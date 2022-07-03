@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ThomsehSMP:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ThomsehSMP_jar</output-path>
+    <root id="archive" name="ThomsehSMP.jar">
+      <element id="module-output" name="ThomsehSMP" />
+    </root>
+  </artifact>
+</component>

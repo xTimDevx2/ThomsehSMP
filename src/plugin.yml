@@ -1,0 +1,45 @@
+name: ThomsehSMP
+version: B-0.1
+main: me.xtimdevx.thomsehsmp.Main
+description: SMP plugin voor twitch streamer Thomseh
+author: xTimDevx
+softdepend: [LuckPerms, Citizens]
+api-version: 1.13
+
+commands:
+  smp:
+    usage: /<command>
+  setrank:
+    usage: /<command>
+  spawn:
+    usage: /<command>
+  home:
+    usage: /<command>
+  sethome:
+    usage: /<command>
+  tpa:
+    usage: /<command>
+  tpaccept:
+    aliases: [tpyes, ta]
+    usage: /<command>
+  tpdeny:
+    aliases: [tpno]
+    usage: /<command>
+  randomtp:
+    aliases: [rtp]
+    usage: /<command>
+  givekey:
+    usage: /<command>
+  balance:
+    aliases: [bal]
+    usage: /<command>
+  reward:
+    usage: /<command>
+  respawnNPC:
+    usage: /<command>
+  quest:
+    usage: /<command>
+  user:
+    usage: /<command>
+  summonarmorstand:
+    usage: /<command>
