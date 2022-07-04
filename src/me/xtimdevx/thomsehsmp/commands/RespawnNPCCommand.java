@@ -3,6 +3,7 @@ package me.xtimdevx.thomsehsmp.commands;
 import me.xtimdevx.thomsehsmp.Settings;
 import me.xtimdevx.thomsehsmp.npc.AaronTrait;
 import me.xtimdevx.thomsehsmp.npc.BaldemarTrait;
+import me.xtimdevx.thomsehsmp.npc.RedstoneMarketTrait;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.trait.trait.Equipment;
@@ -23,7 +24,8 @@ public class RespawnNPCCommand implements CommandExecutor {
         Player player = (Player) sender;
         if(args.length == 0) {
             player.sendMessage("§cUsage: /respawnnpc <npc>");
-            player.sendMessage("§cNPC's: Aaron, Baldemar");
+            player.sendMessage("§cQuest NPC's: Aaron, Baldemar");
+            player.sendMessage("§cMarket NPC's: Redstone");
 
             return true;
         }
@@ -71,6 +73,27 @@ public class RespawnNPCCommand implements CommandExecutor {
 
 
             player.sendMessage("§3§lSMP §8> §fSpawned quest NPC §3Baldemar§f.");
+        }
+        if(args[0].equalsIgnoreCase("Redstone")) {
+            Location npcSpawn = new Location(Bukkit.getWorld("world"), -91, 83, -109);
+            npcSpawn.setYaw(60);
+            npcSpawn.setPitch(-10);
+            NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "MarketRedstone");
+
+            npc.setName("§cRedstone §f§lMarket §cAline");
+
+            SkinTrait skinTrait = npc.getTrait(SkinTrait.class);
+            System.out.println(skinTrait.getSkinName());
+            skinTrait.setSkinPersistent("redstonemarketsmpthomseh", "sfyQcGkECt3CdkVa2SoqhGqS5Rmj9tOmI3FxU/fQGuQh+FF+pY9kg0jm7Fr9XUMv+O3NhUi4sZJ7sgHJU+xhYNSl/INGr/kYTEIUQC5yUUnwj/wYkqUbJ4WEGpiPozdgTl3ZG6NZkEBIOSo6r1Pwoqz91UcP2040ewi4tLyGdOSIhefkXuhSPPEexBWeYR8B7XTQGyaXmkmaVqhd8kd8moDOae3/XJefBUDjT5Ygomt7zEQ0MVmQCiJqJXN/OavReXVhWsigBVpAoUuw7L+XXYGanRrsS827KWoLSxlLPDE5bLpv9oM9cD+SADdxIw/q6lXqzVnSpI8Oy4XAZKQJmWqlw0ZASygnQPLrM6ysTYVCiB8TWyu83UEcUoojtkPX7b/RAts4pu8/OhkVv/rBotX9KMfX/5kmvJ7N7sHbOekv5q87/wTste1GNPrtipm/TbNEjgxh9OYB6xpaGcciHWOgiXC281QyZBNBurGxSIp56IkNGK46/ixorjhacXcL2buNm6WKfhHPgfGL8xMJrFRR5undQydySO3gY/qxfQF18dBiunpE8UU+IQ5qbiJV+2l7t30tgESqNFKh4+mGnrXzIDYO4jyPOwp6oaUhCWCZ18z6oMab+oWN3OTapYuRg2kwapulYtwWWPTX6+a8hLBPeCwfU9tJpuDx2agzzR0=", "ewogICJ0aW1lc3RhbXAiIDogMTY1Njk2NjUzMzc2OSwKICAicHJvZmlsZUlkIiA6ICJmMTdkOWJlZmM2NGM0YzA4ODVhYWU3NWQ0YjhiNWE0NCIsCiAgInByb2ZpbGVOYW1lIiA6ICJTaXJCYW5kZXJzbmF0Y2giLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGFjZGUxNGFiZGZiODNmMTI1YjYxMzc0MzVlYTg2NDg4ODM0MWM3MDhkY2EwNTdjZmQwYWExM2RhODBiMDZlMiIsCiAgICAgICJtZXRhZGF0YSIgOiB7CiAgICAgICAgIm1vZGVsIiA6ICJzbGltIgogICAgICB9CiAgICB9CiAgfQp9");
+
+        npc.getOrAddTrait(Equipment.class).set(Equipment.EquipmentSlot.HAND, new ItemStack(Material.REDSTONE, 1));
+
+            npc.addTrait(RedstoneMarketTrait.class);
+
+            npc.spawn(npcSpawn);
+
+
+            player.sendMessage("§3§lSMP §8> §fSpawned Market NPC §3Aline§f.");
         }
         return true;
     }

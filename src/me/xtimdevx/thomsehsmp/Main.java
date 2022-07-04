@@ -11,7 +11,9 @@ import me.xtimdevx.thomsehsmp.managers.CooldownManager;
 import me.xtimdevx.thomsehsmp.managers.NPCManager;
 import me.xtimdevx.thomsehsmp.npc.AaronTrait;
 import me.xtimdevx.thomsehsmp.npc.BaldemarTrait;
+import me.xtimdevx.thomsehsmp.npc.RedstoneMarketTrait;
 import me.xtimdevx.thomsehsmp.quests.QuestCommands;
+import me.xtimdevx.thomsehsmp.quests.QuestEvents;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.event.CitizensEnableEvent;
 import net.citizensnpcs.api.trait.TraitInfo;
@@ -44,6 +46,7 @@ public class Main extends JavaPlugin {
 
         CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(AaronTrait.class).withName("aaron"));
         CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(BaldemarTrait.class).withName("baldemar"));
+        CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(RedstoneMarketTrait.class).withName("redstonemarket"));
 
         try {
             loadDaily();
@@ -111,5 +114,6 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new BowPackage(), this);
         Bukkit.getPluginManager().registerEvents(new CommandEvents(), this);
         Bukkit.getPluginManager().registerEvents(new NPCManager(), this);
+        Bukkit.getPluginManager().registerEvents(new QuestEvents(), this);
     }
 }

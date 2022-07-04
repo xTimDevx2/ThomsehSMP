@@ -1,6 +1,5 @@
 package me.xtimdevx.thomsehsmp.quests;
 
-import javafx.print.PageLayout;
 import me.xtimdevx.thomsehsmp.Main;
 import me.xtimdevx.thomsehsmp.User;
 import me.xtimdevx.thomsehsmp.utils.MessageUtils;
@@ -289,16 +288,23 @@ public class QuestManager {
 
 
     public Inventory openQuestmenu(Player player) {
+        User user = User.get(player);
         Inventory inv = Bukkit.createInventory(player, 54, "§3§nQuest Menu:");
         ArrayList<String> lore = new ArrayList<String>();
 
-        ItemStack glass = new ItemStack(Material.CYAN_STAINED_GLASS);
+        ItemStack glass = new ItemStack(Material.CYAN_STAINED_GLASS_PANE);
 
         inv.setItem(0, glass);
         inv.setItem(9, glass);
+        inv.setItem(18, glass);
         inv.setItem(27, glass);
         inv.setItem(36, glass);
         inv.setItem(45, glass);
+        inv.setItem(46, glass);
+        inv.setItem(47, glass);
+        inv.setItem(51, glass);
+        inv.setItem(52, glass);
+        inv.setItem(53, glass);
         ItemStack QuestTimber = new ItemStack(Material.BOOK);
         ItemMeta QuestTimberMeta = QuestTimber.getItemMeta();
         QuestTimberMeta.setDisplayName("§8> §3§lTimber §f§oQuest §8<");
@@ -313,174 +319,105 @@ public class QuestManager {
         lore.add("§flumberjack §3Aaron at:");
         lore.add("   §f§ox:-33, y:83, z:-133");
         lore.add(" ");
-        lore.add("§fStatus: §c§lNOT STARTED");
+        if(isQuestCompleted(QuestLines.TIMBER, Quests.TIMBER_3SAPLING, player)) {
+            lore.add("§fStatus: §a§lCOMPLETED");
+            QuestTimberMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, true);
+
+        }else {
+            lore.add("§fStatus: " + (user.getFile().getBoolean("quest.TIMBER.started") ? "§a§lONGOING" : "§C§LNOT STARTED")+"");
+        }
         lore.add("§8§m-------------------------");
         lore.add(" ");
         QuestTimberMeta.setLore(lore);
+        QuestTimberMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        QuestTimberMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         QuestTimber.setItemMeta(QuestTimberMeta);
-        inv.setItem(0, QuestTimber);
+        inv.setItem(1, QuestTimber);
         lore.clear();
 
-        ItemStack zevenhe = new ItemStack(Material.PAPER);
-        ItemMeta zevenheMeta = zevenhe.getItemMeta();
-        zevenheMeta.setDisplayName("§7§l750$ §7money cheque");
+        ItemStack QuestTimber16LOG = new ItemStack(Material.PAPER);
+        ItemMeta QuestTimber16LOGMeta = QuestTimber16LOG.getItemMeta();
+        QuestTimber16LOGMeta.setDisplayName("§8> §3§lTimber §f§oQuest §8<");
         lore.add(" ");
-        lore.add("§8> §7§oRight click to use.");
+        lore.add("§8§m-------------------------");
+        lore.add("         §3§lTimber");
+        lore.add("§fChapter: §3§l1§f/§3§l3");
         lore.add(" ");
-        zevenheMeta.setLore(lore);
-        zevenhe.setItemMeta(zevenheMeta);
-        inv.setItem(1, zevenhe);
+        lore.add("§3§oInstructies: ");
+        lore.add("§fVerzamel 16 wooden logs");
+        lore.add("§fen breng deze terug naar Aaron");
+        lore.add(" ");
+        if(isQuestCompleted(QuestLines.TIMBER, Quests.TIMBER_16LOGS, player)) {
+            lore.add("§fStatus: §a§lCOMPLETED");
+            QuestTimber16LOGMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1,true);
+        }else {
+            lore.add("§fStatus: " + (user.getFile().getBoolean("quest.TIMBER.TIMBER_16LOGS.active") ? "§a§lONGOING" : "§C§LNOT STARTED")+"");
+        }
+        lore.add("§8§m-------------------------");
+        lore.add(" ");
+        QuestTimber16LOGMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        QuestTimber16LOGMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        QuestTimber16LOGMeta.setLore(lore);
+        QuestTimber16LOG.setItemMeta(QuestTimber16LOGMeta);
+        inv.setItem(2, QuestTimber16LOG);
         lore.clear();
 
-        ItemStack redstonepak = new ItemStack(Material.REDSTONE);
-        ItemMeta redstonepakMeta = redstonepak.getItemMeta();
-        redstonepakMeta.setDisplayName("§7§lRedstone §7Pakket");
+        ItemStack QuestTimberDIAAXE = new ItemStack(Material.PAPER);
+        ItemMeta QuestTimberDIAAXEMeta = QuestTimberDIAAXE.getItemMeta();
+        QuestTimberDIAAXEMeta.setDisplayName("§8> §3§lTimber §f§oQuest §8<");
         lore.add(" ");
-        lore.add("§8> §7§oRight click to use.");
+        lore.add("§8§m-------------------------");
+        lore.add("         §3§lTimber");
+        lore.add("§fChapter: §3§l2§f/§3§l3");
         lore.add(" ");
-        redstonepakMeta.setLore(lore);
-        redstonepak.setItemMeta(redstonepakMeta);
-        inv.setItem(2, redstonepak);
+        lore.add("§3§oInstructies: ");
+        lore.add("§fBreng 4 diamonds, 2 sticks");
+        lore.add("§fen 1 bookshelf naar Baldemar de smid");
+        lore.add(" ");
+        if(isQuestCompleted(QuestLines.TIMBER, Quests.TIMBER_DIAMONDAXE, player)) {
+            lore.add("§fStatus: §a§lCOMPLETED");
+            QuestTimberDIAAXEMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, true);
+        }else {
+            lore.add("§fStatus: " + (user.getFile().getBoolean("quest.TIMBER.TIMBER_DIAMONDAXE.active") ? "§a§lONGOING" : "§C§LNOT STARTED")+"");
+        }
+        lore.add("§8§m-------------------------");
+        lore.add(" ");
+        QuestTimberDIAAXEMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        QuestTimberDIAAXEMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        QuestTimberDIAAXEMeta.setLore(lore);
+        QuestTimberDIAAXE.setItemMeta(QuestTimberDIAAXEMeta);
+        inv.setItem(3, QuestTimberDIAAXE);
         lore.clear();
 
-        ItemStack oaklog = new ItemStack(Material.OAK_LOG, 16);
-        ItemMeta oaklogMeta = oaklog.getItemMeta();
-        oaklogMeta.setDisplayName("§7§l16x §7Oak Logs");
-        oaklog.setItemMeta(oaklogMeta);
-        inv.setItem(3, oaklog);
-
-        ItemStack xp = new ItemStack(Material.EXPERIENCE_BOTTLE, 8);
-        ItemMeta xpMeta = xp.getItemMeta();
-        xpMeta.setDisplayName("§7§l8x §7Bottle o' enchanting");
-        xp.setItemMeta(xpMeta);
-        inv.setItem(4, xp);
-
-        ItemStack bone = new ItemStack(Material.BONE, 16);
-        ItemMeta boneMeta = bone.getItemMeta();
-        boneMeta.setDisplayName("§7§l16x §7Bones");
-        bone.setItemMeta(boneMeta);
-        inv.setItem(5, bone);
-
-        ItemStack pork = new ItemStack(Material.COOKED_BEEF, 12);
-        ItemMeta porkMeta = pork.getItemMeta();
-        porkMeta.setDisplayName("§7§l12x §7Cooked beef");
-        pork.setItemMeta(porkMeta);
-        inv.setItem(6, pork);
-
-        ItemStack emerald = new ItemStack(Material.EMERALD, 5);
-        ItemMeta emeraldMeta = emerald.getItemMeta();
-        emeraldMeta.setDisplayName("§7§l5x §7Emerald");
-        emerald.setItemMeta(emeraldMeta);
-        inv.setItem(7, emerald);
-
-        ItemStack pearl = new ItemStack(Material.ENDER_PEARL, 3);
-        ItemMeta pearlMeta = pearl.getItemMeta();
-        pearlMeta.setDisplayName("§7§l3x §7Ender Pearl");
-        pearl.setItemMeta(pearlMeta);
-        inv.setItem(8, pearl);
-
-        ItemStack torch = new ItemStack(Material.TORCH, 64);
-        ItemMeta torchMeta = torch.getItemMeta();
-        torchMeta.setDisplayName("§7§l64x §7Torches");
-        torch.setItemMeta(torchMeta);
-        inv.setItem(9, torch);
-
-        ItemStack ironarmor = new ItemStack(Material.IRON_HORSE_ARMOR, 1);
-        ItemMeta ironarmorMeta = ironarmor.getItemMeta();
-        ironarmorMeta.setDisplayName("§7§l1x §7Iron Horse Armor");
-        ironarmor.setItemMeta(ironarmorMeta);
-        inv.setItem(10, ironarmor);
-
-        ItemStack reward = new ItemStack(Material.BOW);
-        ItemMeta rewardmeta = reward.getItemMeta();
-        rewardmeta.setDisplayName("§7§lBow §7Package");
+        ItemStack QuestSapplings = new ItemStack(Material.PAPER);
+        ItemMeta QuestSapplingsMeta = QuestSapplings.getItemMeta();
+        QuestSapplingsMeta.setDisplayName("§8> §3§lTimber §f§oQuest §8<");
         lore.add(" ");
-        lore.add("§8> §7§oRight click to use.");
+        lore.add("§8§m-------------------------");
+        lore.add("         §3§lTimber");
+        lore.add("§fChapter: §3§l3§f/§3§l3");
         lore.add(" ");
-        rewardmeta.setLore(lore);
-        reward.setItemMeta(rewardmeta);
+        lore.add("§3§oInstructies: ");
+        lore.add("§fVerzamel een accacia, jungle");
+        lore.add("§fen spruce sappling en breng");
+        lore.add("§fdeze naar Aaron.");
+        lore.add(" ");
+        if(isQuestCompleted(QuestLines.TIMBER, Quests.TIMBER_3SAPLING, player)) {
+            lore.add("§fStatus: §a§lCOMPLETED");
+            QuestSapplings.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 1);
+        }else {
+            lore.add("§fStatus: " + (user.getFile().getBoolean("quest.TIMBER.TIMBER_3SAPLING.active") ? "§a§lONGOING" : "§C§LNOT STARTED")+"");
+        }
+        lore.add("§8§m-------------------------");
+        lore.add(" ");
+        QuestSapplingsMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        QuestSapplingsMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        QuestSapplingsMeta.setLore(lore);
+        QuestSapplings.setItemMeta(QuestSapplingsMeta);
+        inv.setItem(4, QuestSapplings);
         lore.clear();
-        inv.setItem(11, reward);
 
-        ItemStack adem = new ItemStack(Material.DRAGON_BREATH, 1);
-        ItemMeta ademMeta = adem.getItemMeta();
-        ademMeta.setDisplayName("§7§l1x §7Dragon Breath");
-        adem.setItemMeta(ademMeta);
-        inv.setItem(12, adem);
 
-        ItemStack saddle = new ItemStack(Material.SADDLE, 1);
-        ItemMeta saddleMeta = saddle.getItemMeta();
-        saddleMeta.setDisplayName("§7§l1x §7Saddle");
-        saddle.setItemMeta(saddleMeta);
-        inv.setItem(13, saddle);
-
-        ItemStack bamboo = new ItemStack(Material.BAMBOO, 5);
-        ItemMeta bambooMeta = bamboo.getItemMeta();
-        bambooMeta.setDisplayName("§7§l5x §7Bamboo");
-        bamboo.setItemMeta(bambooMeta);
-        inv.setItem(14, bamboo);
-
-        ItemStack diaPick = new ItemStack(Material.DIAMOND_PICKAXE, 1);
-        ItemMeta diaMeta = diaPick.getItemMeta();
-        diaMeta.setDisplayName("§7§l1x §7Diamond Pickaxe ");
-        lore.add(" ");
-        lore.add("§8> §7§oEfficiency 3.");
-        lore.add(" ");
-        diaMeta.addEnchant(Enchantment.DIG_SPEED, 3, true);
-        diaMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        diaMeta.setLore(lore);
-        diaPick.setItemMeta(diaMeta);
-        lore.clear();
-        inv.setItem(15, diaPick);
-
-        ItemStack blaze = new ItemStack(Material.BLAZE_ROD, 2);
-        ItemMeta blazeMeta = blaze.getItemMeta();
-        blazeMeta.setDisplayName("§7§l2x §7Blaze Rods");
-        blaze.setItemMeta(blazeMeta);
-        inv.setItem(16, blaze);
-
-        ItemStack sponge = new ItemStack(Material.SPONGE, 4);
-        ItemMeta spongeMeta = sponge.getItemMeta();
-        spongeMeta.setDisplayName("§7§l4x §7Sponge");
-        sponge.setItemMeta(spongeMeta);
-        inv.setItem(17, sponge);
-
-        ItemStack book = new ItemStack(Material.BOOK, 1);
-        ItemMeta bookMeta = book.getItemMeta();
-        bookMeta.setDisplayName("§7§l1x §7Enchanted Book");
-        lore.add(" ");
-        lore.add("§8> §7§oProtection 2");
-        lore.add(" ");
-        bookMeta.addEnchant(Enchantment.DIG_SPEED, 3, true);
-        bookMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        bookMeta.setLore(lore);
-        book.setItemMeta(bookMeta);
-        lore.clear();
-        inv.setItem(18, book);
-
-        ItemStack goldcarrot = new ItemStack(Material.GOLDEN_CARROT, 8);
-        ItemMeta goldcarrotMeta = goldcarrot.getItemMeta();
-        goldcarrotMeta.setDisplayName("§7§l8x §7Golden Carrot");
-        goldcarrot.setItemMeta(goldcarrotMeta);
-        inv.setItem(19, goldcarrot);
-
-        ItemStack elytra = new ItemStack(Material.ELYTRA, 1);
-        ItemMeta elytraMeta = elytra.getItemMeta();
-        elytraMeta.setDisplayName("§7§l1x §7Elytra §6§lLEGENDARY");
-        elytra.setItemMeta(elytraMeta);
-        inv.setItem(20, elytra);
-
-        ItemStack trident = new ItemStack(Material.TRIDENT, 1);
-        ItemMeta tridentMeta = trident.getItemMeta();
-        tridentMeta.setDisplayName("§7§l1x §7Trident §6§lLEGENDARY");
-        trident.setItemMeta(tridentMeta);
-        inv.setItem(21, trident);
-
-        ItemStack egg = new ItemStack(Material.TURTLE_EGG, 2);
-        ItemMeta eggMeta = egg.getItemMeta();
-        eggMeta.setDisplayName("§7§l2x §7Turtle Egg");
-        egg.setItemMeta(eggMeta);
-        inv.setItem(22, egg);
         player.openInventory(inv);
         return inv;
 
