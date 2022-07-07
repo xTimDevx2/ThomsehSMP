@@ -14,6 +14,16 @@ public class Utils {
         return p.getInventory().firstEmpty() == -1;
     }
 
+    public static void giveItem(Player player, ItemStack itemStack, int amount) {
+        itemStack.setAmount(amount);
+        if(!invFull(player)) {
+            player.getInventory().addItem(itemStack);
+        }else {
+            Bukkit.getWorld(player.getLocation().getWorld().getName()).dropItem(player.getLocation(), itemStack);
+
+        }
+    }
+
     public static void giveItem(Player player, ItemStack itemStack) {
         if(!invFull(player)) {
             player.getInventory().addItem(itemStack);

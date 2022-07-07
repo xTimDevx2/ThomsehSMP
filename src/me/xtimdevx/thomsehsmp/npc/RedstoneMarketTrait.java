@@ -2,6 +2,7 @@ package me.xtimdevx.thomsehsmp.npc;
 
 import me.xtimdevx.thomsehsmp.Main;
 import me.xtimdevx.thomsehsmp.User;
+import me.xtimdevx.thomsehsmp.markets.RedstoneMarket;
 import me.xtimdevx.thomsehsmp.quests.QuestManager;
 import me.xtimdevx.thomsehsmp.utils.Utils;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
@@ -72,7 +73,7 @@ public class RedstoneMarketTrait extends Trait {
                 User user = User.get(event.getClicker());
                 Player player = event.getClicker();
 
-                player.sendTitle("ewa", "soep");
+                RedstoneMarket.openMarketRedstone(player);
             }
         }
 

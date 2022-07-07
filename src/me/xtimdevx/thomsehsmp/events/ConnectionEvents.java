@@ -1,8 +1,10 @@
 package me.xtimdevx.thomsehsmp.events;
 
+import me.xtimdevx.thomsehsmp.Main;
 import me.xtimdevx.thomsehsmp.User;
 import me.xtimdevx.thomsehsmp.commands.HomeCommand;
 import me.xtimdevx.thomsehsmp.commands.SethomeCommand;
+import me.xtimdevx.thomsehsmp.managers.ScoreboardManager;
 import me.xtimdevx.thomsehsmp.utils.LocationUtils;
 import me.xtimdevx.thomsehsmp.utils.MessageUtils;
 import org.bukkit.Bukkit;
@@ -35,6 +37,17 @@ public class ConnectionEvents implements Listener {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         Date date = new Date();
 
+        Bukkit.getScheduler().runTaskLater(Main.plugin, new Runnable() {
+            @Override
+            public void run() {
+                ScoreboardManager.createMainBoard(player);
+
+                for(Player online : Bukkit.getOnlinePlayers()) {
+                    ScoreboardManager.updateScoreBoard(online);
+                }
+            }
+        }, 20);
+
         user.getFile().set("lastlogin", date.getTime());
         user.saveFile();
 
@@ -63,6 +76,15 @@ public class ConnectionEvents implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         User user = User.get(player);
+
+        Bukkit.getScheduler().runTaskLater(Main.plugin, new Runnable() {
+            @Override
+            public void run() {
+                for(Player online : Bukkit.getOnlinePlayers()) {
+                    ScoreboardManager.updateScoreBoard(online);
+                }
+            }
+        }, 20);
 
     }
 

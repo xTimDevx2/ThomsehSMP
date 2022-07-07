@@ -9,6 +9,7 @@ import me.xtimdevx.thomsehsmp.features.MoneyCheques;
 import me.xtimdevx.thomsehsmp.features.RedstonePackage;
 import me.xtimdevx.thomsehsmp.managers.CooldownManager;
 import me.xtimdevx.thomsehsmp.managers.NPCManager;
+import me.xtimdevx.thomsehsmp.markets.RedstoneMarket;
 import me.xtimdevx.thomsehsmp.npc.AaronTrait;
 import me.xtimdevx.thomsehsmp.npc.BaldemarTrait;
 import me.xtimdevx.thomsehsmp.npc.RedstoneMarketTrait;
@@ -115,5 +116,6 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new CommandEvents(), this);
         Bukkit.getPluginManager().registerEvents(new NPCManager(), this);
         Bukkit.getPluginManager().registerEvents(new QuestEvents(), this);
+        Bukkit.getPluginManager().registerEvents(new RedstoneMarket(), this);
     }
 }

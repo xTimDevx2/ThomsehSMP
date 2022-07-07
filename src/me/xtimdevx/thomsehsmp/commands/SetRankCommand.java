@@ -1,5 +1,7 @@
 package me.xtimdevx.thomsehsmp.commands;
 
+import me.xtimdevx.thomsehsmp.Main;
+import me.xtimdevx.thomsehsmp.managers.ScoreboardManager;
 import me.xtimdevx.thomsehsmp.utils.MessageUtils;
 import me.xtimdevx.thomsehsmp.utils.PermsUtils;
 import net.luckperms.api.LuckPerms;
@@ -44,7 +46,7 @@ public class SetRankCommand implements CommandExecutor, TabCompleter {
         }
 
 
-        OfflinePlayer target = Bukkit.getPlayer(args[0]);
+        Player target = Bukkit.getPlayer(args[0]);
 
         if (target == null) {
             player.sendMessage("§cERROR: This player is not online.");
@@ -60,6 +62,14 @@ public class SetRankCommand implements CommandExecutor, TabCompleter {
         MessageUtils.broadcastCenteredMessage("§3" + args[0] + " §frecieved the rank:");
         MessageUtils.broadcastCenteredMessage("§3§l" + args[1]);
         Bukkit.broadcastMessage("§8§m----------------------------------------------------");
+
+
+        Bukkit.getScheduler().runTaskLater(Main.plugin, new Runnable() {
+            @Override
+            public void run() {
+                ScoreboardManager.updateScoreBoard(target);
+            }
+        }, 20);
 
         return true;
     }

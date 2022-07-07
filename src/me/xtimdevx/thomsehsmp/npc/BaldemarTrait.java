@@ -192,7 +192,7 @@ public class BaldemarTrait extends Trait {
 
                                 player.sendMessage("§8> §fJe kreeg de §cHeatwaker §fbijl van baldemar, ga terug met Aaron praten.");
                                 player.sendMessage("§7§o(Tip: Ben je heatwaker verloren? Je kan altijd een nieuwe gaan maken bij Baldemar)");
-                                Utils.giveItem(player, axe);
+                                Utils.giveItem(player, axe, 1);
 
                                 user.getFile().set("quest.TIMBER.TIMBER_DIAMONDAXE.stage", 2);
                                 user.saveFile();
@@ -334,7 +334,7 @@ public class BaldemarTrait extends Trait {
 
                                 player.sendMessage("§8> §fJe kreeg de §cHeatwaker §fbijl van baldemar, ga terug met Aaron praten.");
                                 player.sendMessage("§7§o(Tip: Verlies Heatwaker niet nog eens, je kan hem niet nog eens maken.)");
-                                Utils.giveItem(player, axe);
+                                Utils.giveItem(player, axe, 1);
 
                                 user.getFile().set("quest.TIMBER.TIMBER_DIAMONDAXE.heatwakerherkansing", true);
                                 user.saveFile();
