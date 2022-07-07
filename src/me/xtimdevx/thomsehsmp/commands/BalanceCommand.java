@@ -33,6 +33,7 @@ public class BalanceCommand implements CommandExecutor {
             }
 
             player.sendMessage("§8> §f" + target.getName() + "'s Balance: §3" + user.getFile().getInt("balance") + " §f⛀");
+            return true;
         }
 
         if(args.length < 3) {

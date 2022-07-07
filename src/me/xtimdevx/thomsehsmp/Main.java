@@ -13,6 +13,7 @@ import me.xtimdevx.thomsehsmp.markets.RedstoneMarket;
 import me.xtimdevx.thomsehsmp.npc.AaronTrait;
 import me.xtimdevx.thomsehsmp.npc.BaldemarTrait;
 import me.xtimdevx.thomsehsmp.npc.RedstoneMarketTrait;
+import me.xtimdevx.thomsehsmp.npc.ResourceMarketTrait;
 import me.xtimdevx.thomsehsmp.quests.QuestCommands;
 import me.xtimdevx.thomsehsmp.quests.QuestEvents;
 import net.citizensnpcs.api.CitizensAPI;
@@ -48,6 +49,7 @@ public class Main extends JavaPlugin {
         CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(AaronTrait.class).withName("aaron"));
         CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(BaldemarTrait.class).withName("baldemar"));
         CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(RedstoneMarketTrait.class).withName("redstonemarket"));
+        CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(ResourceMarketTrait.class).withName("resourcemarket"));
 
         try {
             loadDaily();
