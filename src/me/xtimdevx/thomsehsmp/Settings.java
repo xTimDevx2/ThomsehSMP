@@ -14,6 +14,9 @@ public class Settings {
     private FileConfiguration data;
     private File dfile;
 
+    private FileConfiguration worlds;
+    private File wfile;
+
     public static Settings getInstance() {
         return instance;
     }
@@ -35,6 +38,18 @@ public class Settings {
 
         data = YamlConfiguration.loadConfiguration(dfile);
 
+        wfile = new File(Main.plugin.getDataFolder(), "worlds.yml");
+
+        if (!wfile.exists()) {
+            try {
+                wfile.createNewFile();
+            } catch (Exception e) {
+                Bukkit.getServer().getLogger().severe(ChatColor.RED + "Could not create worlds.yml!");
+            }
+        }
+
+        worlds = YamlConfiguration.loadConfiguration(wfile);
+
 
         Main.plugin.getLogger().info("Configs has been setup.");
     }
@@ -54,6 +69,22 @@ public class Settings {
     public void reloadData() {
         data = YamlConfiguration.loadConfiguration(dfile);
 
+    }
+
+    public FileConfiguration getWorlds() {
+        return worlds;
+    }
+
+    public void saveWorlds() {
+        try {
+            worlds.save(wfile);
+        } catch (Exception e) {
+            Bukkit.getServer().getLogger().severe(ChatColor.RED + "Could not save worlds.yml!");
+        }
+    }
+
+    public void reloadWorlds() {
+        worlds = YamlConfiguration.loadConfiguration(wfile);
     }
 }
 

@@ -1,12 +1,16 @@
 package me.xtimdevx.thomsehsmp.commands;
 
+import me.xtimdevx.thomsehsmp.Main;
 import me.xtimdevx.thomsehsmp.User;
 import me.xtimdevx.thomsehsmp.utils.MessageUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.io.File;
 
 public class UserCommand implements CommandExecutor {
 
@@ -22,6 +26,7 @@ public class UserCommand implements CommandExecutor {
             if(args.length < 2) {
                 player.sendMessage("§cUsage: /user <user> reload");
                 player.sendMessage("§cUsage: /user <user> resetquests");
+                player.sendMessage("§cUsage: /user <user> reset");
                 return true;
             }
 
@@ -58,6 +63,26 @@ public class UserCommand implements CommandExecutor {
                 user.saveFile();
                 player.sendMessage("§8> §fReset quests for §3" + target.getName() + "§f.");
             }
+            if(args[1].equalsIgnoreCase("reset")) {
+                OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
+
+
+                File file = new File(Main.plugin.getDataFolder() + "<users>"+ target.getUniqueId().toString() + ".yml");
+                file.delete();
+
+                if(target.isOnline()) {
+                    int taskID = -1;
+                    taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            player.kickPlayer("§3§lSMP \n§fYour account has been reset, please relog.");
+                        }
+                    }, 20);
+                }
+
+                player.sendMessage("§8> §fReset §3" + target.getName() + "§f's account.");
+            }
+
 
         }
         return true;

@@ -1,5 +1,7 @@
 package me.xtimdevx.thomsehsmp.events;
 
+import me.xtimdevx.thomsehsmp.User;
+import me.xtimdevx.thomsehsmp.utils.DateUtils;
 import me.xtimdevx.thomsehsmp.utils.MessageUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -8,6 +10,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import java.util.Date;
+import java.util.TimeZone;
+
 public class ChatEvent implements Listener{
 
     @EventHandler
@@ -15,7 +20,27 @@ public class ChatEvent implements Listener{
         OfflinePlayer oplayer = event.getPlayer();
         Player player = event.getPlayer();
 
+        User userM = User.get(player);
+
         event.setCancelled(true);
+
+        if (userM.isMuted()) {
+            TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+            Date date = new Date();
+            event.setCancelled(true);
+            if (userM.getUnmuteTime() == -1 || userM.getUnmuteTime() > date.getTime()) {
+                player.sendMessage(MessageUtils.GARY + "Je bent gemute voor§8: §c" + userM.getMutedReason());
+
+                if (userM.getUnmuteTime() < 0) {
+                    player.sendMessage("§8> §fJe mute is permanent.");
+                } else {
+                    player.sendMessage("§8> §fJe mute verloopt in: §c" + DateUtils.formatDateDiff(userM.getUnmuteTime()));
+                }
+                return;
+            } else {
+                userM.unmute();
+            }
+        }
 
         if(player.isOp()) {
             Bukkit.broadcastMessage(MessageUtils.returnPrefix(oplayer) + player.getName() + " §8> §f" + event.getMessage().replace("&", "§"));

@@ -43,10 +43,10 @@ public class HomeCommand implements CommandExecutor {
 
             String home = args[0];
             if(user.getFile().get("home." + home) == null) {
-                player.sendMessage("§cERROR: This home does not excist.");
+                player.sendMessage("§cERROR: Deze home bestaat niet.");
                 return true;
             }
-            player.sendMessage("§8> §fTeleporting you in §35 §fseconds. Do not move!");
+            player.sendMessage("§8> §fWe teleporteren je in §35 §fseconden. Niet bewegen!");
             SpawnCommand.moving.add(player);
             taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                 @Override
@@ -70,7 +70,7 @@ public class HomeCommand implements CommandExecutor {
                     player.teleport(homeloc);
 
 
-                    player.sendMessage("§8> §fTeleporting you to your home. §7§o(" + home + ")");
+                    player.sendMessage("§8> §fWe teleporteren je naar je home. §7§o(" + home + ")");
                     SpawnCommand.moving.remove(player);
                 }
             }, 100L);

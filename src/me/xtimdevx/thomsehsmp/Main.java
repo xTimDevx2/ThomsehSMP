@@ -9,11 +9,11 @@ import me.xtimdevx.thomsehsmp.features.MoneyCheques;
 import me.xtimdevx.thomsehsmp.features.RedstonePackage;
 import me.xtimdevx.thomsehsmp.managers.CooldownManager;
 import me.xtimdevx.thomsehsmp.managers.NPCManager;
+import me.xtimdevx.thomsehsmp.markets.BlockMarket;
+import me.xtimdevx.thomsehsmp.markets.FishMarket;
 import me.xtimdevx.thomsehsmp.markets.RedstoneMarket;
-import me.xtimdevx.thomsehsmp.npc.AaronTrait;
-import me.xtimdevx.thomsehsmp.npc.BaldemarTrait;
-import me.xtimdevx.thomsehsmp.npc.RedstoneMarketTrait;
-import me.xtimdevx.thomsehsmp.npc.ResourceMarketTrait;
+import me.xtimdevx.thomsehsmp.markets.ResourceMarket;
+import me.xtimdevx.thomsehsmp.npc.*;
 import me.xtimdevx.thomsehsmp.quests.QuestCommands;
 import me.xtimdevx.thomsehsmp.quests.QuestEvents;
 import net.citizensnpcs.api.CitizensAPI;
@@ -50,6 +50,8 @@ public class Main extends JavaPlugin {
         CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(BaldemarTrait.class).withName("baldemar"));
         CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(RedstoneMarketTrait.class).withName("redstonemarket"));
         CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(ResourceMarketTrait.class).withName("resourcemarket"));
+        CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(FishMarketTrait.class).withName("fishmarket"));
+        CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(BlockMarketTrait.class).withName("blockmarket"));
 
         try {
             loadDaily();
@@ -101,6 +103,11 @@ public class Main extends JavaPlugin {
         getCommand("quest").setExecutor(new QuestCommands());
         getCommand("user").setExecutor(new UserCommand());
         getCommand("summonarmorstand").setExecutor(new SummonArmorstandCommand());
+        getCommand("delhome").setExecutor(new DelhomeCommand());
+        getCommand("ban").setExecutor(new BanCommand());
+        getCommand("tempban").setExecutor(new TempbanCommand());
+        getCommand("mute").setExecutor(new MuteCommand());
+        getCommand("world").setExecutor(new WorldCommand());
 
         //TAB
         getCommand("setrank").setTabCompleter(new SetRankCommand());
@@ -119,5 +126,8 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new NPCManager(), this);
         Bukkit.getPluginManager().registerEvents(new QuestEvents(), this);
         Bukkit.getPluginManager().registerEvents(new RedstoneMarket(), this);
+        Bukkit.getPluginManager().registerEvents(new ResourceMarket(), this);
+        Bukkit.getPluginManager().registerEvents(new FishMarket(), this);
+        Bukkit.getPluginManager().registerEvents(new BlockMarket(), this);
     }
 }

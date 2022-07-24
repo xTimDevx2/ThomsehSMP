@@ -43,3 +43,13 @@ commands:
     usage: /<command>
   summonarmorstand:
     usage: /<command>
+  delhome:
+    usage: /<command>
+  ban:
+    usage: /<command>
+  tempban:
+    usage: /<command>
+  mute:
+    usage: /<command>
+  world:
+    usage: /<command>

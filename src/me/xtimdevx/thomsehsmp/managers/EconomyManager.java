@@ -17,6 +17,8 @@ public class EconomyManager {
 
         user.getFile().set("balance", user.getFile().getInt("balance") + amount);
         user.saveFile();
+
+        ScoreboardManager.updateScoreBoard(player);
     }
 
     public void removeBalance(Player player, int amount) {
@@ -24,6 +26,8 @@ public class EconomyManager {
 
         user.getFile().set("balance", user.getFile().getInt("balance") - amount);
         user.saveFile();
+
+        ScoreboardManager.updateScoreBoard(player);
     }
 
     public void setBalance(Player player, int amount) {
@@ -31,6 +35,8 @@ public class EconomyManager {
 
         user.getFile().set("balance", amount);
         user.saveFile();
+
+        ScoreboardManager.updateScoreBoard(player);
     }
 
     public boolean hasEnoughBalance(Player player, int amount) {
@@ -53,6 +59,7 @@ public class EconomyManager {
 
         user.getFile().set("balance", user.getFile().getInt("balance") + amount);
         user.saveFile();
+
     }
 
     public void removeBalance(OfflinePlayer player, int amount) {

@@ -3,6 +3,7 @@ package me.xtimdevx.thomsehsmp.npc;
 import me.xtimdevx.thomsehsmp.Main;
 import me.xtimdevx.thomsehsmp.User;
 import me.xtimdevx.thomsehsmp.markets.RedstoneMarket;
+import me.xtimdevx.thomsehsmp.markets.ResourceMarket;
 import me.xtimdevx.thomsehsmp.quests.QuestManager;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.citizensnpcs.api.persistence.Persist;
@@ -60,7 +61,7 @@ public class ResourceMarketTrait extends Trait {
             User user = User.get(event.getClicker());
             Player player = event.getClicker();
 
-            RedstoneMarket.openMarketRedstone(player);
+            ResourceMarket.openMarketRedstone(player);
         }
     }
 

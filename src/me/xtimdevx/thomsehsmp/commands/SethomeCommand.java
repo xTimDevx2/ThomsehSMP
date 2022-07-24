@@ -31,7 +31,7 @@ public class SethomeCommand implements CommandExecutor {
             user.getFile().set("home.home.yaw", location.getYaw());
 
 
-            player.sendMessage("§8» §fYou set your home §7§o(Name: home)");
+            player.sendMessage("§8» §fJe hebt je home hier geplaatst. §7§o(Naam: home)");
             return true;
         }
 
@@ -46,14 +46,18 @@ public class SethomeCommand implements CommandExecutor {
             user.getFile().set("home." + name + ".yaw", location.getYaw());
 
             if(user.getFile().getStringList("homelist").contains(name)) {
-                player.sendMessage("§8» §fEdited the location of your home §7§o(Name: " + name + ")");
+                player.sendMessage("§8» §fDe locatie van je home is aangepast. §7§o(Naam: " + name + ")");
             } else {
                 Main.home.clear();
                 Main.home.addAll(user.getFile().getStringList("homelist"));
+                if(Main.home.size() == 3) {
+                    player.sendMessage("§cError: Je kan niet meer als 3 homes zetten.");
+                    return true;
+                }
                 Main.home.add(name);
                 user.getFile().set("homelist", Main.home);
                 user.saveFile();
-                player.sendMessage("§8» §fYou set your home §7§o(Name: " + name + ")");
+                player.sendMessage("§8» §fJe hebt je home hier geplaatst. §7§o(Naam: " + name + ")");
             }
 
         }

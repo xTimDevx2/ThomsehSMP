@@ -10,7 +10,15 @@ import java.util.Map;
 
 public class Utils {
 
+    public static void clearChat(Player player) {
+        for(int i=0; i<50; i++)
+        {
+            player.sendMessage(" ");
+        }
+    }
+
     public static boolean invFull(Player p) {
+
         return p.getInventory().firstEmpty() == -1;
     }
 

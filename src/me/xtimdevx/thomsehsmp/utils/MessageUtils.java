@@ -9,6 +9,7 @@ public class MessageUtils {
 
     public static String NOPERM = "§cYou don't have permissions to use this.";
     public static String PREFIX = "§3§lSMP §8> §f";
+    public static String GARY = "§c§lGary §8> §f";
 
     public static String returnPrefix(OfflinePlayer player){
         PermsUtils permsUtils = PermsUtils.getInstance();

@@ -1,10 +1,7 @@
 package me.xtimdevx.thomsehsmp.commands;
 
 import me.xtimdevx.thomsehsmp.Settings;
-import me.xtimdevx.thomsehsmp.npc.AaronTrait;
-import me.xtimdevx.thomsehsmp.npc.BaldemarTrait;
-import me.xtimdevx.thomsehsmp.npc.RedstoneMarketTrait;
-import me.xtimdevx.thomsehsmp.npc.ResourceMarketTrait;
+import me.xtimdevx.thomsehsmp.npc.*;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.trait.trait.Equipment;
@@ -26,7 +23,7 @@ public class RespawnNPCCommand implements CommandExecutor {
         if(args.length == 0) {
             player.sendMessage("§cUsage: /respawnnpc <npc>");
             player.sendMessage("§cQuest NPC's: Aaron, Baldemar");
-            player.sendMessage("§cMarket NPC's: Redstone, Resource");
+            player.sendMessage("§cMarket NPC's: Redstone, Resource, Fish, Block");
 
             return true;
         }
@@ -76,9 +73,9 @@ public class RespawnNPCCommand implements CommandExecutor {
             player.sendMessage("§3§lSMP §8> §fSpawned quest NPC §3Baldemar§f.");
         }
         if(args[0].equalsIgnoreCase("Redstone")) {
-            Location npcSpawn = new Location(Bukkit.getWorld("world"), -91, 83, -109);
-            npcSpawn.setYaw(60);
-            npcSpawn.setPitch(-10);
+            Location npcSpawn = new Location(Bukkit.getWorld("world"), -4.5, 84, -55.5);
+            npcSpawn.setYaw(-90);
+            npcSpawn.setPitch(0);
             NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "MarketRedstone");
 
             npc.setName("§cRedstone §f§lMarket §cAline");
@@ -98,9 +95,9 @@ public class RespawnNPCCommand implements CommandExecutor {
         }
 
         if(args[0].equalsIgnoreCase("Resource")) {
-            Location npcSpawn = new Location(Bukkit.getWorld("world"), -86, 83, -109);
-            npcSpawn.setYaw(60);
-            npcSpawn.setPitch(-10);
+            Location npcSpawn = new Location(Bukkit.getWorld("world"), -7.5, 84, -58.5);
+            npcSpawn.setYaw(180);
+            npcSpawn.setPitch(0);
             NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "MarketResource");
 
             npc.setName("§bResource §f§lMarket §bTheodorus");
@@ -117,6 +114,51 @@ public class RespawnNPCCommand implements CommandExecutor {
 
 
             player.sendMessage("§3§lSMP §8> §fSpawned Market NPC §3Theodorus§f.");
+        }
+
+        if(args[0].equalsIgnoreCase("Fish")) {
+            Location npcSpawn = new Location(Bukkit.getWorld("world"), -7.5, 84, -52.5);
+            npcSpawn.setYaw(0);
+            npcSpawn.setPitch(0);
+            NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "MarketFish");
+
+            npc.setName("§9Fish §f§lMarket §9Mia");
+
+            SkinTrait skinTrait = npc.getTrait(SkinTrait.class);
+            System.out.println(skinTrait.getSkinName());
+            skinTrait.setSkinPersistent("fishmarketsmpthomseh", "dOBOlOUH5iKJ9GjH6rISncVdpasWlYAeU/hY0n+w0iy2xgwa7LCA+iu57c+Ib/Lo8d1z1Ld1ruOpATnJtNbDxfmwiVOXfotp61ONNESXzmIC2Cf7jJCNF49e8PzpS0cPQ7E3AaOhTmnAIImeapb4j9fgmjn056T3iCv8RwC1WPZPp27TrPos+L7UemGsJx65MkYU3thOiG+sXH4j5DVJTPgFwTyOJOjGYXoTMVQlPTcESbexnaI1qb+xtYG4v8VUUQ9CUmPWq+AaAwGI27mnyzbyBmyw62lT+/RMLBo5+Hc43mccPzQGMSykCZNAni9A8Ag4ZSY+5RIoIP0d9A3L3tDA9rRc6mSwnJ408DG3PGALS70gGnByAyADvzJhhRqs7NibMqDnpjTpLs7yMrgeh4r8QncAoRx/vkUTckpudIvxfrFxkL4lAFJQfjypviNMidD4L+v70a1/eD1n0wG0mjFs2VWZSNoRoctLFzZX7QPJCe7B2eBAR18rEq+ADzHG4me1Xfiv+qY6xzCpIZl3rsuxEzdOoD4QynJSvjUuGm2FJMhJhdlrSZAn20tiHGvqdrAb+7GWbEre9BWKG6avOHidoRk7N/0e4y8paba9k0totSWwMmtliZ1kXg6NeK8QV3pRAAbFuXVmsL+QRAd52H5e8GKFN3SZ52+UkdEOU5k=", "ewogICJ0aW1lc3RhbXAiIDogMTY0OTA3OTg1ODg3NiwKICAicHJvZmlsZUlkIiA6ICJmNWQwYjFhZTQxNmU0YTE5ODEyMTRmZGQzMWU3MzA1YiIsCiAgInByb2ZpbGVOYW1lIiA6ICJDYXRjaFRoZVdhdmUxMCIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS9kZGY1NDU0ZDBiODFhMjk3Njg3NDllMmVlZTExNDUyNjA4ZTE5MDY4MzlkY2FkZTljZDdhYTk2ODE1OTU0NTFlIiwKICAgICAgIm1ldGFkYXRhIiA6IHsKICAgICAgICAibW9kZWwiIDogInNsaW0iCiAgICAgIH0KICAgIH0KICB9Cn0=");
+
+            npc.getOrAddTrait(Equipment.class).set(Equipment.EquipmentSlot.HAND, new ItemStack(Material.FISHING_ROD, 1));
+
+            npc.addTrait(FishMarketTrait.class);
+
+            npc.spawn(npcSpawn);
+
+
+            player.sendMessage("§3§lSMP §8> §fSpawned Market NPC §3Mia§f.");
+        }
+
+        if(args[0].equalsIgnoreCase("Block")) {
+            Location npcSpawn = new Location(Bukkit.getWorld("world"), -10.5, 84, -55.5);
+            npcSpawn.setYaw(90);
+            npcSpawn.setPitch(0);
+            NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "MarketBlock");
+
+            npc.setName("§2Block §f§lMarket §2Noah");
+
+            SkinTrait skinTrait = npc.getTrait(SkinTrait.class);
+            System.out.println(skinTrait.getSkinName());
+            skinTrait.setSkinPersistent("blockmarketsmpthomseh", "gHn/TH3+HAxOF65P0F/Y0lD6w7UhFQj8p0IQdfFOgsUBpWBbtKu9KIdGQv1Fep8I+goyOsMVVPAhQ/1GDlNf4WN7iyCCvORe5f5PbJgWBM+R82qGX9YwARVwLpLwu/XpTzwbtuisL19M/qdULm3qB+1zrSHv42D07fpG+a7rhXhqDAnvKoXUKt8S3OyUccu4drfIh9R1ctor7kF0+KrZ6j4hGikhuHUVj0Xm5SLgJv9ILCfgN8cMjBvjIR3wbIpluvcvZ5xHJ5GbgrGpCKPrBdR5scvknX8iv+T2HEl58LMQfmy340z9CGCJnJio1wM8dFbq8Fp/1trMqAY2UjEemkGryBF4zdcXcGHyGY2lkm4TFTf6QoI7F0+b6HAh6KQe7VmzV96Mp1vJ2FytJq9v477D+zblsjdun75c18RR2O/obdSNhBwTinwaWGKUFruhQQrDS28jzgRGRQrjs9EQV74YD8eorTEFoWdnf//edglVi6KnQoRsxa+prlbUR5ASfiWSRjhAUyYmSUYTFjbKs74pjMYPTkmPEXnozUC41q2y40ECXWnV1ycOj+S5/FhImNLfJf5cdROM9NIRPfqyFIFZOejGuElAHmXAyFTBi0/Pnfj+30d83mCaei0+Q+y4XRxGgV05Ep0kAiaf/tv5LIBCoDGls1IpCMm4UUAtcHc=", "ewogICJ0aW1lc3RhbXAiIDogMTYxMjY5NDgyODQ3MiwKICAicHJvZmlsZUlkIiA6ICI2MTZiODhkNDMwNzM0ZTM3OWM3NDc1ODdlZTJkNzlmZCIsCiAgInByb2ZpbGVOYW1lIiA6ICJfX25vdGFodW1hbl9fIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2Q4NWVjNWQ1OWEwNDhkMzNjYzVlNTUwNWNlZTJhZWMyMWIzNTRlMTc4ZDdkZjcwNzE3ZThiMGNlMmMyMDkyMWUiCiAgICB9CiAgfQp9");
+
+            npc.getOrAddTrait(Equipment.class).set(Equipment.EquipmentSlot.HAND, new ItemStack(Material.COBBLESTONE, 1));
+            npc.getOrAddTrait(Equipment.class).set(Equipment.EquipmentSlot.OFF_HAND, new ItemStack(Material.SPRUCE_LOG, 1));
+
+            npc.addTrait(BlockMarketTrait.class);
+
+            npc.spawn(npcSpawn);
+
+
+            player.sendMessage("§3§lSMP §8> §fSpawned Market NPC §3Noah§f.");
         }
         return true;
     }

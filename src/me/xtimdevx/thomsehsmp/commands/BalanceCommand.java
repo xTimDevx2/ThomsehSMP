@@ -47,6 +47,27 @@ public class BalanceCommand implements CommandExecutor {
         }else {
             OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
 
+            if(target.isOnline()) {
+                int amount = Integer.parseInt(args[2]);
+                Player targetonline = Bukkit.getPlayer(args[1]);
+                if(args[0].equalsIgnoreCase("add")) {
+                    economyManager.addBalance(targetonline, amount);
+
+                    player.sendMessage("§8> §fAdded §3" + amount + " §f⛀ to " + target.getName() + "'s balance.");
+                }
+                if(args[0].equalsIgnoreCase("remove")) {
+                    economyManager.removeBalance(targetonline, amount);
+
+                    player.sendMessage("§8> §fRemoved §3" + amount + " §f⛀ from " + target.getName() + "'s balance.");
+                }
+                if(args[0].equalsIgnoreCase("set")) {
+                    economyManager.setBalance(targetonline, amount);
+
+                    player.sendMessage("§8> §fSet §3" + target.getName() + " §f's balance to §3" + amount + " §f⛀.");
+                }
+                return true;
+            }
+
             int amount = Integer.parseInt(args[2]);
             if(args[0].equalsIgnoreCase("add")) {
                 economyManager.addBalance(target, amount);

@@ -8,7 +8,7 @@ public class ServerEvents implements Listener {
 
     @EventHandler
     public void onServerListPing(ServerListPingEvent event) {
-        event.setMotd("§3§lNAAMUNKWOWN SMP §8- §fCurrently in development! §oReleasing soon \n" +
+        event.setMotd("§3§lOrigami SMP §8- §fCurrently in development! §oReleasing soon \n" +
                 "§8> §7§oTwitch.tv/thomseh");
     }
 }
