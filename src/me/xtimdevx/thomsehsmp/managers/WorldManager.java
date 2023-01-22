@@ -1,14 +1,16 @@
 package me.xtimdevx.thomsehsmp.managers;
-
 import me.xtimdevx.thomsehsmp.Settings;
 import me.xtimdevx.thomsehsmp.utils.FileUtils;
 import me.xtimdevx.thomsehsmp.utils.LocationUtils;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 
 import java.util.Set;
 
-public class WorldManager {
+public class WorldManager implements Listener {
 
     private Settings settings = Settings.getInstance();
     private static WorldManager instance = new WorldManager();
@@ -107,4 +109,5 @@ public class WorldManager {
     public void unloadWorld(World world) {
         Bukkit.getServer().unloadWorld(world, false);
     }
+
 }

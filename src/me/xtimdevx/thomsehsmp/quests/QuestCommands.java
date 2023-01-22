@@ -38,27 +38,27 @@ public class QuestCommands implements CommandExecutor {
                     if (QuestManager.TimberRequest16LOG.contains(player.getUniqueId())) {
                         ongoing.add(player.getName());
                         int taskID = -1;
-                        manager.sendNPCMessage(QuestManager.NPCS.AARON, player, "Yes?! That's great to hear!");
+                        manager.sendNPCMessage(QuestManager.NPCS.AARON, player, "Ja?! Dat hoor ik graag!");
                         taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                             @Override
                             public void run() {
-                                manager.sendNPCMessage(QuestManager.NPCS.AARON, player, "Your first task will be very easy, here it comes:");
+                                manager.sendNPCMessage(QuestManager.NPCS.AARON, player, "Je eerste taak zal zeer eenvoudig zijn:");
                                 player.sendMessage("§8> §3§lTask Recieved:");
-                                player.sendMessage("§8> §fGather 16 Logs and deliver them back to me.");
+                                player.sendMessage("§8> §fVerzamel 16 logs en breng ze terug naar aaron.");
                             }
                         }, 50);
 
                         taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                             @Override
                             public void run() {
-                                manager.sendNPCMessage(QuestManager.NPCS.AARON, player, "There you go, by the way don't forget you can always use §3§l/quest §fto look your tasks.");
+                            manager.sendNPCMessage(QuestManager.NPCS.AARON, player, "Dat is het! Oh en vergeet niet dat je §3§l/quest §fkan doen om je actieve tasks te bekijken.");
                             }
                         }, 100);
 
                         taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                             @Override
                             public void run() {
-                                manager.sendNPCMessage(QuestManager.NPCS.AARON, player, "Alright good luck and don't forget to have a little fun!");
+                                manager.sendNPCMessage(QuestManager.NPCS.AARON, player, "Oke veel success en dan zie ik je snel weer!");
                             }
                         }, 150);
 
@@ -68,14 +68,14 @@ public class QuestCommands implements CommandExecutor {
                                 User user = User.get(player);
                                 player.sendMessage("§8§m----------------------------------------------------");
                                 MessageUtils.sendCenteredMessage(player, "§3§lQuest Started!");
-                                MessageUtils.sendCenteredMessage(player, "§fAaron the lumberjack ");
+                                MessageUtils.sendCenteredMessage(player, "§fAaron De Houthakker ");
                                 player.sendMessage(" ");
-                                MessageUtils.sendCenteredMessage(player, "§fChapter §31§8/§33");
-                                MessageUtils.sendCenteredMessage(player, "§fGather 16 logs and bring them to Aaron.");
+                                MessageUtils.sendCenteredMessage(player, "§fHoofdstuk §31§8/§33");
+                                MessageUtils.sendCenteredMessage(player, "§fVerzamel 16 logs en breng ze naar Aaron.");
                                 player.sendMessage(" ");
-                                MessageUtils.sendCenteredMessage(player, "§fUse §3/quest §fto look at your tasks.");
+                                MessageUtils.sendCenteredMessage(player, "§fGebruik §3§o/quest §fom je actieve tasks te bekijken.");
                                 player.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-                                player.sendTitle("§3§lQuest Started", "§fChapter 1!");
+                                player.sendTitle("§3§lHoofdstuk 1", "§fHet Magische Hout");
                                 player.sendMessage("§8§m----------------------------------------------------");
 
                                 user.getFile().set("quest.TIMBER.started", true);
@@ -99,7 +99,7 @@ public class QuestCommands implements CommandExecutor {
                         taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                             @Override
                             public void run() {
-                                manager.sendNPCMessage(QuestManager.NPCS.AARON, player, "De man die je zoekt heet Baldemar de smid, je vind hem in een dorpje ten noorden van ons.");
+                                manager.sendNPCMessage(QuestManager.NPCS.AARON, player, "De man die je zoekt heet Baldemar De Smid, je vind hem in de blacksmith ten zuiden van ons.");
                             }
                         }, 50L);
                         taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
@@ -124,15 +124,15 @@ public class QuestCommands implements CommandExecutor {
                                 User user = User.get(player);
                                 player.sendMessage("§8§m----------------------------------------------------");
                                 MessageUtils.sendCenteredMessage(player, "§3§lQuest Updated!");
-                                MessageUtils.sendCenteredMessage(player, "§fAaron de Blacksmith");
+                                MessageUtils.sendCenteredMessage(player, "§fAaron De Houthakker");
                                 player.sendMessage(" ");
-                                MessageUtils.sendCenteredMessage(player, "§fChapter §32§8/§33");
+                                MessageUtils.sendCenteredMessage(player, "§fHoofdstuk §32§8/§33");
                                 MessageUtils.sendCenteredMessage(player, "§fVerzamel 4 Diamonds, 2 Sticks en een bookshelf");
-                                MessageUtils.sendCenteredMessage(player, "§fen breng deze naar Baldemar de Smid");
+                                MessageUtils.sendCenteredMessage(player, "§fen breng deze naar Baldemar De Smid");
                                 player.sendMessage(" ");
-                                MessageUtils.sendCenteredMessage(player, "§fGebruik §3/quest §fom naar je tasks te kijken.");
+                                MessageUtils.sendCenteredMessage(player, "§fGebruik §3/quest §fom je actieve tasks te bekijken.");
                                 player.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-                                player.sendTitle("§3§lQuest Updated", "§fChapter 2!");
+                                player.sendTitle("§3§lHoofdstuk 2", "§fBaldemar De Smid!");
                                 player.sendMessage("§8§m----------------------------------------------------");
 
                                 user.getFile().set("quest.TIMBER.TIMBER_DIAMONDAXE.active", true);
@@ -172,14 +172,14 @@ public class QuestCommands implements CommandExecutor {
                                 User user = User.get(player);
                                 player.sendMessage("§8§m----------------------------------------------------");
                                 MessageUtils.sendCenteredMessage(player, "§3§lQuest Updated!");
-                                MessageUtils.sendCenteredMessage(player, "§fAaron the lumberjack ");
+                                MessageUtils.sendCenteredMessage(player, "§fAaron De Houthakker ");
                                 player.sendMessage(" ");
-                                MessageUtils.sendCenteredMessage(player, "§fChapter §33§8/§33");
+                                MessageUtils.sendCenteredMessage(player, "§fHoofdstuk §33§8/§33");
                                 MessageUtils.sendCenteredMessage(player, "§fVerzamel een jungle, accacia en spruce sappling");
                                 player.sendMessage(" ");
-                                MessageUtils.sendCenteredMessage(player, "§fGebruik §3/quest §fom naar je tasks te kijken.");
+                                MessageUtils.sendCenteredMessage(player, "§fGebruik §3/quest §fom je actieve tasks te bekijken.");
                                 player.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-                                player.sendTitle("§3§lQuest Updated", "§fChapter 3!");
+                                player.sendTitle("§3§lHoofdstuk 3", "§f3 Verschillende Bossen");
                                 player.sendMessage("§8§m----------------------------------------------------");
 
                                 user.getFile().set("quest.TIMBER.TIMBER_3SAPLING.active", true);
@@ -203,21 +203,21 @@ public class QuestCommands implements CommandExecutor {
                         return true;
                     } else {
                         ongoing.add(player.getName());
-                        manager.sendNPCMessage(QuestManager.NPCS.AARON, player, "That's a shame, if you change your mind you know where to find me.");
+                        manager.sendNPCMessage(QuestManager.NPCS.AARON, player, "Dat is jammer, als je je bedenkt kom dan zeker terug.");
 
                         int taskID = -1;
 
                         taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                             @Override
                             public void run() {
-                                manager.sendNPCMessage(QuestManager.NPCS.AARON, player, "Goodbye traveler.");
+                                manager.sendNPCMessage(QuestManager.NPCS.AARON, player, "Tot nog eens reiziger.");
                             }
                         }, 40);
 
                         taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                             @Override
                             public void run() {
-                                player.sendMessage("§8> §fYou denied Aaron's quest.");
+                                player.sendMessage("§8> §fJe hebt Aaron zijn request afgewezen.");
                             }
                         }, 80);
                         QuestManager.NPCTalking.remove(player.getName());

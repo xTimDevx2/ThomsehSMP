@@ -2,6 +2,7 @@ package me.xtimdevx.thomsehsmp.npc;
 
 import me.xtimdevx.thomsehsmp.Main;
 import me.xtimdevx.thomsehsmp.User;
+import me.xtimdevx.thomsehsmp.managers.EconomyManager;
 import me.xtimdevx.thomsehsmp.quests.QuestManager;
 import me.xtimdevx.thomsehsmp.utils.MessageUtils;
 import net.citizensnpcs.api.event.NPCClickEvent;
@@ -59,6 +60,8 @@ public class AaronTrait extends Trait {
 
     // An example event handler. All traits will be registered automatically as
     // Bukkit Listeners.
+
+    EconomyManager economyManager = new EconomyManager();
     @EventHandler
     public void click(NPCRightClickEvent event) {
         if (event.getNPC() == this.getNPC()) {
@@ -155,19 +158,27 @@ public class AaronTrait extends Trait {
                             public void run() {
                                 player.sendMessage("§8§m----------------------------------------------------");
                                 MessageUtils.sendCenteredMessage(player, "§3§lQuestLine Afgerond!");
-                                MessageUtils.sendCenteredMessage(player, "§fAaron the lumberjack ");
+                                MessageUtils.sendCenteredMessage(player, "§fAaron de houdhakker ");
                                 player.sendMessage(" ");
-                                MessageUtils.sendCenteredMessage(player, "§fChapter §33§8/§33");
+                                MessageUtils.sendCenteredMessage(player, "§fHoofdstuk §33§8/§33");
                                 MessageUtils.sendCenteredMessage(player, "§fVerzamel de saplings die Aaron nodig heeft..");
                                 player.sendMessage(" ");
                                 MessageUtils.sendCenteredMessage(player, "§fDit was voorlopig de laatste quest voor aaron.");
                                 player.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-                                player.sendTitle("§3§lQuest Afgerond", "§fChapter 3!");
+                                player.sendTitle("§3§lQuest Afgerond", "§fHet magische bos van Aaron!");
                                 player.sendMessage("§8§m----------------------------------------------------");
+                                player.sendMessage("§7§o§lReward");
+                                player.sendMessage("§7§o- Aaron staat bij je in het krijt");
+                                player.sendMessage("§7§o- 1000 ⛀");
+                                player.sendMessage("§7§o- 10 EXP levels");
+                                player.sendMessage("§8§m----------------------------------------------------");
+                                player.sendMessage("§7§oAaron will remember that...");
                                 user.getFile().set("quest.TIMBER.TIMBER_3SAPLING.completed", true);
                                 user.getFile().set("quest.TIMBER.TIMBER_3SAPLING.active", false);
                                 user.getFile().set("quest.TIMBER.completed", true);
                                 user.saveFile();
+                                economyManager.addBalance(player, 1000);
+                                player.giveExpLevels(10);
                             }
                         }, 200);
                         return;
@@ -176,14 +187,14 @@ public class AaronTrait extends Trait {
 
                 if(manager.isQuestActive(QuestManager.QuestLines.TIMBER, QuestManager.Quests.TIMBER_DIAMONDAXE, event.getClicker())) {
                     if(user.getFile().getInt("quest.TIMBER.TIMBER_DIAMONDAXE.stage") == 1) {
-                        manager.sendNPCMessage(QuestManager.NPCS.AARON, player, "Breng 4 diamonds, 2 sticks en een bookshelf naar baldemar op -65, 85, -117 en zeg dat ik je gestuurd heb.");
+                        manager.sendNPCMessage(QuestManager.NPCS.AARON, player, "Breng 4 diamonds, 2 sticks en een bookshelf naar Baldemar op -65, 85, -117 en zeg dat ik je gestuurd heb.");
                         return;
                     }
                     if(user.getFile().getInt("quest.TIMBER.TIMBER_DIAMONDAXE.stage") == 2) {
                         ItemStack item = player.getItemInHand();
 
                         if(item.getItemMeta() != null && item.getItemMeta().getDisplayName().equalsIgnoreCase("§cHeatwaker")) {
-                            manager.sendNPCMessage(QuestManager.NPCS.AARON, player, "Zo te zien heb je baldemar gevonden en heb je Heatwaker te pakken weten te krijgen.");
+                            manager.sendNPCMessage(QuestManager.NPCS.AARON, player, "Zo te zien heb je Baldemar gevonden en heb je Heatwaker te pakken weten te krijgen.");
 
                             int taskID = -1;
 
@@ -206,14 +217,19 @@ public class AaronTrait extends Trait {
                                 public void run() {
                                     player.sendMessage("§8§m----------------------------------------------------");
                                     MessageUtils.sendCenteredMessage(player, "§3§lQuest Afgerond!");
-                                    MessageUtils.sendCenteredMessage(player, "§fAaron the lumberjack ");
+                                    MessageUtils.sendCenteredMessage(player, "§fAaron de houthakker ");
                                     player.sendMessage(" ");
-                                    MessageUtils.sendCenteredMessage(player, "§fChapter §32§8/§33");
+                                    MessageUtils.sendCenteredMessage(player, "§fHoofdstuk §32§8/§33");
                                     MessageUtils.sendCenteredMessage(player, "§fVerkrijg de Heatwaker bijl van Baldemar de smid.");
                                     player.sendMessage(" ");
                                     MessageUtils.sendCenteredMessage(player, "§fPraat opnieuw met Aaron voor je laatste quest.");
                                     player.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-                                    player.sendTitle("§3§lQuest Afgerond", "§fChapter 2!");
+                                    player.sendTitle("§3§lHoofdstuk Afgerond", "§fVolgende: Praat met Aaron");
+                                    player.sendMessage("§8§m----------------------------------------------------");
+                                    player.sendMessage("§7§o§lReward");
+                                    player.sendMessage("§7§o- §cHeatwaker");
+                                    player.sendMessage("§7§o- 200 ⛀");
+                                    player.sendMessage("§7§o- 5 XP levels");
                                     player.sendMessage("§8§m----------------------------------------------------");
                                     user.getFile().set("quest.TIMBER.TIMBER_DIAMONDAXE.completed", true);
                                     user.getFile().set("quest.TIMBER.TIMBER_DIAMONDAXE.active", false);
@@ -221,6 +237,9 @@ public class AaronTrait extends Trait {
                                     user.getFile().set("quest.TIMBER.TIMBER_3SAPLING.completed", false);
                                     user.getFile().set("quest.TIMBER.TIMBER_DIAMONDAXE.stage", 1);
                                     user.saveFile();
+
+                                    economyManager.addBalance(player, 200);
+                                    player.giveExpLevels(5);
                                 }
                             }, 150);
                             return;

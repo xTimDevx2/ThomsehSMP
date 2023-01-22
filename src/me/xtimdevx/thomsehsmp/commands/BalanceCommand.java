@@ -16,9 +16,16 @@ public class BalanceCommand implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Player player = (Player) sender;
+        User puser = User.get(player);
+
 
         if(args.length == 0) {
-            player.sendMessage("§8> §fYour Balance: §3" + economyManager.getBalance(player) + " §f⛀");
+            if (puser.getLanguage().equalsIgnoreCase("ENGLISH")) {
+                player.sendMessage("§8> §fYour Balance: §3" + economyManager.getBalance(player) + " §f⛀");
+            }
+            if (puser.getLanguage().equalsIgnoreCase("DUTCH")) {
+                player.sendMessage("§8> §fJouw Balance: §3" + economyManager.getBalance(player) + " §f⛀");
+            }
             return true;
         }
 
@@ -28,7 +35,12 @@ public class BalanceCommand implements CommandExecutor {
             User user = User.get(target);
 
             if(user == null) {
-                player.sendMessage("§cThis player has not joined our server before.");
+                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
+                    player.sendMessage("§cThis player is not known to us yet.");
+                }
+                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
+                    player.sendMessage("§cDeze speler is ons niet bekend.");
+                }
                 return true;
             }
 

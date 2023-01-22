@@ -29,19 +29,46 @@ public class SetRankCommand implements CommandExecutor, TabCompleter {
 
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        Player player = (Player) sender;
-        if (!player.hasPermission("smp.commands.setrank")) {
-            player.sendMessage(MessageUtils.NOPERM);
+        if (!sender.hasPermission("smp.commands.setrank")) {
+            sender.sendMessage(MessageUtils.NOPERM);
             return true;
         }
         if (args.length < 2) {
-            player.sendMessage("§cMissing arguments: /setrank <player> <rank>");
+            sender.sendMessage("§cMissing arguments: /setrank <player> <rank> <-s>");
             return true;
+        }
+        if(args.length == 3) {
+            if(args[2].equalsIgnoreCase("-s")) {
+                Group group = PermsUtils.getInstance().getGroup(args[1]);
+
+                if (group == null) {
+                    sender.sendMessage("§cERROR: This group does not excist.");
+                    return true;
+                }
+
+
+                Player target = Bukkit.getPlayer(args[0]);
+
+                if (target == null) {
+                    sender.sendMessage("§cERROR: This sender is not online.");
+                    return true;
+                }
+
+                PermsUtils.getInstance().setGroup(target, args[1]);
+
+                Bukkit.getScheduler().runTaskLater(Main.plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        ScoreboardManager.updateScoreBoard(target);
+                    }
+                }, 20);
+                return true;
+            }
         }
         Group group = PermsUtils.getInstance().getGroup(args[1]);
 
         if (group == null) {
-            player.sendMessage("§cERROR: This group does not excist.");
+            sender.sendMessage("§cERROR: This group does not excist.");
             return true;
         }
 
@@ -49,7 +76,7 @@ public class SetRankCommand implements CommandExecutor, TabCompleter {
         Player target = Bukkit.getPlayer(args[0]);
 
         if (target == null) {
-            player.sendMessage("§cERROR: This player is not online.");
+            sender.sendMessage("§cERROR: This sender is not online.");
             return true;
         }
 
@@ -59,7 +86,7 @@ public class SetRankCommand implements CommandExecutor, TabCompleter {
         Bukkit.broadcastMessage("§8§m----------------------------------------------------");
         MessageUtils.broadcastCenteredMessage("§3§lRank set!");
         Bukkit.broadcastMessage(" ");
-        MessageUtils.broadcastCenteredMessage("§3" + args[0] + " §frecieved the rank:");
+        MessageUtils.broadcastCenteredMessage("§fPlayer §3§o" + args[0] + "");
         MessageUtils.broadcastCenteredMessage("§3§l" + args[1]);
         Bukkit.broadcastMessage("§8§m----------------------------------------------------");
 
@@ -87,6 +114,7 @@ public class SetRankCommand implements CommandExecutor, TabCompleter {
                 commands.add("Developer");
                 commands.add("Mod");
                 commands.add("Builder");
+                commands.add("Twitch");
                 commands.add("Emerald");
                 commands.add("Diamond");
                 commands.add("Gold");

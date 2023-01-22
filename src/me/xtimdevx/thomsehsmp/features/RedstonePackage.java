@@ -1,5 +1,6 @@
 package me.xtimdevx.thomsehsmp.features;
 
+import me.xtimdevx.thomsehsmp.User;
 import me.xtimdevx.thomsehsmp.utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -23,6 +24,7 @@ public class RedstonePackage implements Listener {
     @EventHandler
     public void onClick(PlayerInteractEvent event) {
         Player player = (Player) event.getPlayer();
+        User user = User.get(player);
 
         ItemStack cheque = player.getItemInHand();
 
@@ -39,7 +41,12 @@ public class RedstonePackage implements Listener {
                     cheque.setAmount(cheque.getAmount() - 1);
                 }
                 giveRedstonePackage(player);
-                player.sendMessage("§8> §fYou recieved the §cRedstone §fpackage!");
+                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
+                    player.sendMessage("§8> §fYou recieved the §cRedstone §fpackage!");
+                }
+                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
+                    player.sendMessage("§8> §fJe hebt de §cRedstone §fpackage gekregen!");
+                }
 
 
                 return;

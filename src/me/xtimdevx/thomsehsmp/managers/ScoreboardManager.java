@@ -2,6 +2,7 @@ package me.xtimdevx.thomsehsmp.managers;
 
 import me.xtimdevx.thomsehsmp.Main;
 import me.xtimdevx.thomsehsmp.User;
+import me.xtimdevx.thomsehsmp.utils.MessageUtils;
 import me.xtimdevx.thomsehsmp.utils.PermsUtils;
 import net.luckperms.api.model.group.Group;
 import org.bukkit.Bukkit;
@@ -41,9 +42,9 @@ public class ScoreboardManager {
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
         Objective obj = scoreboard.registerNewObjective("MainBoard", "dummy");
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
-        obj.setDisplayName("§3§lOrigami SMP");
+        obj.setDisplayName(MessageUtils.format("#01C5CB§lO#00B0B6§lr#009EA3§li#008A8E§lg#00767A§la#006A6D§lm#006366§li §f§lSMP"));
 
-        Score season = obj.getScore("§7§oSeason: 1");
+        Score season = obj.getScore("§7§oSeason: 2   Patch: A-1.2");
         season.setScore(15);
 
         Score line1 = obj.getScore("§f§8§m-----------------");
@@ -77,7 +78,7 @@ public class ScoreboardManager {
         if (Bukkit.getOnlinePlayers().size() == 0) {
             onlineCounter.setPrefix(ChatColor.WHITE + "  0§8/§f" + Bukkit.getMaxPlayers());
         } else {
-            onlineCounter.setPrefix(String.valueOf(ChatColor.WHITE) + "  " + Bukkit.getOnlinePlayers().size() + "§8/§f" + Bukkit.getMaxPlayers());
+            onlineCounter.setPrefix(ChatColor.WHITE + "  " + Bukkit.getOnlinePlayers().size() + "§8/§f" + Bukkit.getMaxPlayers());
         }
         obj.getScore(ChatColor.BLACK + "" + ChatColor.WHITE + "").setScore(1);
 
@@ -182,7 +183,7 @@ public class ScoreboardManager {
                 if(Bukkit.getOnlinePlayers().size() == 0) {
                     scoreboard.getTeam("onlineCounter").setPrefix(ChatColor.WHITE + "  0§8/§f" + Bukkit.getMaxPlayers());
                 }else {
-                    scoreboard.getTeam("onlineCounter").setPrefix(String.valueOf(ChatColor.WHITE) + "  " + Bukkit.getOnlinePlayers().size() + "§8/§f" + Bukkit.getMaxPlayers());
+                    scoreboard.getTeam("onlineCounter").setPrefix(ChatColor.WHITE + "  " + Bukkit.getOnlinePlayers().size() + "§8/§f" + Bukkit.getMaxPlayers());
                 }
 
                 scoreboard.getTeam("playerRank").setPrefix("  " + rankName(player));

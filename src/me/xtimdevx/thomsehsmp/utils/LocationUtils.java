@@ -10,7 +10,8 @@ import java.util.Random;
 
 public class LocationUtils {
 
-    public static Location spawn = new Location(Bukkit.getWorld("world"), -62.5, 85, -108.5);
+    public static Location spawn = new Location(Bukkit.getWorld("SMP"), 86.5, 69, -119.5);
+    public static Location crates = new Location(Bukkit.getWorld("SMP"), 35.5, 68, -110.5);
 
     private static BlockFace[] faces = new BlockFace[] { BlockFace.SELF, BlockFace.EAST, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH_EAST, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST, BlockFace.NORTH_WEST};
 

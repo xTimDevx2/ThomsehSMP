@@ -84,12 +84,11 @@ public class User {
             config.set("bans", 0);
 
             Main.home.clear();
-            Main.home.add("Home");
 
             config.set("home.home.x", -62.5);
             config.set("home.home.y", 85);
             config.set("home.home.z", -108.5);
-            config.set("home.home.world", "world");
+            config.set("home.home.world", "SMP");
             config.set("home.home.pitch", 0);
             config.set("home.home.yaw", 0);
 
@@ -97,6 +96,11 @@ public class User {
             config.set("tparequest", "none");
 
             config.set("balance", 100);
+
+            config.set("builder", false);
+            config.set("staff", false);
+
+            config.set("language", "ENGLISH");
 
 
             config.set("quest.TIMBER.started", false);
@@ -236,6 +240,18 @@ public class User {
 
     public void setPPS(int score) {
         config.set("PPS", score);
+        saveFile();
+    }
+
+    public String getLanguage() {
+        return config.getString("language");
+    }
+
+    public enum Languages {
+        DUTCH, ENGLISH
+    }
+    public void setLanguage(Languages language) {
+        config.set("language", language.toString());
         saveFile();
     }
 }

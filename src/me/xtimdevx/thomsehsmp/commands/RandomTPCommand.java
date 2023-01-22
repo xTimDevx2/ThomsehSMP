@@ -1,6 +1,7 @@
 package me.xtimdevx.thomsehsmp.commands;
 
 import me.xtimdevx.thomsehsmp.Main;
+import me.xtimdevx.thomsehsmp.User;
 import me.xtimdevx.thomsehsmp.managers.CooldownManager;
 import me.xtimdevx.thomsehsmp.utils.LocationUtils;
 import me.xtimdevx.thomsehsmp.utils.MessageUtils;
@@ -21,22 +22,53 @@ public class RandomTPCommand implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Player player = (Player) sender;
+        User user = User.get(player);
 
 
-        if(!player.getWorld().getName().equalsIgnoreCase("world")) {
+        if(!player.getWorld().getName().equalsIgnoreCase("SMP")) {
             player.sendMessage("§cERROR: You can only use this in the overworld.");
             return true;
         }
         int timeLeft = cooldownManager.getCooldown(player.getUniqueId());
 
         if(timeLeft == 0){
-            List<Location> loc = LocationUtils.getScatterLocations(Bukkit.getWorld("world"), 100);
+            List<Location> loc = LocationUtils.getScatterLocations(Bukkit.getWorld("SMP"), 1500);
             Location rtp = loc.get(0);
-            player.sendMessage("§8§m----------------------------------------------------");
-            MessageUtils.sendCenteredMessage(player, "§3§lSending you to a random location....");
-            MessageUtils.sendCenteredMessage(player, "§fX: " + rtp.getBlockX() + " Y: " + rtp.getBlockY() + " Z: " + rtp.getBlockZ());
-            MessageUtils.sendCenteredMessage(player, "§fBiome: §3" + NameUtils.getBiomeName(player.getWorld().getBiome(rtp)));
-            player.sendMessage("§8§m----------------------------------------------------");
+
+
+            Location location = player.getLocation();
+
+            double bx = location.getX();
+            double by = location.getY();
+            double bz = location.getZ();
+            float bPitch = location.getPitch();
+            float bYaw = location.getYaw();
+            String bWorld = location.getWorld().getName();
+
+            user.getFile().set("back.x", bx);
+            user.getFile().set("back.y", by);
+            user.getFile().set("back.z", bz);
+            user.getFile().set("back.pitch", bPitch);
+            user.getFile().set("back.yaw", bYaw);
+            user.getFile().set("back.world", bWorld);
+            user.saveFile();
+
+
+            if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
+                player.sendMessage("§8§m----------------------------------------------------");
+                MessageUtils.sendCenteredMessage(player, "§3§lWe are sending you to a random location....");
+                MessageUtils.sendCenteredMessage(player, "§fX: " + rtp.getBlockX() + " Y: " + rtp.getBlockY() + " Z: " + rtp.getBlockZ());
+                MessageUtils.sendCenteredMessage(player, "§fBiome: §3§o" + NameUtils.getBiomeName(player.getWorld().getBiome(rtp)));
+                player.sendMessage("§8§m----------------------------------------------------");
+            }
+            if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
+                player.sendMessage("§8§m----------------------------------------------------");
+                MessageUtils.sendCenteredMessage(player, "§3§lWe sturen je naar een willekeurige locatie....");
+                MessageUtils.sendCenteredMessage(player, "§fX: " + rtp.getBlockX() + " Y: " + rtp.getBlockY() + " Z: " + rtp.getBlockZ());
+                MessageUtils.sendCenteredMessage(player, "§fBiome: §3§o" + NameUtils.getBiomeName(player.getWorld().getBiome(rtp)));
+                player.sendMessage("§8§m----------------------------------------------------");
+            }
+
             player.teleport(rtp);
 
             cooldownManager.setCooldown(player.getUniqueId(), CooldownManager.RANDOMTP);
@@ -53,7 +85,12 @@ public class RandomTPCommand implements CommandExecutor {
 
         }else{
             //Hasn't expired yet, shows how many seconds left until it does
-            player.sendMessage("§8> §3"+  timeLeft + " §fseconds before you can use random teleport again.");
+            if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
+                player.sendMessage("§8> §fWait §3"+  timeLeft + " §fseconds before using random teleport again.");
+            }
+            if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
+                player.sendMessage("§8> §fWacht nog §3"+  timeLeft + " §fseconden voor je opnieuw random teleport kan gebruiken.");
+            }
         }
 
         return true;

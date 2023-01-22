@@ -3,6 +3,7 @@ package me.xtimdevx.thomsehsmp.events;
 import me.xtimdevx.thomsehsmp.User;
 import me.xtimdevx.thomsehsmp.utils.DateUtils;
 import me.xtimdevx.thomsehsmp.utils.MessageUtils;
+import me.xtimdevx.thomsehsmp.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -29,12 +30,27 @@ public class ChatEvent implements Listener{
             Date date = new Date();
             event.setCancelled(true);
             if (userM.getUnmuteTime() == -1 || userM.getUnmuteTime() > date.getTime()) {
-                player.sendMessage(MessageUtils.GARY + "Je bent gemute voor§8: §c" + userM.getMutedReason());
+                if (userM.getLanguage().equalsIgnoreCase("ENGLISH")) {
+                    player.sendMessage(MessageUtils.GARY + "You have been muted for§8: §c" + userM.getMutedReason());
+                }
+                if (userM.getLanguage().equalsIgnoreCase("DUTCH")) {
+                    player.sendMessage(MessageUtils.GARY + "Je bent gemute voor§8: §c" + userM.getMutedReason());
+                }
 
                 if (userM.getUnmuteTime() < 0) {
-                    player.sendMessage("§8> §fJe mute is permanent.");
+                    if (userM.getLanguage().equalsIgnoreCase("ENGLISH")) {
+                        player.sendMessage("§8> §fYour mute is permanent.");
+                    }
+                    if (userM.getLanguage().equalsIgnoreCase("DUTCH")) {
+                        player.sendMessage("§8> §fJe mute is permanent.");
+                    }
                 } else {
-                    player.sendMessage("§8> §fJe mute verloopt in: §c" + DateUtils.formatDateDiff(userM.getUnmuteTime()));
+                    if (userM.getLanguage().equalsIgnoreCase("ENGLISH")) {
+                        player.sendMessage("§8> §fYour mute expires in: §c" + DateUtils.formatDateDiff(userM.getUnmuteTime()));
+                    }
+                    if (userM.getLanguage().equalsIgnoreCase("DUTCH")) {
+                        player.sendMessage("§8> §fJe mute verloopt in: §c" + DateUtils.formatDateDiff(userM.getUnmuteTime()));
+                    }
                 }
                 return;
             } else {
@@ -43,10 +59,10 @@ public class ChatEvent implements Listener{
         }
 
         if(player.isOp()) {
-            Bukkit.broadcastMessage(MessageUtils.returnPrefix(oplayer) + player.getName() + " §8> §f" + event.getMessage().replace("&", "§"));
+            Utils.chat(MessageUtils.returnPrefix(oplayer) + player.getName() + " §8> §f" + event.getMessage().replace("&", "§"));
 
         }else {
-            Bukkit.broadcastMessage(MessageUtils.returnPrefix(oplayer) + player.getName() + " §8> §f" + event.getMessage());
+            Utils.chat(MessageUtils.returnPrefix(oplayer) + player.getName() + " §8> §f" + event.getMessage());
 
         }
     }

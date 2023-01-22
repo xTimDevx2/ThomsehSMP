@@ -1,9 +1,9 @@
 name: ThomsehSMP
-version: B-0.1
+version: A-0.1
 main: me.xtimdevx.thomsehsmp.Main
 description: SMP plugin voor twitch streamer Thomseh
 author: xTimDevx
-softdepend: [LuckPerms, Citizens]
+depend: [LuckPerms, Citizens, DiscordBotAPI]
 api-version: 1.13
 
 commands:
@@ -52,4 +52,60 @@ commands:
   mute:
     usage: /<command>
   world:
+    usage: /<command>
+  back:
+    usage: /<command>
+  shout:
+    usage: /<command>
+  withdraw:
+    usage: /<command>
+  donateannounce:
+    usage: /<command>
+  heal:
+    usage: /<command>
+  craft:
+    usage: /<command>
+  crates:
+    usage: /<command>
+  help:
+    usage: /<command>
+    aliases: [?]
+  helpop:
+    usage: /<command>
+  createhologram:
+    usage: /<command>
+  twitch:
+    usage: /<command>
+  discord:
+    usage: /<command>
+  test:
+    usage: /<command>
+  builder:
+    usage: /<command>
+  rules:
+    usage: /<command>
+    aliases: [regels]
+  giveaway:
+    usage: /<command>
+  msg:
+    usage: /<command>
+  reply:
+    usage: /<command>
+    aliases: [r]
+  language:
+    usage: /<command>
+    aliases: [lang]
+  maintenance:
+    usage: /<command>
+  duel:
+    usage: /<command>
+  checkhomes:
+    usage: /<command>
+  amulet:
+    usage: /<command>
+  atp:
+    usage: /<command>
+  afk:
+    usage: /<command>
+  stats:
     usage: /<command>

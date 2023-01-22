@@ -20,8 +20,13 @@ public class DelhomeCommand implements CommandExecutor {
             Player player = (Player) sender;
             User user = User.get(player);
 
-            if(user.getFile().get("home." + name) == null) {
-                player.sendMessage("§cError: Deze home bestaat niet.");
+            if (user.getFile().getStringList("homelist").stream().noneMatch(name::equalsIgnoreCase)) {
+                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
+                    player.sendMessage("§cError: This home does not excist.");
+                }
+                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
+                    player.sendMessage("§cError: Deze home bestaat niet.");
+                }
                 return true;
             }
 
@@ -34,7 +39,12 @@ public class DelhomeCommand implements CommandExecutor {
             user.getFile().set("homelist", Main.home);
             user.saveFile();
 
-            player.sendMessage("§8» §fJe hebt je home verwijdert. §7§o(Naam: " + name + ")");
+            if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
+                player.sendMessage("§8> §fYou deleted your home. §7§o(Naam: " + name + ")");
+            }
+            if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
+                player.sendMessage("§8> §fJe hebt je home verwijdert. §7§o(Naam: " + name + ")");
+            }
         }
         return true;
     }

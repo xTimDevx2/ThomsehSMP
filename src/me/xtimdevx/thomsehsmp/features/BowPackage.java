@@ -1,5 +1,6 @@
 package me.xtimdevx.thomsehsmp.features;
 
+import me.xtimdevx.thomsehsmp.User;
 import me.xtimdevx.thomsehsmp.utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -11,7 +12,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class BowPackage implements Listener {
+public class  BowPackage implements Listener {
 
     Utils utils = new Utils();
 
@@ -28,11 +29,12 @@ public class BowPackage implements Listener {
     @EventHandler
     public void onClick(PlayerInteractEvent event) {
         Player player = (Player) event.getPlayer();
+        User user = User.get(player);
 
         ItemStack cheque = player.getItemInHand();
 
         if(cheque.getType() == Material.BOW) {
-            if(cheque.getItemMeta().getDisplayName().contains("§8> §3§LBow Package §8<")) {
+            if(cheque.getItemMeta().getDisplayName().contains("§3§lBow Package")) {
 
 
                 if(cheque.getAmount() == 0) {
@@ -41,7 +43,12 @@ public class BowPackage implements Listener {
                     cheque.setAmount(cheque.getAmount() - 1);
                 }
                 giveBowPackage(player);
-                player.sendMessage("§8> §fYou recieved the §2Bow §fpackage!");
+                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
+                    player.sendMessage("§8> §fYou recieved the §2Bow §fpackage!");
+                }
+                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
+                    player.sendMessage("§8> §fJe hebt de §2Bow §fpackage gekregen!");
+                }
 
 
                 return;

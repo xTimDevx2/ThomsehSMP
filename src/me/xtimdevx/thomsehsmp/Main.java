@@ -1,14 +1,17 @@
 package me.xtimdevx.thomsehsmp;
 
+import com.tjplaysnow.discord.object.Bot;
+import com.tjplaysnow.discord.object.CommandSpigotManager;
+import com.tjplaysnow.discord.object.ThreadSpigot;
 import me.xtimdevx.thomsehsmp.commands.*;
 import me.xtimdevx.thomsehsmp.crates.CratesCommands;
 import me.xtimdevx.thomsehsmp.crates.CratesEvents;
 import me.xtimdevx.thomsehsmp.events.*;
-import me.xtimdevx.thomsehsmp.features.BowPackage;
-import me.xtimdevx.thomsehsmp.features.MoneyCheques;
-import me.xtimdevx.thomsehsmp.features.RedstonePackage;
-import me.xtimdevx.thomsehsmp.managers.CooldownManager;
+import me.xtimdevx.thomsehsmp.features.*;
+import me.xtimdevx.thomsehsmp.managers.AFKManager;
 import me.xtimdevx.thomsehsmp.managers.NPCManager;
+import me.xtimdevx.thomsehsmp.managers.TriviaManager;
+import me.xtimdevx.thomsehsmp.managers.WorldManager;
 import me.xtimdevx.thomsehsmp.markets.BlockMarket;
 import me.xtimdevx.thomsehsmp.markets.FishMarket;
 import me.xtimdevx.thomsehsmp.markets.RedstoneMarket;
@@ -16,34 +19,72 @@ import me.xtimdevx.thomsehsmp.markets.ResourceMarket;
 import me.xtimdevx.thomsehsmp.npc.*;
 import me.xtimdevx.thomsehsmp.quests.QuestCommands;
 import me.xtimdevx.thomsehsmp.quests.QuestEvents;
+import me.xtimdevx.thomsehsmp.utils.MovementChecker;
 import net.citizensnpcs.api.CitizensAPI;
-import net.citizensnpcs.api.event.CitizensEnableEvent;
 import net.citizensnpcs.api.trait.TraitInfo;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.luckperms.api.LuckPerms;
-import net.luckperms.api.model.group.Group;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.logging.Level;
 
-public class Main extends JavaPlugin {
+public class Main extends JavaPlugin implements Listener {
 
     public static Plugin plugin;
 
     public static List<String> home = new ArrayList<>();
 
+
+    public static Bot bot;
+    public final String TOKEN = "MTAwNTgzNzQ3ODM5MDkzOTcwOA.GiuGfd.2DKxXtEQSj-db_uHmQ8kfjJDW15GiKZSOOhQzQ";
+
+    public static HashMap<CommandSender, CommandSender> msg = new HashMap<CommandSender, CommandSender>();
+
+    public Bossbar bar;
+
+    private AFKManager afkManager;
+    private TriviaManager triviaManager;
+
+
+
+
     public void onEnable() {
         plugin = this;
         Settings.getInstance().setup();
+        this.afkManager = new AFKManager();
+
+        this.triviaManager = new TriviaManager();
+
+        triviaManager.startTrivia();
+
+
         registerCommands();
         registerListeners();
 
-        home.add("home");
+
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, new MovementChecker(this.afkManager), 0L, 6000L);
+
+
+        bar = new Bossbar(this);
+        bar.createBar();
+
+        if(Bukkit.getOnlinePlayers().size() > 0)
+            for(Player online : Bukkit.getOnlinePlayers())
+                bar.addPlayer(online);
 
 
         CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(AaronTrait.class).withName("aaron"));
@@ -52,6 +93,12 @@ public class Main extends JavaPlugin {
         CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(ResourceMarketTrait.class).withName("resourcemarket"));
         CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(FishMarketTrait.class).withName("fishmarket"));
         CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(BlockMarketTrait.class).withName("blockmarket"));
+        CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(ObiwanTrait.class).withName("obiwan"));
+        CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(AshTrait.class).withName("ash"));
+        CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(FakenaTrait.class).withName("fakena"));
+        CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(FlopTrait.class).withName("flop"));
+        CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(ThomsehTrait.class).withName("thomseh"));
+        CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(OogwayTrait.class).withName("oogway"));
 
         try {
             loadDaily();
@@ -64,6 +111,29 @@ public class Main extends JavaPlugin {
         if (provider != null) {
             LuckPerms api = provider.getProvider();
         }
+
+        bot = new Bot(TOKEN);
+        bot.setBotThread(new ThreadSpigot(plugin));
+        bot.setConsoleCommandManager(new CommandSpigotManager());
+
+
+
+        int taskID = -1;
+
+        taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+            @Override
+            public void run() {
+                EmbedBuilder eb = new EmbedBuilder();
+                eb.setTitle("**OP Log!**", null);
+                eb.setColor(Color.RED);
+                eb.addField("De server is nu online...", "420 errors...",  false);
+                eb.setFooter(Bukkit.getServer().getVersion().toString());
+
+
+                Main.bot.getBot().getTextChannelById("1007970856032542740").sendMessageEmbeds(eb.build()).complete();
+            }
+        }, 100);
+
     }
 
     public void onDisable() {
@@ -72,6 +142,17 @@ public class Main extends JavaPlugin {
         }catch (Exception e) {
             Bukkit.getLogger().log(Level.ALL, "Error while loading daily cooldowns.");
         }
+
+        bar.getBar().removeAll();
+
+        EmbedBuilder eb = new EmbedBuilder();
+        eb.setTitle("**OP Log!**", null);
+        eb.setColor(Color.RED);
+        eb.addField("De server is nu offline...", "69 errors...",  false);
+        eb.setFooter(Bukkit.getServer().getBukkitVersion().toString());
+
+
+        Main.bot.getBot().getTextChannelById("1007970856032542740").sendMessageEmbeds(eb.build()).complete();
     }
 
     public void saveDaily() {
@@ -85,6 +166,7 @@ public class Main extends JavaPlugin {
         for (String key : Settings.getInstance().getData().getConfigurationSection("Db").getKeys(false)) {
             RewardCommand.cooldownsdaily.put(key, Settings.getInstance().getData().getLong("Db." + key));
         }
+
     }
 
     public void registerCommands() {
@@ -108,12 +190,43 @@ public class Main extends JavaPlugin {
         getCommand("tempban").setExecutor(new TempbanCommand());
         getCommand("mute").setExecutor(new MuteCommand());
         getCommand("world").setExecutor(new WorldCommand());
+        getCommand("back").setExecutor(new BackCommand());
+        getCommand("shout").setExecutor(new ShoutCommand());
+        getCommand("withdraw").setExecutor(new WithdrawCommand());
+        getCommand("donateannounce").setExecutor(new DonateAnnounceCommand());
+        getCommand("heal").setExecutor(new HealCommand());
+        getCommand("craft").setExecutor(new CraftCommand());
+        getCommand("crates").setExecutor(new CratesCommand());
+        getCommand("help").setExecutor(new HelpCommand());
+        getCommand("helpop").setExecutor(new HelpopCommand());
+        getCommand("createhologram").setExecutor(new CreateHologramCommand());
+        getCommand("discord").setExecutor(new SocialCommands());
+        getCommand("twitch").setExecutor(new SocialCommands());
+        getCommand("test").setExecutor(new TestCommand());
+        getCommand("builder").setExecutor(new BuilderCommand());
+        getCommand("rules").setExecutor(new RulesCommand());
+        getCommand("giveaway").setExecutor(new GiveawayCommand());
+        getCommand("msg").setExecutor(new MsgCommand());
+        getCommand("reply").setExecutor(new ReplyCommand());
+        getCommand("language").setExecutor(new LanguageCommand());
+        getCommand("maintenance").setExecutor(new MaintenanceCommand());
+        getCommand("duel").setExecutor(new DuelCommand());
+        getCommand("checkhomes").setExecutor(new CheckHomesCommand());
+        getCommand("amulet").setExecutor(new DonatorWand());
+        getCommand("atp").setExecutor(new AdminTeleportCommand());
+        getCommand("afk").setExecutor(new AFKCommand(this.afkManager));
+        getCommand("stats").setExecutor(new StatsCommand());
+
+
 
         //TAB
         getCommand("setrank").setTabCompleter(new SetRankCommand());
+        getCommand("home").setTabCompleter(new HomeCommand());
+        getCommand("maintenance").setTabCompleter(new MaintenanceCommand());
     }
 
     public void registerListeners() {
+        Bukkit.getPluginManager().registerEvents(this, this);
         Bukkit.getPluginManager().registerEvents(new ChatEvent(), this);
         Bukkit.getPluginManager().registerEvents(new ConnectionEvents(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerEvents(), this);
@@ -129,5 +242,17 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new ResourceMarket(), this);
         Bukkit.getPluginManager().registerEvents(new FishMarket(), this);
         Bukkit.getPluginManager().registerEvents(new BlockMarket(), this);
+        Bukkit.getPluginManager().registerEvents(new WorldManager(), this);
+        Bukkit.getPluginManager().registerEvents(new Tutorial(), this);
+        Bukkit.getPluginManager().registerEvents(new AFKListeners(this.afkManager), this);
+        Bukkit.getPluginManager().registerEvents(new TriviaManager(), this);
+
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+        if(!bar.getBar().getPlayers().contains(event.getPlayer())) {
+            bar.addPlayer(event.getPlayer());
+        }
     }
 }

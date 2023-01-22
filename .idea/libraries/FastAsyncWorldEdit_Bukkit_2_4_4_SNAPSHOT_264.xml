@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="FastAsyncWorldEdit-Bukkit-2.4.4-SNAPSHOT-264">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../1.19.2/FastAsyncWorldEdit-Bukkit-2.4.4-SNAPSHOT-264.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../1.19.2/LuckPerms-Bukkit-5.4.41.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../1.19.2/Citizens-2.0.30-b2665.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

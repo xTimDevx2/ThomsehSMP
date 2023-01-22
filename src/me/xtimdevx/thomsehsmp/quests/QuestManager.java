@@ -2,6 +2,7 @@ package me.xtimdevx.thomsehsmp.quests;
 
 import me.xtimdevx.thomsehsmp.Main;
 import me.xtimdevx.thomsehsmp.User;
+import me.xtimdevx.thomsehsmp.managers.EconomyManager;
 import me.xtimdevx.thomsehsmp.utils.MessageUtils;
 import net.md_5.bungee.api.chat.*;
 import org.bukkit.*;
@@ -50,47 +51,47 @@ public class QuestManager {
 
         if(questLines.equals(QuestLines.TIMBER)) {
             NPCTalking.add(player.getName());
-            sendNPCMessage(NPCS.AARON, player, "Hey! I'm lumberjack Aaron.");
+            sendNPCMessage(NPCS.AARON, player, "Hey! Ik ben houthakker Aaron.");
 
             taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                 @Override
                 public void run() {
-                    sendNPCMessage(NPCS.AARON, player, "Trees have been growing like crazy lately.");
+                    sendNPCMessage(NPCS.AARON, player, "De bomen blijven maar groeien de laatste tijd, ze lijken wel betoverd.");
                 }
             }, 50L);
 
             taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                 @Override
                 public void run() {
-                    sendNPCMessage(NPCS.AARON, player, "I could really use some help to get them all down!");
+                    sendNPCMessage(NPCS.AARON, player, "Ik zou je hulp nu echt kunnen gebruiken om ze neer te hakken!");
                 }
             }, 100L);
 
             taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                 @Override
                 public void run() {
-                    sendNPCMessage(NPCS.AARON, player, "I will reward you handsomely.");
+                    sendNPCMessage(NPCS.AARON, player, "Ik zal je er rijkelijk voor belonen.");
                 }
             }, 150L);
             taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                 @Override
                 public void run() {
-                    sendNPCMessage(NPCS.AARON, player, "Do you accept my offer and will you help me?");
+                    sendNPCMessage(NPCS.AARON, player, "Accepteer je mijn voorstel reiziger?");
 
                     TimberRequest16LOG.add(player.getUniqueId());
 
-                    player.sendMessage("§8> §3§lQuest offer! §fAaron the lumberjack requests your help.");
-                    player.sendMessage("§8> §fDo you accept?");
+                    player.sendMessage("§8> §3§lQuest offer! §fAaron de houthakker vraagt om jou hulp.");
+                    player.sendMessage("§8> §fAccepteer je dit??");
                     ComponentBuilder builder2 = new ComponentBuilder("");
-                    builder2.append("§8> §aAccept");
+                    builder2.append("§8> §aAccepteren");
                     builder2.event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/quest accept"));
-                    builder2.event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§aClick here to accept this quest.")}));
+                    builder2.event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§aKlik hier om de quest te accepteren.")}));
                     player.spigot().sendMessage(builder2.create());
 
                     ComponentBuilder builder1 = new ComponentBuilder("");
-                    builder1.append("§8> §cDeny");
+                    builder1.append("§8> §cWeigeren");
                     builder1.event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/quest deny"));
-                    builder1.event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§cClick here to deny this quest.")}));
+                    builder1.event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§cKlik hier om de quest te weigeren.")}));
                     player.spigot().sendMessage(builder1.create());
                 }
             }, 190L);
@@ -99,7 +100,7 @@ public class QuestManager {
     
     public void sendNPCMessage(NPCS npc, Player player, String message) {
         if(npc.equals(NPCS.AARON)) {
-            player.sendMessage("§8(§2§lLumberjack§8) §fAaron §8> §f" + message);
+            player.sendMessage("§8(§2§lHouthakker§8) §fAaron §8> §f" + message);
         }
         if(npc.equals(NPCS.BALDEMAR)) {
             player.sendMessage("§8(§4§lSmid§8) §fBaldemar §8> §f" + message);
@@ -142,7 +143,7 @@ public class QuestManager {
                 taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                     @Override
                     public void run() {
-                        sendNPCMessage(NPCS.AARON, player, "Er is een man in dorpje wat verder in het westen die kan een bijl maken waarmee je alle bomen kan omhakken.");
+                        sendNPCMessage(NPCS.AARON, player, "Er is een man in een blacksmith ten zuiden van ons, die kan een bijl maken waarmee je alle bomen kan omhakken.");
                     }
                 },100L);
                 taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
@@ -226,6 +227,8 @@ public class QuestManager {
         }
     }
 
+    EconomyManager manager = new EconomyManager();
+
     public boolean isQuestActive(QuestLines questLines, Quests quest, Player player) {
         User user = User.get(player);
         if (user.getFile().getBoolean("quest." + questLines + "." + quest + ".active")) {
@@ -267,19 +270,26 @@ public class QuestManager {
 
                     player.sendMessage("§8§m----------------------------------------------------");
                     MessageUtils.sendCenteredMessage(player, "§3§lQuest Completed!");
-                    MessageUtils.sendCenteredMessage(player, "§fAaron the lumberjack ");
+                    MessageUtils.sendCenteredMessage(player, "§fAaron de houthakker ");
                     player.sendMessage(" ");
-                    MessageUtils.sendCenteredMessage(player, "§fChapter §31§8/§33");
-                    MessageUtils.sendCenteredMessage(player, "§fGather 16 logs and bring them to Aaron.");
+                    MessageUtils.sendCenteredMessage(player, "§fHoofdstuk §31§8/§33");
+                    MessageUtils.sendCenteredMessage(player, "§fVerzamel 16 logs en breng ze naar Aaron.");
                     player.sendMessage(" ");
-                    MessageUtils.sendCenteredMessage(player, "§fTalk to Aaron again to recieve your next .");
+                    MessageUtils.sendCenteredMessage(player, "§fPraat opnieuw met Aaron voor je volgende taak.");
                     player.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-                    player.sendTitle("§3§lQuest Completed", "§fChapter 1!");
+                    player.sendTitle("§3§lHoofdstuk afgerond", "§fVolgende: Praat met Aaron");
+                    player.sendMessage("§8§m----------------------------------------------------");
+                    player.sendMessage("§7§o§lReward");
+                    player.sendMessage("§7§o- 100 ⛀");
+                    player.sendMessage("§7§o- 3 EXP levels");
                     player.sendMessage("§8§m----------------------------------------------------");
 
-                    sendNPCMessage(NPCS.AARON, player, "Hey! Thanks for helping me out, come talk to me again soon!");
+                    manager.addBalance(player, 100);
+                    player.giveExpLevels(3);
+
+                    sendNPCMessage(NPCS.AARON, player, "Bedankt voor de hulp! Kom terug met me praten voor je volgende taak.");
                 }else {
-                    sendNPCMessage(NPCS.AARON, player, "You need to return 16 logs of whatever kind to me to complete this quest.");
+                    sendNPCMessage(NPCS.AARON, player, "Je moet 16 logs terug brengen om deze quest te voltooien.");
                 }
             }
         }
@@ -298,7 +308,16 @@ public class QuestManager {
         inv.setItem(9, glass);
         inv.setItem(18, glass);
         inv.setItem(27, glass);
+        inv.setItem(28, glass);
+        inv.setItem(29, glass);
+        inv.setItem(30, glass);
+        inv.setItem(31, glass);
+        inv.setItem(32, glass);
+        inv.setItem(33, glass);
+        inv.setItem(34, glass);
+        inv.setItem(35, glass);
         inv.setItem(36, glass);
+        inv.setItem(44, glass);
         inv.setItem(45, glass);
         inv.setItem(46, glass);
         inv.setItem(47, glass);
@@ -311,20 +330,20 @@ public class QuestManager {
         lore.add(" ");
         lore.add("§8§m-------------------------");
         lore.add("         §3§lTimber");
-        lore.add("§fChapters: §33");
+        lore.add("§fHoofdstukken: §33");
         lore.add(" ");
-        lore.add("§3§oInstructions: ");
-        lore.add("§fTo start of this quest you");
-        lore.add("§fhave to talk to talk to");
-        lore.add("§flumberjack §3Aaron at:");
+        lore.add("§3§oInstructies: ");
+        lore.add("§fOm deze quest te starten moet");
+        lore.add("§fJe met houthakker Aaron");
+        lore.add("§fpraten op coords coördinaten:");
         lore.add("   §f§ox:-33, y:83, z:-133");
         lore.add(" ");
         if(isQuestCompleted(QuestLines.TIMBER, Quests.TIMBER_3SAPLING, player)) {
-            lore.add("§fStatus: §a§lCOMPLETED");
+            lore.add("§fStatus: §a§lCOMPLEET");
             QuestTimberMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, true);
 
         }else {
-            lore.add("§fStatus: " + (user.getFile().getBoolean("quest.TIMBER.started") ? "§a§lONGOING" : "§C§LNOT STARTED")+"");
+            lore.add("§fStatus: " + (user.getFile().getBoolean("quest.TIMBER.started") ? "§a§lLOPEND" : "§C§LNIET GESTART")+"");
         }
         lore.add("§8§m-------------------------");
         lore.add(" ");
@@ -341,17 +360,17 @@ public class QuestManager {
         lore.add(" ");
         lore.add("§8§m-------------------------");
         lore.add("         §3§lTimber");
-        lore.add("§fChapter: §3§l1§f/§3§l3");
+        lore.add("§fHoofdstuk: §3§l1§f/§3§l3");
         lore.add(" ");
         lore.add("§3§oInstructies: ");
         lore.add("§fVerzamel 16 wooden logs");
         lore.add("§fen breng deze terug naar Aaron");
         lore.add(" ");
         if(isQuestCompleted(QuestLines.TIMBER, Quests.TIMBER_16LOGS, player)) {
-            lore.add("§fStatus: §a§lCOMPLETED");
+            lore.add("§fStatus: §a§lCOMPLEET");
             QuestTimber16LOGMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1,true);
         }else {
-            lore.add("§fStatus: " + (user.getFile().getBoolean("quest.TIMBER.TIMBER_16LOGS.active") ? "§a§lONGOING" : "§C§LNOT STARTED")+"");
+            lore.add("§fStatus: " + (user.getFile().getBoolean("quest.TIMBER.TIMBER_16LOGS.active") ? "§a§lLOPEND" : "§C§LNIET GESTART")+"");
         }
         lore.add("§8§m-------------------------");
         lore.add(" ");
@@ -368,17 +387,17 @@ public class QuestManager {
         lore.add(" ");
         lore.add("§8§m-------------------------");
         lore.add("         §3§lTimber");
-        lore.add("§fChapter: §3§l2§f/§3§l3");
+        lore.add("§fHoofdstuk: §3§l2§f/§3§l3");
         lore.add(" ");
         lore.add("§3§oInstructies: ");
         lore.add("§fBreng 4 diamonds, 2 sticks");
         lore.add("§fen 1 bookshelf naar Baldemar de smid");
         lore.add(" ");
         if(isQuestCompleted(QuestLines.TIMBER, Quests.TIMBER_DIAMONDAXE, player)) {
-            lore.add("§fStatus: §a§lCOMPLETED");
+            lore.add("§fStatus: §a§lCOMPLEET");
             QuestTimberDIAAXEMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, true);
         }else {
-            lore.add("§fStatus: " + (user.getFile().getBoolean("quest.TIMBER.TIMBER_DIAMONDAXE.active") ? "§a§lONGOING" : "§C§LNOT STARTED")+"");
+            lore.add("§fStatus: " + (user.getFile().getBoolean("quest.TIMBER.TIMBER_DIAMONDAXE.active") ? "§a§lLOPEND" : "§C§LNIET GESTART")+"");
         }
         lore.add("§8§m-------------------------");
         lore.add(" ");
@@ -395,18 +414,18 @@ public class QuestManager {
         lore.add(" ");
         lore.add("§8§m-------------------------");
         lore.add("         §3§lTimber");
-        lore.add("§fChapter: §3§l3§f/§3§l3");
+        lore.add("§fHOOFDSTUK: §3§l3§f/§3§l3");
         lore.add(" ");
         lore.add("§3§oInstructies: ");
-        lore.add("§fVerzamel een accacia, jungle");
-        lore.add("§fen spruce sappling en breng");
+        lore.add("§fVerzamel een acacia, jungle");
+        lore.add("§fen spruce sapling en breng");
         lore.add("§fdeze naar Aaron.");
         lore.add(" ");
         if(isQuestCompleted(QuestLines.TIMBER, Quests.TIMBER_3SAPLING, player)) {
-            lore.add("§fStatus: §a§lCOMPLETED");
-            QuestSapplings.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 1);
+            lore.add("§fStatus: §a§lCOMPLEET");
+            QuestSapplingsMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, false);
         }else {
-            lore.add("§fStatus: " + (user.getFile().getBoolean("quest.TIMBER.TIMBER_3SAPLING.active") ? "§a§lONGOING" : "§C§LNOT STARTED")+"");
+            lore.add("§fStatus: " + (user.getFile().getBoolean("quest.TIMBER.TIMBER_3SAPLING.active") ? "§a§lLOPEND" : "§C§LNIET GESTART")+"");
         }
         lore.add("§8§m-------------------------");
         lore.add(" ");
@@ -425,12 +444,12 @@ public class QuestManager {
 
     public static void spawnAnvilParticle() {
 
-        Location loc1 = new Location(Bukkit.getWorld("world"), -66, 86.2, -118);
-        Location loc2 = new Location(Bukkit.getWorld("world"), -66.5, 86.2, -118.4);
-        Location loc3 = new Location(Bukkit.getWorld("world"), -66.5, 86.2, -118.1);
-        Location loc4 = new Location(Bukkit.getWorld("world"), -66.2, 86.2, -118.3);
-        Location loc5 = new Location(Bukkit.getWorld("world"), -66.8, 86.2, -118.6);
-        Location loc6 = new Location(Bukkit.getWorld("world"), -66.1, 86.2, -118.9);
+        Location loc1 = new Location(Bukkit.getWorld("SMP"), 37, 68.2, -62);
+        Location loc2 = new Location(Bukkit.getWorld("SMP"), 37.5, 68.2, -62.4);
+        Location loc3 = new Location(Bukkit.getWorld("SMP"), 37.5, 68.2, -62.1);
+        Location loc4 = new Location(Bukkit.getWorld("SMP"), 37.2, 68.2, -62.3);
+        Location loc5 = new Location(Bukkit.getWorld("SMP"), 37.8, 68.2, -62.6);
+        Location loc6 = new Location(Bukkit.getWorld("SMP"), 37.1, 68.2, -62.9);
 
         int red = 249;
         int green = 1;

@@ -15,23 +15,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CommandEvents implements Listener, TabCompleter {
+public class CommandEvents implements Listener{
 
-    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("ver") || cmd.getName().equalsIgnoreCase("version") || cmd.getName().equalsIgnoreCase("about")) {
-            List<String> completions = new ArrayList<>();
-            List<String> commands = new ArrayList<>();
-
-            commands.add("Plugins");
-            commands.add("Developed");
-            commands.add("By");
-            commands.add("xTimDevx");
-            StringUtil.copyPartialMatches(args[1], commands, completions);
-            Collections.sort(completions);
-            return completions;
-        }
-        return null;
-    }
 
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent event) {
@@ -75,7 +60,7 @@ public class CommandEvents implements Listener, TabCompleter {
 
         if (command.equalsIgnoreCase("pl") || command.equalsIgnoreCase("plugins") || command.equalsIgnoreCase("?") || command.equalsIgnoreCase("ver") || command.equalsIgnoreCase("version") || command.equalsIgnoreCase("about")) {
             event.setCancelled(true);
-            player.sendMessage("§cThe plugins are custom coded by xTimDevx.");
+            player.sendMessage("§cDe meeste plugins zijn gecode door §b§lTeam Scyle§f.");
         }
         if(command.equalsIgnoreCase("/calc")||command.equalsIgnoreCase("/calculate")||command.equalsIgnoreCase("/solve")||command.equalsIgnoreCase("/eval")||command.equalsIgnoreCase("/evaluate")) {
             event.setCancelled(true);

@@ -3,6 +3,7 @@ package me.xtimdevx.thomsehsmp.commands;
 import me.xtimdevx.thomsehsmp.User;
 import me.xtimdevx.thomsehsmp.utils.DateUtils;
 import me.xtimdevx.thomsehsmp.utils.MessageUtils;
+import me.xtimdevx.thomsehsmp.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -19,7 +20,7 @@ public class MuteCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Player p = (Player) sender;
         if(cmd.getName().equalsIgnoreCase("mute")) {
-            if(!p.hasPermission("smp.command.mute")) {
+                if(!p.hasPermission("smp.command.mute")) {
                 p.sendMessage(MessageUtils.NOPERM);
                 return true;
             }
@@ -41,9 +42,19 @@ public class MuteCommand implements CommandExecutor {
             TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
             long time = DateUtils.parseDateDiff(args[1], true);
 
-            Bukkit.broadcastMessage(MessageUtils.GARY + "§c" + target.getName() + " §fis §c" + (args[1].equals("-") ? "gemute" : "getemp-mute") + " §fvoor §c" + reason + "§f.");
+            if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
+                Bukkit.broadcastMessage(MessageUtils.GARY + "§c" + target.getName() + " §fhas been §c" + (args[1].equals("-") ? "muted" : "temp-muted") + " §ffor §c" + reason + "§f.");
+            }
+            if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
+                Bukkit.broadcastMessage(MessageUtils.GARY + "§c" + target.getName() + " §fis §c" + (args[1].equals("-") ? "gemute" : "getemp-mute") + " §fvoor §c" + reason + "§f.");
+            }
             if(target.isOnline()) {
-                target.getPlayer().sendMessage("§8> §fJe bent gemute voor §c" + reason + "§f.");
+                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
+                    target.getPlayer().sendMessage("§8> §fYou have been muted for §c" + reason + "§f.");
+                }
+                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
+                    target.getPlayer().sendMessage("§8> §fJe bent gemute voor §c" + reason + "§f.");
+                }
             }
 
             user.mute(reason, (time <= 0 ? null : new Date(time)));

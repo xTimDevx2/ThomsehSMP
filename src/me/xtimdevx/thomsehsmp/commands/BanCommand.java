@@ -2,6 +2,7 @@ package me.xtimdevx.thomsehsmp.commands;
 
 import me.xtimdevx.thomsehsmp.User;
 import me.xtimdevx.thomsehsmp.utils.MessageUtils;
+import me.xtimdevx.thomsehsmp.utils.Utils;
 import org.bukkit.BanEntry;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
@@ -45,14 +46,18 @@ public class BanCommand implements CommandExecutor {
             final String msg = reason.toString().trim();
 
             if (target == null) {
-                player.getServer().broadcastMessage(MessageUtils.GARY + "§c" + args[0] + " §fis verbannen van de server voor §c" + msg + "§f!");
+                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
+                    Utils.broadcastLanguage(MessageUtils.GARY + "§c" + args[0] + " §fhas been from the server for §c" + msg + "§f!", User.Languages.ENGLISH);
+                }
+                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
+                    Utils.broadcastLanguage(MessageUtils.GARY + "§c" + args[0] + " §fis verbannen van de server voor §c" + msg + "§f!", User.Languages.DUTCH);
+                }
                 list.addBan(args[0], msg, null, sender.getName());
                 user.getFile().set("bans", user.getFile().getInt("bans") + 1);
                 user.saveFile();
                 return true;
             }
 
-            player.getServer().broadcastMessage(MessageUtils.GARY + "§c" + args[0] + " §fis verbannen van de server voor §c" + msg + "§f!");
             user.getFile().set("bans", user.getFile().getInt("bans") + 1);
             user.saveFile();
             for (Player online : Bukkit.getOnlinePlayers()) {

@@ -1,5 +1,6 @@
 package me.xtimdevx.thomsehsmp.crates;
 
+import me.xtimdevx.thomsehsmp.User;
 import me.xtimdevx.thomsehsmp.utils.MessageUtils;
 import me.xtimdevx.thomsehsmp.utils.NameUtils;
 import me.xtimdevx.thomsehsmp.utils.Utils;
@@ -24,6 +25,41 @@ public class CratesManager {
 
     public String lastreward = "none";
 
+    public void placeCarpet(String color) {
+        if(color.equalsIgnoreCase("Green")) {
+            Bukkit.getWorld("SMP").getBlockAt(new Location(Bukkit.getWorld("SMP"), 36.5, 68, -115.5)).setType(Material.LIME_CARPET);
+            Bukkit.getWorld("SMP").getBlockAt(new Location(Bukkit.getWorld("SMP"), 35.5, 68, -115.5)).setType(Material.LIME_CARPET);
+            Bukkit.getWorld("SMP").getBlockAt(new Location(Bukkit.getWorld("SMP"), 34.5, 68, -115.5)).setType(Material.LIME_CARPET);
+            Bukkit.getWorld("SMP").getBlockAt(new Location(Bukkit.getWorld("SMP"), 34.5, 68, -116.5)).setType(Material.LIME_CARPET);
+            Bukkit.getWorld("SMP").getBlockAt(new Location(Bukkit.getWorld("SMP"), 34.5, 68, -117.5)).setType(Material.LIME_CARPET);
+            Bukkit.getWorld("SMP").getBlockAt(new Location(Bukkit.getWorld("SMP"), 35.5, 68, -117.5)).setType(Material.LIME_CARPET);
+            Bukkit.getWorld("SMP").getBlockAt(new Location(Bukkit.getWorld("SMP"), 36.5, 68, -117.5)).setType(Material.LIME_CARPET);
+            Bukkit.getWorld("SMP").getBlockAt(new Location(Bukkit.getWorld("SMP"), 36.5, 68, -116.5)).setType(Material.LIME_CARPET);
+        }
+
+        if(color.equalsIgnoreCase("Red")) {
+            Bukkit.getWorld("SMP").getBlockAt(new Location(Bukkit.getWorld("SMP"), 36.5, 68, -115.5)).setType(Material.RED_CARPET);
+            Bukkit.getWorld("SMP").getBlockAt(new Location(Bukkit.getWorld("SMP"), 35.5, 68, -115.5)).setType(Material.RED_CARPET);
+            Bukkit.getWorld("SMP").getBlockAt(new Location(Bukkit.getWorld("SMP"), 34.5, 68, -115.5)).setType(Material.RED_CARPET);
+            Bukkit.getWorld("SMP").getBlockAt(new Location(Bukkit.getWorld("SMP"), 34.5, 68, -116.5)).setType(Material.RED_CARPET);
+            Bukkit.getWorld("SMP").getBlockAt(new Location(Bukkit.getWorld("SMP"), 34.5, 68, -117.5)).setType(Material.RED_CARPET);
+            Bukkit.getWorld("SMP").getBlockAt(new Location(Bukkit.getWorld("SMP"), 35.5, 68, -117.5)).setType(Material.RED_CARPET);
+            Bukkit.getWorld("SMP").getBlockAt(new Location(Bukkit.getWorld("SMP"), 36.5, 68, -117.5)).setType(Material.RED_CARPET);
+            Bukkit.getWorld("SMP").getBlockAt(new Location(Bukkit.getWorld("SMP"), 36.5, 68, -116.5)).setType(Material.RED_CARPET);
+        }
+    }
+    
+    public void removeCarpet() {
+        Bukkit.getWorld("SMP").getBlockAt(new Location(Bukkit.getWorld("SMP"), 36.5, 68, -115.5)).setType(Material.AIR);
+        Bukkit.getWorld("SMP").getBlockAt(new Location(Bukkit.getWorld("SMP"), 35.5, 68, -115.5)).setType(Material.AIR);
+        Bukkit.getWorld("SMP").getBlockAt(new Location(Bukkit.getWorld("SMP"), 34.5, 68, -115.5)).setType(Material.AIR);
+        Bukkit.getWorld("SMP").getBlockAt(new Location(Bukkit.getWorld("SMP"), 34.5, 68, -116.5)).setType(Material.AIR);
+        Bukkit.getWorld("SMP").getBlockAt(new Location(Bukkit.getWorld("SMP"), 34.5, 68, -117.5)).setType(Material.AIR);
+        Bukkit.getWorld("SMP").getBlockAt(new Location(Bukkit.getWorld("SMP"), 35.5, 68, -117.5)).setType(Material.AIR);
+        Bukkit.getWorld("SMP").getBlockAt(new Location(Bukkit.getWorld("SMP"), 36.5, 68, -117.5)).setType(Material.AIR);
+        Bukkit.getWorld("SMP").getBlockAt(new Location(Bukkit.getWorld("SMP"), 36.5, 68, -116.5)).setType(Material.AIR);
+    }
+
     public ItemStack randomReward(CrateType type) {
         if(type == CrateType.QUEST) {
             Random random = new Random();
@@ -32,11 +68,11 @@ public class CratesManager {
                 //500$
                 ItemStack money500 = new ItemStack(Material.PAPER);
                 ItemMeta money500meta = money500.getItemMeta();
-                money500meta.setDisplayName("§8> §3§l500$ Cheque §8< §7§o(Right click)");
+                money500meta.setDisplayName("§8> §3§l500 ⛀ Cheque §8< §7§o(Right click)");
                 ArrayList<String> lore = new ArrayList<String>();
                 lore.add("§8§m-------------------------");
                 lore.add("§3§lMoney Cheque");
-                lore.add("§f500$");
+                lore.add("§f500 ⛀");
                 lore.add("§7§oRight click to claim.");
                 lore.add("§8§m-------------------------");
 
@@ -56,11 +92,11 @@ public class CratesManager {
                 //750$
                 ItemStack money750 = new ItemStack(Material.PAPER);
                 ItemMeta money750meta = money750.getItemMeta();
-                money750meta.setDisplayName("§8> §3§l750$ Cheque §8< §7§o(Right click)");
+                money750meta.setDisplayName("§8> §3§l750 ⛀ Cheque §8< §7§o(Right click)");
                 ArrayList<String> lore = new ArrayList<String>();
                 lore.add("§8§m-------------------------");
                 lore.add("§3§lMoney Cheque");
-                lore.add("§f750$");
+                lore.add("§f750 ⛀");
                 lore.add("§7§oRight click to claim.");
                 lore.add("§8§m-------------------------");
 
@@ -295,25 +331,41 @@ public class CratesManager {
 
         ItemStack dirt = new ItemStack(Material.DIRT);
         ItemMeta dirtmeta = dirt.getItemMeta();
-        dirtmeta.setDisplayName("§dThe §lHOLY §ddirt");
+        dirtmeta.setDisplayName("§dDe §lHOLY §ddirt");
         dirt.setItemMeta(dirtmeta);
         return dirt;
     }
 
     public void openCrate(CrateType type, Player player) {
+        User user = User.get(player);
         if(type == CrateType.QUEST) {
             utils.giveItem(player, randomReward(CrateType.QUEST));
-            player.sendMessage("§8§m----------------------------------------------------");
-            MessageUtils.sendCenteredMessage(player, "§3§lDaily Crate Reward!");
-            MessageUtils.sendCenteredMessage(player, "§fYou recieved:");
-            MessageUtils.sendCenteredMessage(player, "§3" + lastreward);
-            player.sendMessage("§8§m----------------------------------------------------");
+            if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
+                player.sendMessage("§8§m----------------------------------------------------");
+                MessageUtils.sendCenteredMessage(player, "§6§lYou opened a crate!");
+                player.sendMessage(" ");
+                player.sendMessage("§fType: §6§oDaily");
+                player.sendMessage(" ");
+                player.sendMessage("§fReward: ");
+                player.sendMessage("§6§o" + lastreward);
+                player.sendMessage("§8§m----------------------------------------------------");
+            }
+            if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
+                player.sendMessage("§8§m----------------------------------------------------");
+                MessageUtils.sendCenteredMessage(player, "§6§lJe hebt een crate geopend!");
+                player.sendMessage(" ");
+                player.sendMessage("§fType: §6§oDaily");
+                player.sendMessage(" ");
+                player.sendMessage("§fReward: ");
+                player.sendMessage("§6§o" + lastreward);
+                player.sendMessage("§8§m----------------------------------------------------");
+            }
             if(lastreward.equalsIgnoreCase("Elytra (Legendary Reward)")) {
-                Bukkit.broadcastMessage("§3§lCrates §8> §3" + player.getName() + " §fjust got a §6§lLEGENDARY §freward from his daily crate. §7§o(Elytra)");
+                Bukkit.broadcastMessage("§3§lCrates §8> §3" + player.getName() + " §fheeft een §6§lLEGENDARY §freward gekregen van zijn daily key. §7§o(Elytra)");
                 Bukkit.broadcastMessage("§8> §fUse §3/reward §fto claim your free daily key.");
             }
             if(lastreward.equalsIgnoreCase("Trident (Legendary Reward)")) {
-                Bukkit.broadcastMessage("§3§lCrates §8> §3" + player.getName() + " §fjust got a §6§lLEGENDARY §freward from his daily crate. §7§o(Trident)");
+                Bukkit.broadcastMessage("§3§lCrates §8> §3" + player.getName() + " §fheeft een §6§lLEGENDARY §freward gekregen van zijn daily key  §7§o(Trident)");
                 Bukkit.broadcastMessage("§8> §fUse §3/reward §fto claim your free daily key.");
             }
         }
@@ -344,7 +396,7 @@ public class CratesManager {
 
         ItemStack fivehg = new ItemStack(Material.PAPER);
         ItemMeta fivehgMeta = fivehg.getItemMeta();
-        fivehgMeta.setDisplayName("§7§l500$ §7Money Cheque");
+        fivehgMeta.setDisplayName("§7§l500 ⛀ §7Money Cheque");
         lore.add(" ");
         lore.add("§8> §7§oRight click to use.");
         lore.add(" ");

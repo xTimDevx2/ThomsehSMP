@@ -1,7 +1,9 @@
 package me.xtimdevx.thomsehsmp.markets;
 
 import me.xtimdevx.thomsehsmp.managers.EconomyManager;
+import me.xtimdevx.thomsehsmp.utils.MessageUtils;
 import me.xtimdevx.thomsehsmp.utils.Utils;
+import net.dv8tion.jda.api.entities.Message;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -13,7 +15,7 @@ public class MarketMethods {
     EconomyManager economyManager = new EconomyManager();
 
     public enum MarketNPC{
-        ALINE, THEODORUS, MIA, NOAH;
+        ALINE, THEODORUS, MIA, NOAH, OBIWAN, ASH, THOMAS, FLOP, FAKENA;
     }
 
     public String refactorName(MarketNPC npc) {
@@ -180,6 +182,21 @@ public class MarketMethods {
         }
         if(npc == MarketNPC.NOAH) {
             player.sendMessage("§8(§2§lMarket Guild§8) §fNoah §8> §f" + message);
+        }
+        if(npc == MarketNPC.OBIWAN) {
+            player.sendMessage(MessageUtils.format("§8(#00E0FF§lZ#00C9E5§lw#00B0C8§le#0097AB§lr#008496§lv#007585§le#006D76§lr§8) §fTobi wan §8> §f" + message));
+        }
+        if(npc == MarketNPC.ASH) {
+            player.sendMessage(MessageUtils.format("§8(§c§lTrainer§8) §fEsh Catchem §8> §f" + message));
+        }
+        if(npc == MarketNPC.FAKENA) {
+            player.sendMessage(MessageUtils.format("§8(#860D0D§lDemon§8) §fFakena §8> §f" + message));
+        }
+        if(npc == MarketNPC.FLOP) {
+            player.sendMessage(MessageUtils.format("§8(#1FE984§lKabouter§8) §fFlop §8> §f" + message));
+        }
+        if(npc == MarketNPC.THOMAS) {
+            player.sendMessage(MessageUtils.format("§8(#FF5F5F§lO#FE4848§lw#FF3030§ln#FF1D1D§le#FF0000§lr§8) §fThomseh §8> §f" + message));
         }
     }
 

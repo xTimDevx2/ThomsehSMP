@@ -36,14 +36,14 @@ public class CratesCommands implements CommandExecutor {
                 return true;
             }
 
-            ItemStack questkey = new ItemStack (Material.GOLDEN_CARROT);
+            ItemStack questkey = new ItemStack(Material.GOLDEN_CARROT);
             ItemMeta questkeyMeta = questkey.getItemMeta();
             questkeyMeta.setDisplayName("§8> §6§lDaily Crate Key §8<");
             ArrayList<String> lore = new ArrayList<String>();
             lore.add("§8§m-------------------------");
-            lore.add("§fRight click §3Daily Crate");
-            lore.add("§fto recieve your rewards.");
-            lore.add("§3§o/warp crates");
+            lore.add("§fGebruik rechtermuisknop op §3Daily Crate");
+            lore.add("§ftOm je rewards te krijgen.");
+            lore.add("§3§o/crates §fom te teleporteren.");
             lore.add("§8§m-------------------------");
 
             questkeyMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, true);
@@ -56,8 +56,8 @@ public class CratesCommands implements CommandExecutor {
             target.getInventory().addItem(questkey);
             lore.clear();
             
-            player.sendMessage("§8> §fYou sent a §3daily §fkey to §3" + target.getName() + "§f.");
-            target.sendMessage("§8> §fYou recieved a §3daily §fkey§f.");
+            player.sendMessage("§8> §fJe hebt een §3daily §fkey aan §3" + target.getName() + "§f gegeven.");
+            target.sendMessage("§8> §fJe hebt een §3daily §fontvangen§f.");
 
         }
         return true;

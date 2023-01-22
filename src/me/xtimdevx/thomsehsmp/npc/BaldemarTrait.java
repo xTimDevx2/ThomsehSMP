@@ -2,6 +2,7 @@ package me.xtimdevx.thomsehsmp.npc;
 
 import me.xtimdevx.thomsehsmp.Main;
 import me.xtimdevx.thomsehsmp.User;
+import me.xtimdevx.thomsehsmp.commands.RespawnNPCCommand;
 import me.xtimdevx.thomsehsmp.quests.QuestManager;
 import me.xtimdevx.thomsehsmp.utils.Utils;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
@@ -65,6 +66,8 @@ public class BaldemarTrait extends Trait {
 
     public boolean isTalking = false;
 
+    public Location anvil = new Location(Bukkit.getWorld("SMP"), 36.5, 67, -58.5);
+
     @EventHandler
     public void click(NPCRightClickEvent event) {
         if (event.getNPC() == this.getNPC()) {
@@ -73,7 +76,7 @@ public class BaldemarTrait extends Trait {
             if(manager.isQuestActive(QuestManager.QuestLines.TIMBER, QuestManager.Quests.TIMBER_DIAMONDAXE, event.getClicker())) {
                 if (user.getFile().getInt("quest.TIMBER.TIMBER_DIAMONDAXE.stage") == 1) {
                     if (isTalking) {
-                        player.sendMessage("§8> §fBaldemar kan maar met 1 speler tegelijk praten. Wachten even tot hij klaar is.");
+                        player.sendMessage("§8> §fBaldemar kan maar met 1 speler tegelijk praten. Wacht even tot hij klaar is.");
                         return;
                     }
                     Inventory i = player.getInventory();
@@ -112,8 +115,6 @@ public class BaldemarTrait extends Trait {
 
                         manager.sendNPCMessage(QuestManager.NPCS.BALDEMAR, player, "Jij bent vast door Aaron gestuurd, met deze materialen kan ik voor jullie een bijl maken zoals jullie nog nooit gezien hebben.");
 
-                        Location anvil = new Location(Bukkit.getWorld("world"), -66.5, 86.5, -118.5);
-
                         int taskID = -1;
 
                         taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
@@ -121,7 +122,10 @@ public class BaldemarTrait extends Trait {
                             public void run() {
                                 manager.sendNPCMessage(QuestManager.NPCS.BALDEMAR, player, "Het is maar een suggestie maar ik zou een paar stappen achteruit gaan als ik jou was.");
 
-                                event.getNPC().faceLocation(new Location(Bukkit.getWorld("world"), -66.5, 85, -118.5));
+
+                                anvil.setPitch(35);
+                                anvil.setYaw(-180);
+                                event.getNPC().faceLocation(anvil);
 
 
                             }
@@ -137,7 +141,7 @@ public class BaldemarTrait extends Trait {
 
 
                             }
-                        }, 80);
+                        }, 140);
 
                         taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                             @Override
@@ -148,7 +152,7 @@ public class BaldemarTrait extends Trait {
 
 
                             }
-                        }, 110);
+                        }, 180);
 
                         taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                             @Override
@@ -160,7 +164,7 @@ public class BaldemarTrait extends Trait {
 
 
                             }
-                        }, 150);
+                        }, 220);
 
                         taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                             @Override
@@ -171,9 +175,9 @@ public class BaldemarTrait extends Trait {
 
                                 npc.getOrAddTrait(Equipment.class).set(Equipment.EquipmentSlot.HAND, axe);
 
-                                manager.sendNPCMessage(QuestManager.NPCS.BALDEMAR, player, "Dit is heatwaker. Een bijl met magische krachten. Als je deze terug brengt naar Aaron zal hij zeker niet teleur gesteld zijn.");
+                                manager.sendNPCMessage(QuestManager.NPCS.BALDEMAR, player, "Dit is §cHeatwaker§f. Een bijl met magische krachten. Als je deze terug brengt naar Aaron zal hij zeker niet teleur gesteld zijn.");
                             }
-                        }, 180);
+                        }, 260);
 
                         taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                             @Override
@@ -190,18 +194,26 @@ public class BaldemarTrait extends Trait {
 
                                 manager.sendNPCMessage(QuestManager.NPCS.BALDEMAR, player, "Veel success en tot de volgende keer reiziger.");
 
-                                player.sendMessage("§8> §fJe kreeg de §cHeatwaker §fbijl van baldemar, ga terug met Aaron praten.");
+                                player.sendMessage("§8> §fJe kreeg de §cHeatwaker §fbijl van Baldemar, ga terug met Aaron praten.");
                                 player.sendMessage("§7§o(Tip: Ben je heatwaker verloren? Je kan altijd een nieuwe gaan maken bij Baldemar)");
                                 Utils.giveItem(player, axe, 1);
 
                                 user.getFile().set("quest.TIMBER.TIMBER_DIAMONDAXE.stage", 2);
                                 user.saveFile();
 
+                                event.getNPC().faceLocation(new Location(Bukkit.getWorld("SMP"), 41.5, 67, -62));
+
+                            }
+                        }, 300);
+
+                        taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+                            @Override
+                            public void run() {
+
                                 isTalking = false;
 
-                                npc.faceLocation(new Location(Bukkit.getWorld("world"), -63, 85, -112));
                             }
-                        }, 230);
+                        }, 340);
                         return;
 
 
@@ -255,7 +267,7 @@ public class BaldemarTrait extends Trait {
 
                         manager.sendNPCMessage(QuestManager.NPCS.BALDEMAR, player, "Oke ik maak een nieuwe voor je, maar alleen voor deze keer.");
 
-                        Location anvil = new Location(Bukkit.getWorld("world"), -66.5, 86.5, -118.5);
+                        Location anvil = new Location(Bukkit.getWorld("SMP"), -66.5, 86.5, -118.5);
 
                         int taskID = -1;
 
@@ -264,7 +276,10 @@ public class BaldemarTrait extends Trait {
                             public void run() {
                                 manager.sendNPCMessage(QuestManager.NPCS.BALDEMAR, player, "Het is maar een suggestie maar ik zou een paar stappen achteruit gaan als ik jou was.");
 
-                                event.getNPC().faceLocation(new Location(Bukkit.getWorld("world"), -66.5, 85, -118.5));
+
+                                anvil.setPitch(35);
+                                anvil.setYaw(-180);
+                                npc.faceLocation(anvil);
 
 
                             }
@@ -280,7 +295,7 @@ public class BaldemarTrait extends Trait {
 
 
                             }
-                        }, 80);
+                        }, 140);
 
                         taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                             @Override
@@ -291,7 +306,7 @@ public class BaldemarTrait extends Trait {
 
 
                             }
-                        }, 110);
+                        }, 180);
 
                         taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                             @Override
@@ -303,7 +318,7 @@ public class BaldemarTrait extends Trait {
 
 
                             }
-                        }, 150);
+                        }, 220);
 
                         taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                             @Override
@@ -314,8 +329,9 @@ public class BaldemarTrait extends Trait {
 
                                 npc.getOrAddTrait(Equipment.class).set(Equipment.EquipmentSlot.HAND, axe);
 
+                                manager.sendNPCMessage(QuestManager.NPCS.BALDEMAR, player, "Dit is §cHeatwaker§f. Een bijl met magische krachten. Als je deze terug brengt naar Aaron zal hij zeker niet teleur gesteld zijn.");
                             }
-                        }, 180);
+                        }, 260);
 
                         taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                             @Override
@@ -330,27 +346,37 @@ public class BaldemarTrait extends Trait {
 
                                 npc.getOrAddTrait(Equipment.class).set(Equipment.EquipmentSlot.HAND, new ItemStack(Material.FLINT_AND_STEEL, 1));
 
-                                manager.sendNPCMessage(QuestManager.NPCS.BALDEMAR, player, "Verlies hem nu niet nog eens reiziger.");
+                                manager.sendNPCMessage(QuestManager.NPCS.BALDEMAR, player, "Verlies hem niet nog eens, dit was je laatste kans.");
 
-                                player.sendMessage("§8> §fJe kreeg de §cHeatwaker §fbijl van baldemar, ga terug met Aaron praten.");
-                                player.sendMessage("§7§o(Tip: Verlies Heatwaker niet nog eens, je kan hem niet nog eens maken.)");
+                                player.sendMessage("§8> §fJe kreeg de §cHeatwaker §fbijl van Baldemar, ga terug met Aaron praten.");
+                                player.sendMessage("§7§o(Tip: Ben je heatwaker verloren? Je kan altijd een nieuwe gaan maken bij Baldemar)");
                                 Utils.giveItem(player, axe, 1);
 
-                                user.getFile().set("quest.TIMBER.TIMBER_DIAMONDAXE.heatwakerherkansing", true);
+                                user.getFile().set("quest.TIMBER.TIMBER_DIAMONDAXE.stage", 2);
                                 user.saveFile();
+
+                                event.getNPC().faceLocation(new Location(Bukkit.getWorld("SMP"), 41.5, 67, -62));
+
+                            }
+                        }, 300);
+
+                        taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+                            @Override
+                            public void run() {
 
                                 isTalking = false;
 
-                                npc.faceLocation(new Location(Bukkit.getWorld("world"), -63, 85, -112));
                             }
-                        }, 230);
+                        }, 340);
 
 
                     } else {
                         manager.sendNPCMessage(QuestManager.NPCS.BALDEMAR, player, "Ben je de bijl verloren? Geen probleem breng gewoon opnieuw 4 diamonds, 2 sticks en een bookshelf en dan maak ik een nieuwe voor je.");
                     }
                 }
+                return;
             }
+            manager.sendNPCMessage(QuestManager.NPCS.BALDEMAR, player, "Ik heb op dit moment niks voor je, kom later even terug.");
         }
     }
 
