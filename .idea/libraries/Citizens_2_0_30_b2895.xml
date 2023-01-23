@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="ProtocolLib">
+  <library name="Citizens-2.0.30-b2895">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../ProtocolLib.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/Citizens-2.0.30-b2895.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

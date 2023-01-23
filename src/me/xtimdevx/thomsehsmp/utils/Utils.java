@@ -2,7 +2,6 @@ package me.xtimdevx.thomsehsmp.utils;
 
 import me.xtimdevx.thomsehsmp.User;
 import me.xtimdevx.thomsehsmp.commands.DonateAnnounceCommand;
-import net.dv8tion.jda.api.entities.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;

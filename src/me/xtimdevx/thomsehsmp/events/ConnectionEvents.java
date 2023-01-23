@@ -1,6 +1,5 @@
 package me.xtimdevx.thomsehsmp.events;
 
-import ch.qos.logback.core.util.LocationUtil;
 import jdk.jshell.execution.Util;
 import me.xtimdevx.thomsehsmp.Main;
 import me.xtimdevx.thomsehsmp.Settings;

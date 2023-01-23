@@ -3,7 +3,7 @@ version: A-0.1
 main: me.xtimdevx.thomsehsmp.Main
 description: SMP plugin voor twitch streamer Thomseh
 author: xTimDevx
-depend: [LuckPerms, Citizens, DiscordBotAPI]
+depend: [LuckPerms, Citizens]
 api-version: 1.13
 
 commands:
@@ -108,4 +108,8 @@ commands:
   afk:
     usage: /<command>
   stats:
+    usage: /<command>
+  settings:
+    usage: /<command>
+  socialspy:
     usage: /<command>

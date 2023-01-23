@@ -2,7 +2,6 @@ package me.xtimdevx.thomsehsmp.commands;
 
 import me.xtimdevx.thomsehsmp.Main;
 import me.xtimdevx.thomsehsmp.User;
-import net.dv8tion.jda.api.EmbedBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
@@ -58,13 +57,8 @@ public class HelpopCommand implements CommandExecutor {
                 }
 
 
-                EmbedBuilder eb = new EmbedBuilder();
-                eb.setTitle("**Helpop Request!**", null);
-                eb.setColor(Color.CYAN);
-                eb.addField("Speler: ", player.getName(), false);
 
 
-                Main.bot.getBot().getTextChannelById("998941419647553546").sendMessageEmbeds(eb.build()).complete();
             }
         }else {
             cooldownsHelpop.put(player.getUniqueId().toString(), System.currentTimeMillis());
@@ -84,13 +78,6 @@ public class HelpopCommand implements CommandExecutor {
                 player.sendMessage("§8> §7§o(Tip: Join onze discord voor snelle hulp: https://discord.gg/gquF6tkb3F)");
             }
 
-            EmbedBuilder eb = new EmbedBuilder();
-            eb.setTitle("**Helpop Request!**", null);
-            eb.setColor(Color.CYAN);
-            eb.addField("Speler: ", player.getName(), false);
-
-
-            Main.bot.getBot().getTextChannelById("1007970856032542740").sendMessageEmbeds(eb.build()).complete();
         }
         return true;
     }

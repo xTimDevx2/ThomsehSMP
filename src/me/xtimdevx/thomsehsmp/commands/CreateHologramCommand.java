@@ -2,7 +2,6 @@ package me.xtimdevx.thomsehsmp.commands;
 
 import me.xtimdevx.thomsehsmp.utils.MessageUtils;
 import me.xtimdevx.thomsehsmp.utils.Utils;
-import net.dv8tion.jda.api.entities.Message;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

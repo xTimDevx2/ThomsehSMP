@@ -8,7 +8,6 @@ import me.xtimdevx.thomsehsmp.crates.CratesEvents;
 import me.xtimdevx.thomsehsmp.crates.CratesManager;
 import me.xtimdevx.thomsehsmp.utils.MessageUtils;
 import me.xtimdevx.thomsehsmp.utils.Utils;
-import net.dv8tion.jda.api.entities.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;

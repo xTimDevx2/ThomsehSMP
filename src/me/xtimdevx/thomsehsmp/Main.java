@@ -1,8 +1,5 @@
 package me.xtimdevx.thomsehsmp;
 
-import com.tjplaysnow.discord.object.Bot;
-import com.tjplaysnow.discord.object.CommandSpigotManager;
-import com.tjplaysnow.discord.object.ThreadSpigot;
 import me.xtimdevx.thomsehsmp.commands.*;
 import me.xtimdevx.thomsehsmp.crates.CratesCommands;
 import me.xtimdevx.thomsehsmp.crates.CratesEvents;
@@ -22,7 +19,6 @@ import me.xtimdevx.thomsehsmp.quests.QuestEvents;
 import me.xtimdevx.thomsehsmp.utils.MovementChecker;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.trait.TraitInfo;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.luckperms.api.LuckPerms;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -49,8 +45,6 @@ public class Main extends JavaPlugin implements Listener {
     public static List<String> home = new ArrayList<>();
 
 
-    public static Bot bot;
-    public final String TOKEN = "MTAwNTgzNzQ3ODM5MDkzOTcwOA.GiuGfd.2DKxXtEQSj-db_uHmQ8kfjJDW15GiKZSOOhQzQ";
 
     public static HashMap<CommandSender, CommandSender> msg = new HashMap<CommandSender, CommandSender>();
 
@@ -112,9 +106,6 @@ public class Main extends JavaPlugin implements Listener {
             LuckPerms api = provider.getProvider();
         }
 
-        bot = new Bot(TOKEN);
-        bot.setBotThread(new ThreadSpigot(plugin));
-        bot.setConsoleCommandManager(new CommandSpigotManager());
 
 
 
@@ -123,14 +114,6 @@ public class Main extends JavaPlugin implements Listener {
         taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
             @Override
             public void run() {
-                EmbedBuilder eb = new EmbedBuilder();
-                eb.setTitle("**OP Log!**", null);
-                eb.setColor(Color.RED);
-                eb.addField("De server is nu online...", "420 errors...",  false);
-                eb.setFooter(Bukkit.getServer().getVersion().toString());
-
-
-                Main.bot.getBot().getTextChannelById("1007970856032542740").sendMessageEmbeds(eb.build()).complete();
             }
         }, 100);
 
@@ -145,14 +128,7 @@ public class Main extends JavaPlugin implements Listener {
 
         bar.getBar().removeAll();
 
-        EmbedBuilder eb = new EmbedBuilder();
-        eb.setTitle("**OP Log!**", null);
-        eb.setColor(Color.RED);
-        eb.addField("De server is nu offline...", "69 errors...",  false);
-        eb.setFooter(Bukkit.getServer().getBukkitVersion().toString());
 
-
-        Main.bot.getBot().getTextChannelById("1007970856032542740").sendMessageEmbeds(eb.build()).complete();
     }
 
     public void saveDaily() {
@@ -216,6 +192,8 @@ public class Main extends JavaPlugin implements Listener {
         getCommand("atp").setExecutor(new AdminTeleportCommand());
         getCommand("afk").setExecutor(new AFKCommand(this.afkManager));
         getCommand("stats").setExecutor(new StatsCommand());
+        getCommand("settings").setExecutor(new SettingsCommand());
+        getCommand("socialspy").setExecutor(new SocialspyCommand());
 
 
 
@@ -246,6 +224,7 @@ public class Main extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(new Tutorial(), this);
         Bukkit.getPluginManager().registerEvents(new AFKListeners(this.afkManager), this);
         Bukkit.getPluginManager().registerEvents(new TriviaManager(), this);
+        Bukkit.getPluginManager().registerEvents(new SettingsCommand(), this);
 
     }
 

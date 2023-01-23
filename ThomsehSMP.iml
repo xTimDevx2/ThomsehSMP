@@ -7,9 +7,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Discord Bot API V 5.3" level="project" />
-    <orderEntry type="library" name="spigot-api-1.19.2-R0.1-SNAPSHOT-shaded" level="project" />
-    <orderEntry type="library" name="FastAsyncWorldEdit-Bukkit-2.4.4-SNAPSHOT-264" level="project" />
-    <orderEntry type="library" name="ProtocolLib" level="project" />
+    <orderEntry type="library" name="spigot-api-1.19.2-R0.1-20221106.071812-39-shaded" level="project" />
+    <orderEntry type="library" name="Citizens-2.0.30-b2895" level="project" />
+    <orderEntry type="library" name="LuckPerms-Bukkit-5.4.58" level="project" />
   </component>
 </module>

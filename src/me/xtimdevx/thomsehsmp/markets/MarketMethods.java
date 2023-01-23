@@ -3,7 +3,6 @@ package me.xtimdevx.thomsehsmp.markets;
 import me.xtimdevx.thomsehsmp.managers.EconomyManager;
 import me.xtimdevx.thomsehsmp.utils.MessageUtils;
 import me.xtimdevx.thomsehsmp.utils.Utils;
-import net.dv8tion.jda.api.entities.Message;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

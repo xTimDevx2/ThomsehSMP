@@ -1,6 +1,5 @@
 package me.xtimdevx.thomsehsmp.commands;
 
-import com.tjplaysnow.discord.object.Command;
 import me.xtimdevx.thomsehsmp.User;
 import me.xtimdevx.thomsehsmp.utils.MessageUtils;
 import me.xtimdevx.thomsehsmp.utils.Utils;

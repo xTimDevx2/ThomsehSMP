@@ -4,9 +4,7 @@ import me.xtimdevx.thomsehsmp.Main;
 import me.xtimdevx.thomsehsmp.User;
 import me.xtimdevx.thomsehsmp.utils.MessageUtils;
 import me.xtimdevx.thomsehsmp.utils.PermsUtils;
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageEmbed;
+
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.actionlog.ActionLogger;
@@ -77,16 +75,6 @@ public class BuilderCommand implements CommandExecutor {
             }
             user.getFile().set("builder", true);
             user.saveFile();
-
-            EmbedBuilder eb = new EmbedBuilder();
-            eb.setTitle("**OP Log!**", null);
-            eb.setColor(Color.RED);
-            eb.addField("Iemand heeft builder mode aangezet! ", "**" + player.getName() + "**", false);
-            eb.addField("  ", " ", false);
-            eb.addField("Coords:", "X:" + player.getLocation().getBlockX() + " Z:" + player.getLocation().getBlockZ(), false);
-
-
-            Main.bot.getBot().getTextChannelById("1007970856032542740").sendMessageEmbeds(eb.build()).complete();
         }else {
             PermsUtils permsUtils = PermsUtils.getInstance();
 
@@ -112,15 +100,7 @@ public class BuilderCommand implements CommandExecutor {
             user.getFile().set("builder", false);
             user.saveFile();
 
-            EmbedBuilder eb = new EmbedBuilder();
-            eb.setTitle("**OP Log!**", null);
-            eb.setColor(Color.RED);
-            eb.addField("Iemand heeft builder mode uitgezet! ", "**" + player.getName() + "**", false);
-            eb.addField("  ", " ", false);
-            eb.addField("Coords:", "X:" + player.getLocation().getBlockX() + " Z:" + player.getLocation().getBlockZ(), false);
 
-
-            Main.bot.getBot().getTextChannelById("1007970856032542740").sendMessageEmbeds(eb.build()).complete();
         }
 
         return true;

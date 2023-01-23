@@ -100,6 +100,8 @@ public class User {
             config.set("builder", false);
             config.set("staff", false);
 
+            config.set("settings.deathcounter", true);
+
             config.set("language", "ENGLISH");
 
 

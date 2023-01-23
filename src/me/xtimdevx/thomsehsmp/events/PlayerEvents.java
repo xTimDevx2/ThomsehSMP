@@ -336,7 +336,11 @@ public class PlayerEvents implements Listener {
             user.saveFile();
         }
 
-        event.setDeathMessage("§8> §f" + event.getDeathMessage().replace(player.getName(), "§3§o" + player.getName() + "§f") + " §7§o(#" + user.getFile().getInt("stats.deaths") + ")");
+        if(user.getFile().getBoolean("settings.deathcounter")) {
+            event.setDeathMessage("§8> §f" + event.getDeathMessage().replace(player.getName(), "§3§o" + player.getName() + "§f") + " §7§o(#" + user.getFile().getInt("stats.deaths") + ")");
+        }else {
+            event.setDeathMessage("§8> §f" + event.getDeathMessage().replace(player.getName(), "§3§o" + player.getName() + "§f"));
+        }
     }
 
     @EventHandler
