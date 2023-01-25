@@ -61,6 +61,12 @@ public class PlayerEvents implements Listener {
                 Bukkit.getScheduler().cancelTask(CratesCommand.taskID4);
                 Bukkit.getScheduler().cancelTask(CratesCommand.taskID5);
                 Bukkit.getScheduler().cancelTask(CratesCommand.taskID6);
+                Bukkit.getScheduler().cancelTask(ArenaCommand.taskID);
+                Bukkit.getScheduler().cancelTask(ArenaCommand.taskID2);
+                Bukkit.getScheduler().cancelTask(ArenaCommand.taskID3);
+                Bukkit.getScheduler().cancelTask(ArenaCommand.taskID4);
+                Bukkit.getScheduler().cancelTask(ArenaCommand.taskID5);
+                Bukkit.getScheduler().cancelTask(ArenaCommand.taskID6);
                 player.sendTitle("", "");
                 if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
                     player.sendMessage("§8> §fYou are not allowed to move while teleporting.");
@@ -79,7 +85,7 @@ public class PlayerEvents implements Listener {
             Player reciever = (Player) event.getEntity();
             User user = User.get(reciever);
             if(DuelCommand.duel.contains(reciever)) {
-                if(event.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK && event.getCause() != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK && event.getCause() != EntityDamageEvent.DamageCause.PROJECTILE) {
+                if(event.getCause() == EntityDamageEvent.DamageCause.FALL) {
                     event.setCancelled(true);
                 }
             }
@@ -191,6 +197,8 @@ public class PlayerEvents implements Listener {
                                     @Override
                                     public void run() {
                                         damager.setHealth(20);
+                                        damager.setFoodLevel(20);
+                                        damager.setFireTicks(0);
                                     }
                                 }, 20);
 

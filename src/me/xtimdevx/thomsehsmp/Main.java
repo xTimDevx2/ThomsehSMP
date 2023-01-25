@@ -194,6 +194,7 @@ public class Main extends JavaPlugin implements Listener {
         getCommand("stats").setExecutor(new StatsCommand());
         getCommand("settings").setExecutor(new SettingsCommand());
         getCommand("socialspy").setExecutor(new SocialspyCommand());
+        getCommand("arena").setExecutor(new ArenaCommand());
 
 
 
