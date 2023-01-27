@@ -63,8 +63,6 @@ public class Main extends JavaPlugin implements Listener {
 
         this.triviaManager = new TriviaManager();
 
-        triviaManager.startTrivia();
-
 
         registerCommands();
         registerListeners();

@@ -209,6 +209,12 @@ public class ConnectionEvents implements Listener {
             DuelCommand.duel.remove(player);
             user.getFile().set("DuelTarget", null);
             DuelCommand.duelInvite.remove(player);
+
+            player.getInventory().getHelmet().getItemMeta().setUnbreakable(false);
+            player.getInventory().getChestplate().getItemMeta().setUnbreakable(false);
+            player.getInventory().getLeggings().getItemMeta().setUnbreakable(false);
+            player.getInventory().getBoots().getItemMeta().setUnbreakable(false);
+
         }
 
         Bukkit.getScheduler().runTaskLater(Main.plugin, new Runnable() {

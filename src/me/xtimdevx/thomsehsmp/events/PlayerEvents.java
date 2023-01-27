@@ -94,7 +94,7 @@ public class PlayerEvents implements Listener {
 
     @EventHandler
     public void onDamageByArrow(EntityDamageByEntityEvent event) {
-        if(event.getDamager() instanceof Arrow) {
+        if(event.getDamager() instanceof Arrow || event.getDamager() instanceof Trident) {
             Projectile arrow = (Projectile) event.getDamager();
             arrow.getShooter();
             if(arrow.getShooter() instanceof Player && event.getEntity() instanceof Player) {
@@ -159,6 +159,16 @@ public class PlayerEvents implements Listener {
                                     Duser.getFile().set("stats.duelwins", Duser.getFile().getInt("stats.duelwins") + 1);
                                     Duser.saveFile();
                                 }
+
+                                reciever.getInventory().getHelmet().getItemMeta().setUnbreakable(false);
+                                reciever.getInventory().getChestplate().getItemMeta().setUnbreakable(false);
+                                reciever.getInventory().getLeggings().getItemMeta().setUnbreakable(false);
+                                reciever.getInventory().getBoots().getItemMeta().setUnbreakable(false);
+
+                                damager.getInventory().getHelmet().getItemMeta().setUnbreakable(false);
+                                damager.getInventory().getChestplate().getItemMeta().setUnbreakable(false);
+                                damager.getInventory().getLeggings().getItemMeta().setUnbreakable(false);
+                                damager.getInventory().getBoots().getItemMeta().setUnbreakable(false);
                                 if (Duser.getLanguage().equalsIgnoreCase( "ENGLISH")) {
                                     damager.sendMessage("§8§m----------------------------------------------------");
                                     MessageUtils.sendCenteredMessage(damager, "§3§lDuel ended");

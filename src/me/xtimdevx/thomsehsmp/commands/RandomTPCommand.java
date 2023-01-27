@@ -25,64 +25,117 @@ public class RandomTPCommand implements CommandExecutor {
         User user = User.get(player);
 
 
-        if(!player.getWorld().getName().equalsIgnoreCase("SMP")) {
-            player.sendMessage("§cERROR: You can only use this in the overworld.");
-            return true;
-        }
         int timeLeft = cooldownManager.getCooldown(player.getUniqueId());
 
         if(timeLeft == 0){
-            List<Location> loc = LocationUtils.getScatterLocations(Bukkit.getWorld("SMP"), 1500);
-            Location rtp = loc.get(0);
+            if(player.getWorld().getName().equalsIgnoreCase("SMP")) {
+                List<Location> loc = LocationUtils.getScatterLocations(Bukkit.getWorld("SMP"), 1500, false);
+                Location rtp = loc.get(0);
 
 
-            Location location = player.getLocation();
+                Location location = player.getLocation();
 
-            double bx = location.getX();
-            double by = location.getY();
-            double bz = location.getZ();
-            float bPitch = location.getPitch();
-            float bYaw = location.getYaw();
-            String bWorld = location.getWorld().getName();
+                double bx = location.getX();
+                double by = location.getY();
+                double bz = location.getZ();
+                float bPitch = location.getPitch();
+                float bYaw = location.getYaw();
+                String bWorld = location.getWorld().getName();
 
-            user.getFile().set("back.x", bx);
-            user.getFile().set("back.y", by);
-            user.getFile().set("back.z", bz);
-            user.getFile().set("back.pitch", bPitch);
-            user.getFile().set("back.yaw", bYaw);
-            user.getFile().set("back.world", bWorld);
-            user.saveFile();
+                user.getFile().set("back.x", bx);
+                user.getFile().set("back.y", by);
+                user.getFile().set("back.z", bz);
+                user.getFile().set("back.pitch", bPitch);
+                user.getFile().set("back.yaw", bYaw);
+                user.getFile().set("back.world", bWorld);
+                user.saveFile();
 
 
-            if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                player.sendMessage("§8§m----------------------------------------------------");
-                MessageUtils.sendCenteredMessage(player, "§3§lWe are sending you to a random location....");
-                MessageUtils.sendCenteredMessage(player, "§fX: " + rtp.getBlockX() + " Y: " + rtp.getBlockY() + " Z: " + rtp.getBlockZ());
-                MessageUtils.sendCenteredMessage(player, "§fBiome: §3§o" + NameUtils.getBiomeName(player.getWorld().getBiome(rtp)));
-                player.sendMessage("§8§m----------------------------------------------------");
-            }
-            if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                player.sendMessage("§8§m----------------------------------------------------");
-                MessageUtils.sendCenteredMessage(player, "§3§lWe sturen je naar een willekeurige locatie....");
-                MessageUtils.sendCenteredMessage(player, "§fX: " + rtp.getBlockX() + " Y: " + rtp.getBlockY() + " Z: " + rtp.getBlockZ());
-                MessageUtils.sendCenteredMessage(player, "§fBiome: §3§o" + NameUtils.getBiomeName(player.getWorld().getBiome(rtp)));
-                player.sendMessage("§8§m----------------------------------------------------");
-            }
-
-            player.teleport(rtp);
-
-            cooldownManager.setCooldown(player.getUniqueId(), CooldownManager.RANDOMTP);
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    int timeLeft = cooldownManager.getCooldown(player.getUniqueId());
-                    cooldownManager.setCooldown(player.getUniqueId(), --timeLeft);
-                    if(timeLeft == 0){
-                        this.cancel();
-                    }
+                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
+                    player.sendMessage("§8§m----------------------------------------------------");
+                    MessageUtils.sendCenteredMessage(player, "§2§lOverworld");
+                    MessageUtils.sendCenteredMessage(player, "§3§lWe are sending you to a random location....");
+                    MessageUtils.sendCenteredMessage(player, "§fX: " + rtp.getBlockX() + " Y: " + rtp.getBlockY() + " Z: " + rtp.getBlockZ());
+                    MessageUtils.sendCenteredMessage(player, "§fBiome: §3§o" + NameUtils.getBiomeName(player.getWorld().getBiome(rtp)));
+                    player.sendMessage("§8§m----------------------------------------------------");
                 }
-            }.runTaskTimer(Main.plugin, 20, 20);
+                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
+                    player.sendMessage("§8§m----------------------------------------------------");
+                    MessageUtils.sendCenteredMessage(player, "§2§lOverworld");
+                    MessageUtils.sendCenteredMessage(player, "§3§lWe sturen je naar een willekeurige locatie....");
+                    MessageUtils.sendCenteredMessage(player, "§fX: " + rtp.getBlockX() + " Y: " + rtp.getBlockY() + " Z: " + rtp.getBlockZ());
+                    MessageUtils.sendCenteredMessage(player, "§fBiome: §3§o" + NameUtils.getBiomeName(player.getWorld().getBiome(rtp)));
+                    player.sendMessage("§8§m----------------------------------------------------");
+                }
 
+                player.teleport(rtp);
+
+                cooldownManager.setCooldown(player.getUniqueId(), CooldownManager.RANDOMTP);
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        int timeLeft = cooldownManager.getCooldown(player.getUniqueId());
+                        cooldownManager.setCooldown(player.getUniqueId(), --timeLeft);
+                        if(timeLeft == 0){
+                            this.cancel();
+                        }
+                    }
+                }.runTaskTimer(Main.plugin, 20, 20);
+            }
+            if(player.getWorld().getName().equalsIgnoreCase("SMP_nether")) {
+                List<Location> loc = LocationUtils.getScatterLocations(Bukkit.getWorld("SMP_nether"), 500, true);
+                Location rtp = loc.get(0);
+
+
+                Location location = player.getLocation();
+
+                double bx = location.getX();
+                double by = location.getY();
+                double bz = location.getZ();
+                float bPitch = location.getPitch();
+                float bYaw = location.getYaw();
+                String bWorld = location.getWorld().getName();
+
+                user.getFile().set("back.x", bx);
+                user.getFile().set("back.y", by);
+                user.getFile().set("back.z", bz);
+                user.getFile().set("back.pitch", bPitch);
+                user.getFile().set("back.yaw", bYaw);
+                user.getFile().set("back.world", bWorld);
+                user.saveFile();
+
+
+                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
+                    player.sendMessage("§8§m----------------------------------------------------");
+                    MessageUtils.sendCenteredMessage(player, "§c§lNether");
+                    MessageUtils.sendCenteredMessage(player, "§3§lWe are sending you to a random location....");
+                    MessageUtils.sendCenteredMessage(player, "§fX: " + rtp.getBlockX() + " Y: " + rtp.getBlockY() + " Z: " + rtp.getBlockZ());
+                    MessageUtils.sendCenteredMessage(player, "§fBiome: §3§o" + NameUtils.getBiomeName(player.getWorld().getBiome(rtp)));
+                    player.sendMessage("§8§m----------------------------------------------------");
+                }
+                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
+                    player.sendMessage("§8§m----------------------------------------------------");
+                    MessageUtils.sendCenteredMessage(player, "§c§lNether");
+                    MessageUtils.sendCenteredMessage(player, "§3§lWe sturen je naar een willekeurige locatie....");
+                    MessageUtils.sendCenteredMessage(player, "§fX: " + rtp.getBlockX() + " Y: " + rtp.getBlockY() + " Z: " + rtp.getBlockZ());
+                    MessageUtils.sendCenteredMessage(player, "§fBiome: §3§o" + NameUtils.getBiomeName(player.getWorld().getBiome(rtp)));
+                    player.sendMessage("§8§m----------------------------------------------------");
+                }
+
+                player.teleport(rtp);
+
+                cooldownManager.setCooldown(player.getUniqueId(), CooldownManager.RANDOMTP);
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        int timeLeft = cooldownManager.getCooldown(player.getUniqueId());
+                        cooldownManager.setCooldown(player.getUniqueId(), --timeLeft);
+                        if(timeLeft == 0){
+                            this.cancel();
+                        }
+                    }
+                }.runTaskTimer(Main.plugin, 20, 20);
+            }
         }else{
             //Hasn't expired yet, shows how many seconds left until it does
             if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {

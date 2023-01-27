@@ -29,7 +29,7 @@ public class LocationUtils {
     }
 
     public static Location getHighestBlock(Location loc) {
-        int highest = loc.getWorld().getEnvironment() == World.Environment.NETHER ? 127 : 255;
+        int highest = loc.getWorld().getEnvironment() == World.Environment.NETHER ? 100 : 255;
 
         for (int i = highest; i >= 0; i--) {
             if (loc.getWorld().getBlockAt(loc.getBlockX(), i, loc.getBlockZ()).getType() != Material.AIR) {
@@ -50,39 +50,46 @@ public class LocationUtils {
     }
 
 
-    private static Material[] nospawn = { Material.WATER, Material.WATER, Material.LAVA, Material.LAVA, Material.CACTUS };
+        private static final Material[] nospawn = { Material.WATER, Material.WATER, Material.LAVA, Material.LAVA, Material.CACTUS, Material.BEDROCK, Material.AIR };
 
-    public static List<Location> getScatterLocations(World world, int radius) {
+    public static List<Location> getScatterLocations(World world, int radius, boolean nether) {
         ArrayList<Location> locs = new ArrayList<Location>();
-         double min = 150;
+        double min = 150;
 
-            for (int j = 0; j < 4004; j++) {
-                if (j == 4003) {
-                    Bukkit.broadcastMessage(ChatColor.RED + "Could not scatter a player");
+        for (int j = 0; j < 4004; j++) {
+            if (j == 4003) {
+                Bukkit.broadcastMessage(ChatColor.RED + "Could not scatter a player");
+                break;
+            }
+
+            Random rand = new Random();
+            int x = rand.nextInt(radius * 2) - radius;
+            int z = rand.nextInt(radius * 2) - radius;
+
+            Location loc = new Location(world, x + 0.5, 0, z + 0.5);
+
+            boolean close = false;
+            for (Location l : locs) {
+                if (l.distanceSquared(loc) < min) {
+                    close = true;
+                }
+            }
+
+            if (!close && isVaild(loc.clone())) {
+                if(nether) {
+                    double y = LocationUtils.getProperLocationNether(Bukkit.getWorld("SMP_nether"), loc.getX(), loc.getY(), loc.getZ());
+                    loc.setY(y + 2);
+                    locs.add(loc);
                     break;
-                }
-
-                Random rand = new Random();
-                int x = rand.nextInt(radius * 2) - radius;
-                int z = rand.nextInt(radius * 2) - radius;
-
-                Location loc = new Location(world, x + 0.5, 0, z + 0.5);
-
-                boolean close = false;
-                for (Location l : locs) {
-                    if (l.distanceSquared(loc) < min) {
-                        close = true;
-                    }
-                }
-
-                if (!close && isVaild(loc.clone())) {
+                }else {
                     double y = LocationUtils.highestTeleportableYAtLocation(loc);
                     loc.setY(y + 2);
                     locs.add(loc);
                     break;
-                } else {
-                    min -= 1;
                 }
+            } else {
+                min -= 1;
+            }
         }
 
         return locs;
@@ -135,4 +142,37 @@ public class LocationUtils {
         return -1;
     }
 
+    private static int getProperLocationNether(World world, double x, double y, double z) {
+
+        int y2 = (int) y;
+        Location location = null;
+        Block centerBlock = null;
+        loop:
+        while (y2 <= 120) {
+            centerBlock = world.getBlockAt((int) x, y2, (int) z);
+            if (chkRelativeBlock(centerBlock, BlockFace.SELF, 0)) {
+                location = new Location(world, x, (double) y2 + 2d, z);
+                break loop;
+            }
+
+            y2++;
+        }
+        return location.getBlockY();
+    }
+
+    private static boolean chkRelativeBlock(Block block, BlockFace face, int distance){
+
+        Block relativeBlock = block.getRelative(face, distance);
+
+        Block footBlock = relativeBlock.getRelative(BlockFace.UP);
+        Block headBlock = relativeBlock.getRelative(BlockFace.UP, 2);
+
+        if(!relativeBlock.isLiquid() && !relativeBlock.isEmpty()){
+            if(footBlock.isEmpty() && headBlock.isEmpty()){
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

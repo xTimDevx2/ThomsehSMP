@@ -192,7 +192,15 @@ public class DuelCommand implements CommandExecutor {
                         tuser.getFile().set("DuelTarget", player.getName());
                         tuser.saveFile();
                         user.saveFile();
+                        player.getInventory().getHelmet().getItemMeta().setUnbreakable(true);
+                        player.getInventory().getChestplate().getItemMeta().setUnbreakable(true);
+                        player.getInventory().getLeggings().getItemMeta().setUnbreakable(true);
+                        player.getInventory().getBoots().getItemMeta().setUnbreakable(true);
 
+                        target.getInventory().getHelmet().getItemMeta().setUnbreakable(true);
+                        target.getInventory().getChestplate().getItemMeta().setUnbreakable(true);
+                        target.getInventory().getLeggings().getItemMeta().setUnbreakable(true);
+                        target.getInventory().getBoots().getItemMeta().setUnbreakable(true);
 
                         taskID3 = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                             @Override
@@ -224,6 +232,16 @@ public class DuelCommand implements CommandExecutor {
                                 target.setHealth(20);
                                 player.setFoodLevel(20);
                                 target.setFoodLevel(20);
+
+                                player.getInventory().getHelmet().getItemMeta().setUnbreakable(false);
+                                player.getInventory().getChestplate().getItemMeta().setUnbreakable(false);
+                                player.getInventory().getLeggings().getItemMeta().setUnbreakable(false);
+                                player.getInventory().getBoots().getItemMeta().setUnbreakable(false);
+
+                                target.getInventory().getHelmet().getItemMeta().setUnbreakable(false);
+                                target.getInventory().getChestplate().getItemMeta().setUnbreakable(false);
+                                target.getInventory().getLeggings().getItemMeta().setUnbreakable(false);
+                                target.getInventory().getBoots().getItemMeta().setUnbreakable(false);
                             }
                         },6000);
 
