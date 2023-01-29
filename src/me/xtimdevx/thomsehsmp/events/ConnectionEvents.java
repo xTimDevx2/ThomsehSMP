@@ -9,6 +9,7 @@ import me.xtimdevx.thomsehsmp.commands.HomeCommand;
 import me.xtimdevx.thomsehsmp.commands.SethomeCommand;
 import me.xtimdevx.thomsehsmp.features.Bossbar;
 import me.xtimdevx.thomsehsmp.features.Tutorial;
+import me.xtimdevx.thomsehsmp.managers.DuelsManager;
 import me.xtimdevx.thomsehsmp.managers.ScoreboardManager;
 import me.xtimdevx.thomsehsmp.utils.LocationUtils;
 import me.xtimdevx.thomsehsmp.utils.MessageUtils;
@@ -80,7 +81,9 @@ public class ConnectionEvents implements Listener {
                 ScoreboardManager.createMainBoard(player);
 
                 for(Player online : Bukkit.getOnlinePlayers()) {
-                    ScoreboardManager.updateScoreBoard(online);
+                    if(!DuelsManager.duel.contains(online)) {
+                        ScoreboardManager.updateScoreBoard(online);
+                    }
                     online.setPlayerListFooter("§8> §f§oTwitch.tv/thomseh §8< \n§7§oOnline: " + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers());
                 }
             }
@@ -205,23 +208,19 @@ public class ConnectionEvents implements Listener {
             Bukkit.getScheduler().cancelTask(Tutorial.taskID);
         }
 
-        if(DuelCommand.duel.contains(player)) {
-            DuelCommand.duel.remove(player);
-            user.getFile().set("DuelTarget", null);
-            DuelCommand.duelInvite.remove(player);
-
-            player.getInventory().getHelmet().getItemMeta().setUnbreakable(false);
-            player.getInventory().getChestplate().getItemMeta().setUnbreakable(false);
-            player.getInventory().getLeggings().getItemMeta().setUnbreakable(false);
-            player.getInventory().getBoots().getItemMeta().setUnbreakable(false);
-
+        if(DuelsManager.duel.contains(player)) {
+            DuelsManager manager = new DuelsManager();
+            Player winner = Bukkit.getPlayer(user.getFile().getString("DuelTarget"));
+            manager.endDuel(winner, player, user.getFile().getString("duelmode"), true, false);
         }
 
         Bukkit.getScheduler().runTaskLater(Main.plugin, new Runnable() {
             @Override
             public void run() {
                 for(Player online : Bukkit.getOnlinePlayers()) {
-                    ScoreboardManager.updateScoreBoard(online);
+                    if(!DuelsManager.duel.contains(online)) {
+                        ScoreboardManager.updateScoreBoard(online);
+                    }
                     online.setPlayerListFooter("§8> §f§oTwitch.tv/thomseh §8< \n§7§oOnline: " + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers());
                 }
             }

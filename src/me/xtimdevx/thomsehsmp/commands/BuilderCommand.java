@@ -61,6 +61,7 @@ public class BuilderCommand implements CommandExecutor {
             lpu.data().add(PermissionNode.builder("fawe.admin").build());
             lpu.data().add(PermissionNode.builder("fawe.*").build());
             lpu.data().add(PermissionNode.builder("worldedit.*").build());
+            lpu.data().add(PermissionNode.builder("minecraft.debugstick").build());
             lpu.data().add(PermissionNode.builder("minecraft.command.give").build());
             api.getUserManager().saveUser(lpu);
 
@@ -86,6 +87,7 @@ public class BuilderCommand implements CommandExecutor {
             lpu.data().remove(PermissionNode.builder("fawe.admin").build());
             lpu.data().remove(PermissionNode.builder("fawe.*").build());
             lpu.data().remove(PermissionNode.builder("worldedit.*").build());
+            lpu.data().remove(PermissionNode.builder("minecraft.debugstick").build());
             lpu.data().remove(PermissionNode.builder("minecraft.command.give").build());
             api.getUserManager().saveUser(lpu);
 

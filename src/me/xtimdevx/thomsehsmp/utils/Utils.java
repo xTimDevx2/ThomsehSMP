@@ -12,6 +12,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Utils {
@@ -36,6 +37,27 @@ public class Utils {
         as.setCustomName(MessageUtils.format(text.replace("&", "§")));
         as.setCustomNameVisible(true);
         as.setVisible(false);
+    }
+
+    public static void saveInventory(Player player) {
+        User user = User.get(player);
+
+        user.getFile().set("inventory", null);
+        user.saveFile();
+
+        user.getFile().set("inventory.armor", player.getInventory().getArmorContents());
+        user.getFile().set("inventory.content", player.getInventory().getContents());
+        user.saveFile();
+    }
+
+
+    public static void restoreInventory(Player player) {
+        User user = User.get(player);
+
+        ItemStack[] content = ((List<ItemStack>) user.getFile().get("inventory.armor")).toArray(new ItemStack[0]);
+        player.getInventory().setArmorContents(content);
+        content = ((List<ItemStack>) user.getFile().get("inventory.content")).toArray(new ItemStack[0]);
+        player.getInventory().setContents(content);
     }
 
     public static boolean invFull(Player p) {

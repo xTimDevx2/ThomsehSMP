@@ -4,6 +4,7 @@ import me.xtimdevx.thomsehsmp.Main;
 import me.xtimdevx.thomsehsmp.User;
 import me.xtimdevx.thomsehsmp.commands.*;
 import me.xtimdevx.thomsehsmp.crates.CratesManager;
+import me.xtimdevx.thomsehsmp.managers.DuelsManager;
 import me.xtimdevx.thomsehsmp.utils.LocationUtils;
 import me.xtimdevx.thomsehsmp.utils.MessageUtils;
 import me.xtimdevx.thomsehsmp.utils.Utils;
@@ -84,7 +85,7 @@ public class PlayerEvents implements Listener {
         if(event.getEntity() instanceof Player) {
             Player reciever = (Player) event.getEntity();
             User user = User.get(reciever);
-            if(DuelCommand.duel.contains(reciever)) {
+            if(DuelsManager.duel.contains(reciever)) {
                 if(event.getCause() == EntityDamageEvent.DamageCause.FALL) {
                     event.setCancelled(true);
                 }
@@ -98,7 +99,7 @@ public class PlayerEvents implements Listener {
             Projectile arrow = (Projectile) event.getDamager();
             arrow.getShooter();
             if(arrow.getShooter() instanceof Player && event.getEntity() instanceof Player) {
-                if (!DuelCommand.duel.contains(arrow.getShooter())) {
+                if (!DuelsManager.duel.contains(arrow.getShooter())) {
                     event.setCancelled(true);
                 }
             }
@@ -144,7 +145,7 @@ public class PlayerEvents implements Listener {
                 Projectile arrow = (Projectile) event.getDamager();
                 Player reciever = (Player) event.getEntity();
                 Player damager = (Player) arrow.getShooter();
-                if (DuelCommand.duel.contains(damager) && DuelCommand.duel.contains(reciever)) {
+                if (DuelsManager.duel.contains(damager) && DuelsManager.duel.contains(reciever)) {
                     if(arrow.getShooter() instanceof Player) {
 
                         User Duser = User.get(damager);
@@ -152,73 +153,9 @@ public class PlayerEvents implements Listener {
                         if (Duser.getFile().get("DuelTarget").equals(reciever.getName()) && Ruser.getFile().get("DuelTarget").equals(damager.getName())) {
                             event.setCancelled(false);
                             if (((reciever.getHealth() - event.getFinalDamage()) <= 0)) {
-                                if(Duser.getFile().get("stats.duelwins") == null) {
-                                    Duser.getFile().set("stats.duelwins", 1);
-                                    Duser.saveFile();
-                                }else {
-                                    Duser.getFile().set("stats.duelwins", Duser.getFile().getInt("stats.duelwins") + 1);
-                                    Duser.saveFile();
-                                }
+                                DuelsManager duelsManager = new DuelsManager();
 
-                                reciever.getInventory().getHelmet().getItemMeta().setUnbreakable(false);
-                                reciever.getInventory().getChestplate().getItemMeta().setUnbreakable(false);
-                                reciever.getInventory().getLeggings().getItemMeta().setUnbreakable(false);
-                                reciever.getInventory().getBoots().getItemMeta().setUnbreakable(false);
-
-                                damager.getInventory().getHelmet().getItemMeta().setUnbreakable(false);
-                                damager.getInventory().getChestplate().getItemMeta().setUnbreakable(false);
-                                damager.getInventory().getLeggings().getItemMeta().setUnbreakable(false);
-                                damager.getInventory().getBoots().getItemMeta().setUnbreakable(false);
-                                if (Duser.getLanguage().equalsIgnoreCase( "ENGLISH")) {
-                                    damager.sendMessage("§8§m----------------------------------------------------");
-                                    MessageUtils.sendCenteredMessage(damager, "§3§lDuel ended");
-                                    MessageUtils.sendCenteredMessage(damager, "§a§lYou Won!");
-                                    damager.sendMessage(MessageUtils.format("Your HP: §c§o" + Math.round(damager.getHealth()) + "#810000 ❤"));
-                                    damager.sendMessage("§8§m----------------------------------------------------");
-
-                                }
-                                if (Duser.getLanguage().equalsIgnoreCase("DUTCH")) {
-                                    damager.sendMessage("§8§m----------------------------------------------------");
-                                    MessageUtils.sendCenteredMessage(damager, "§3§lDuel beëindigd!");
-                                    MessageUtils.sendCenteredMessage(damager, "§a§lU heeft gewonnen!");
-                                    damager.sendMessage(MessageUtils.format("Jou HP: §c§o" + Math.round(damager.getHealth()) + "#810000 ❤"));
-                                    damager.sendMessage("§8§m----------------------------------------------------");
-                                }
-
-                                if (Ruser.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                                    reciever.sendMessage("§8§m----------------------------------------------------");
-                                    MessageUtils.sendCenteredMessage(reciever, "§3§lDuel ended");
-                                    MessageUtils.sendCenteredMessage(reciever, "§c§lYou Lost!");
-                                    reciever.sendMessage(MessageUtils.format(damager.getName() + "'s HP: §c§o" + Math.round(damager.getHealth()) + "#810000 ❤"));
-                                    reciever.sendMessage("§8§m----------------------------------------------------");
-
-                                }
-                                if (Ruser.getLanguage().equalsIgnoreCase("DUTCH")) {
-                                    reciever.sendMessage("§8§m----------------------------------------------------");
-                                    MessageUtils.sendCenteredMessage(reciever, "§3§lDuel beëindigd!");
-                                    MessageUtils.sendCenteredMessage(reciever, "§c§lU bent verloren!");
-                                    reciever.sendMessage(MessageUtils.format(damager.getName() + "'s HP: §c§o" + Math.round(damager.getHealth()) + "#810000 ❤"));
-                                    reciever.sendMessage("§8§m----------------------------------------------------");
-                                }
-
-                                reciever.setHealth(20);
-
-                                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        damager.setHealth(20);
-                                        damager.setFoodLevel(20);
-                                        damager.setFireTicks(0);
-                                    }
-                                }, 20);
-
-                                Bukkit.getScheduler().cancelTask(DuelCommand.taskID3);
-                                DuelCommand.duel.remove(damager);
-                                DuelCommand.duel.remove(reciever);
-                                DuelCommand.duelInvite.remove(reciever);
-                                DuelCommand.duelInvite.remove(damager);
-                                Duser.getFile().set("DuelTarget", null);
-                                Ruser.getFile().set("DuelTarget", null);
+                                duelsManager.endDuel(damager, reciever, Duser.getFile().getString("duelmode"), false, false);
                                 return;
                             }
                         } else {
@@ -233,61 +170,16 @@ public class PlayerEvents implements Listener {
             if (event.getDamager() instanceof Player) {
                 Player damager = (Player) event.getDamager();
                 Player reciever = (Player) event.getEntity();
-                if (DuelCommand.duel.contains(damager) && DuelCommand.duel.contains(reciever)) {
+                if (DuelsManager.duel.contains(damager) && DuelsManager.duel.contains(reciever)) {
                     User Duser = User.get(damager);
                     User Ruser = User.get(reciever);
                     if (Duser.getFile().get("DuelTarget").equals(reciever.getName()) && Ruser.getFile().get("DuelTarget").equals(damager.getName())) {
                         event.setCancelled(false);
                         if (((reciever.getHealth() - event.getFinalDamage()) <= 0)) {
 
-                            if (Duser.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                                damager.sendMessage("§8§m----------------------------------------------------");
-                                MessageUtils.sendCenteredMessage(damager, "§3§lDuel ended");
-                                MessageUtils.sendCenteredMessage(damager, "§a§lYou Won!");
-                                damager.sendMessage(MessageUtils.format("Your HP: §c§o" + Math.round(damager.getHealth()) + "#810000 ❤"));
-                                damager.sendMessage("§8§m----------------------------------------------------");
+                            DuelsManager duelsManager = new DuelsManager();
 
-                            }
-                            if (Duser.getLanguage().equalsIgnoreCase("DUTCH")) {
-                                damager.sendMessage("§8§m----------------------------------------------------");
-                                MessageUtils.sendCenteredMessage(damager, "§3§lDuel beëindigd!");
-                                MessageUtils.sendCenteredMessage(damager, "§a§lU heeft gewonnen!");
-                                damager.sendMessage(MessageUtils.format("Jou HP: §c§o" + Math.round(damager.getHealth()) + "#810000 ❤"));
-                                damager.sendMessage("§8§m----------------------------------------------------");
-                            }
-
-                            if (Ruser.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                                reciever.sendMessage("§8§m----------------------------------------------------");
-                                MessageUtils.sendCenteredMessage(reciever, "§3§lDuel ended");
-                                MessageUtils.sendCenteredMessage(reciever, "§c§lYou Lost!");
-                                reciever.sendMessage(MessageUtils.format(damager.getName() + "'s HP: §c§o" + Math.round(damager.getHealth()) + "#810000 ❤"));
-                                reciever.sendMessage("§8§m----------------------------------------------------");
-
-                            }
-                            if (Ruser.getLanguage().equalsIgnoreCase("DUTCH")) {
-                                reciever.sendMessage("§8§m----------------------------------------------------");
-                                MessageUtils.sendCenteredMessage(reciever, "§3§lDuel beëindigd!");
-                                MessageUtils.sendCenteredMessage(reciever, "§c§lU bent verloren!");
-                                reciever.sendMessage(MessageUtils.format(damager.getName() + "'s HP: §c§o" + Math.round(damager.getHealth()) + "#810000 ❤"));
-                                reciever.sendMessage("§8§m----------------------------------------------------");
-                            }
-
-                            reciever.setHealth(20);
-
-                            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
-                                @Override
-                                public void run() {
-                                    damager.setHealth(20);
-                                }
-                            }, 20);
-
-                            Bukkit.getScheduler().cancelTask(DuelCommand.taskID3);
-                            DuelCommand.duel.remove(damager);
-                            DuelCommand.duel.remove(reciever);
-                            DuelCommand.duelInvite.remove(reciever);
-                            DuelCommand.duelInvite.remove(damager);
-                            Duser.getFile().set("DuelTarget", null);
-                            Ruser.getFile().set("DuelTarget", null);
+                            duelsManager.endDuel(damager, reciever, Duser.getFile().getString("duelmode"), false, false);
                         }
                     } else {
                         event.setCancelled(true);

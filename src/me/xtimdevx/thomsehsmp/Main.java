@@ -5,10 +5,7 @@ import me.xtimdevx.thomsehsmp.crates.CratesCommands;
 import me.xtimdevx.thomsehsmp.crates.CratesEvents;
 import me.xtimdevx.thomsehsmp.events.*;
 import me.xtimdevx.thomsehsmp.features.*;
-import me.xtimdevx.thomsehsmp.managers.AFKManager;
-import me.xtimdevx.thomsehsmp.managers.NPCManager;
-import me.xtimdevx.thomsehsmp.managers.TriviaManager;
-import me.xtimdevx.thomsehsmp.managers.WorldManager;
+import me.xtimdevx.thomsehsmp.managers.*;
 import me.xtimdevx.thomsehsmp.markets.BlockMarket;
 import me.xtimdevx.thomsehsmp.markets.FishMarket;
 import me.xtimdevx.thomsehsmp.markets.RedstoneMarket;
@@ -224,6 +221,7 @@ public class Main extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(new AFKListeners(this.afkManager), this);
         Bukkit.getPluginManager().registerEvents(new TriviaManager(), this);
         Bukkit.getPluginManager().registerEvents(new SettingsCommand(), this);
+        Bukkit.getPluginManager().registerEvents(new DuelsManager(), this);
 
     }
 

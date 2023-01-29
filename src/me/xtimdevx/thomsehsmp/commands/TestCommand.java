@@ -1,7 +1,9 @@
 package me.xtimdevx.thomsehsmp.commands;
 
+import me.xtimdevx.thomsehsmp.User;
 import me.xtimdevx.thomsehsmp.crates.CratesEvents;
 import me.xtimdevx.thomsehsmp.utils.MessageUtils;
+import me.xtimdevx.thomsehsmp.utils.Utils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,13 +23,21 @@ public class TestCommand implements CommandExecutor {
 
         if(args.length == 0) {
             player.sendMessage("§cUsage: /test <subject>");
-            player.sendMessage("§cSubjects: TEST");
+            player.sendMessage("§cSubjects: TEST, SAVEINV");
             return true;
         }
 
         if(args[0].equalsIgnoreCase("test")) {
             events.createHelix(player);
             player.sendMessage("success");
+        }
+
+        if(args[0].equalsIgnoreCase("saveinv")) {
+            Utils.saveInventory(player);
+        }
+
+        if(args[0].equalsIgnoreCase("loadinv")) {
+            Utils.restoreInventory(player);
         }
 
         return true;
