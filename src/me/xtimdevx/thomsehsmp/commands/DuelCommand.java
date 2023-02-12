@@ -4,8 +4,10 @@ import me.xtimdevx.thomsehsmp.Main;
 import me.xtimdevx.thomsehsmp.User;
 import me.xtimdevx.thomsehsmp.managers.DuelsManager;
 import me.xtimdevx.thomsehsmp.utils.MessageUtils;
+import me.xtimdevx.thomsehsmp.utils.Utils;
 import net.md_5.bungee.api.chat.*;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -52,6 +54,9 @@ public class DuelCommand implements CommandExecutor {
                     return true;
                 }
                 Bukkit.getScheduler().cancelTask(DuelsManager.taskID);
+
+                Utils.saveInventory(player);
+                Utils.saveInventory(target);
 
                 manager.startDuel(player, target, user.getFile().getString("duelmode"));
                 return true;
@@ -123,6 +128,33 @@ public class DuelCommand implements CommandExecutor {
                 if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
                     player.sendMessage("§cError: Deze speler is al geinviteerd voor een duel.");
                 }
+                return true;
+            }
+            if(DuelsManager.duel.contains(player)) {
+                player.sendMessage("§cError: Je zit al in een duel");
+                return true;
+            }
+            if(DuelsManager.duel.contains(target)) {
+                player.sendMessage("§cError: Deze speler zit al in een duel");
+                return true;
+            }
+            if(target.getGameMode() != GameMode.SURVIVAL) {
+                player.sendMessage("§cError: Deze speler zit niet in survival mode");
+                return true;
+            }
+            if(player.getGameMode() != GameMode.SURVIVAL) {
+                player.sendMessage("§cError: Je zit niet in survival mode");
+                return true;
+            }
+            User tuser = User.get(target);
+            boolean builder = user.getFile().getBoolean("builder");
+            boolean tbuilder = tuser.getFile().getBoolean("builder");
+            if(builder) {
+                player.sendMessage("§cJe kan niemand inviten voor een duel in builder mode.");
+                return true;
+            }
+            if(tbuilder) {
+                player.sendMessage("§cDeze speler zit in builder mode en kan niet geinviteerd worden.");
                 return true;
             }
             if (target == player) {

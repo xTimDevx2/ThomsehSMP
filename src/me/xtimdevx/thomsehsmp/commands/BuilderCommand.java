@@ -50,7 +50,7 @@ public class BuilderCommand implements CommandExecutor {
 
         boolean builder = user.getFile().getBoolean("builder");
 
-        if(builder == false) {
+        if(!builder) {
             PermsUtils permsUtils = PermsUtils.getInstance();
 
             LuckPerms api = LuckPermsProvider.get();

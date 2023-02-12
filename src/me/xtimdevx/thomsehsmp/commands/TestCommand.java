@@ -34,10 +34,12 @@ public class TestCommand implements CommandExecutor {
 
         if(args[0].equalsIgnoreCase("saveinv")) {
             Utils.saveInventory(player);
+            player.sendMessage("saved inv");
         }
 
         if(args[0].equalsIgnoreCase("loadinv")) {
             Utils.restoreInventory(player);
+            player.sendMessage("loaded inv");
         }
 
         return true;

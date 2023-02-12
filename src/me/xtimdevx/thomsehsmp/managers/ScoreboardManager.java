@@ -44,7 +44,7 @@ public class ScoreboardManager {
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
         obj.setDisplayName(MessageUtils.format("#01C5CB§lO#00B0B6§lr#009EA3§li#008A8E§lg#00767A§la#006A6D§lm#006366§li §f§lSMP"));
 
-        Score season = obj.getScore("§7§oSeason: 2   Patch: A-1.3");
+        Score season = obj.getScore("§7§oSeason: 2   Patch: A-1.4");
         season.setScore(15);
 
         Score line1 = obj.getScore("§f§8§m-----------------");
@@ -203,11 +203,11 @@ public class ScoreboardManager {
         User user = User.get(player);
 
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-        Objective obj = scoreboard.registerNewObjective("MainBoard", "dummy");
+        Objective obj = scoreboard.registerNewObjective("duelboard", "dummy");
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
         obj.setDisplayName(MessageUtils.format("#01C5CB§lO#00B0B6§lr#009EA3§li#008A8E§lg#00767A§la#006A6D§lm#006366§li §f§lSMP"));
 
-        Score season = obj.getScore("§7§oSeason: 2   Patch: A-1.3");
+        Score season = obj.getScore("§7§oSeason: 2   Patch: A-1.4");
         season.setScore(15);
 
         Score line1 = obj.getScore("§f§8§m-----------------");
@@ -216,18 +216,23 @@ public class ScoreboardManager {
         Score questName = obj.getScore("§8> §3§lDuel! §8<");
         questName.setScore(13);
 
+        Score MT = obj.getScore(" ");
+        Score MT2 = obj.getScore("§f ");
+        MT.setScore(12);
+        MT2.setScore(9);
+
         Score tegenstander = obj.getScore("§8> §3§lTegenstander");
-        tegenstander.setScore(12);
+        tegenstander.setScore(11);
 
         Score tegenstandernaam = obj.getScore("§f" + oponentname);
-        tegenstandernaam.setScore(11);
+        tegenstandernaam.setScore(10);
 
 
         Score balanceName = obj.getScore("§8> §3§lModus");
-        balanceName.setScore(10);
+        balanceName.setScore(8);
 
         Score modus = obj.getScore("§f" + mode);
-        modus.setScore(9);
+        modus.setScore(7);
 
         Score line2 = obj.getScore("§8§m-----------------");
         line2.setScore(0);

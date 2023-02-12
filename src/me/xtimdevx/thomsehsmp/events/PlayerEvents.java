@@ -11,13 +11,22 @@ import me.xtimdevx.thomsehsmp.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.player.*;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PlayerEvents implements Listener {
 
@@ -88,6 +97,41 @@ public class PlayerEvents implements Listener {
             if(DuelsManager.duel.contains(reciever)) {
                 if(event.getCause() == EntityDamageEvent.DamageCause.FALL) {
                     event.setCancelled(true);
+                }
+                if(event.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) {
+                    if (((reciever.getHealth() - event.getFinalDamage()) <= 0)) {
+                        event.setCancelled(true);
+                    }
+                }
+                if(event.getCause() == EntityDamageEvent.DamageCause.FIRE) {
+                    if (((reciever.getHealth() - event.getFinalDamage()) <= 0)) {
+                        event.setCancelled(true);
+                    }
+                }
+                if(event.getCause() == EntityDamageEvent.DamageCause.MAGIC) {
+                    if (((reciever.getHealth() - event.getFinalDamage()) <= 0)) {
+                        event.setCancelled(true);
+                    }
+                }
+                if(event.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION) {
+                    if (((reciever.getHealth() - event.getFinalDamage()) <= 0)) {
+                        event.setCancelled(true);
+                    }
+                }
+                if(event.getCause() == EntityDamageEvent.DamageCause.DROWNING) {
+                    if (((reciever.getHealth() - event.getFinalDamage()) <= 0)) {
+                        event.setCancelled(true);
+                    }
+                }
+                if(event.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION) {
+                    if (((reciever.getHealth() - event.getFinalDamage()) <= 0)) {
+                        event.setCancelled(true);
+                    }
+                }
+                if(event.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) {
+                    if (((reciever.getHealth() - event.getFinalDamage()) <= 0)) {
+                        event.setCancelled(true);
+                    }
                 }
             }
         }
@@ -168,8 +212,12 @@ public class PlayerEvents implements Listener {
                 }
             }
             if (event.getDamager() instanceof Player) {
-                Player damager = (Player) event.getDamager();
                 Player reciever = (Player) event.getEntity();
+                if(!DuelsManager.duel.contains(reciever)) {
+                    event.setCancelled(true);
+                    return;
+                }
+                    Player damager = (Player) event.getDamager();
                 if (DuelsManager.duel.contains(damager) && DuelsManager.duel.contains(reciever)) {
                     User Duser = User.get(damager);
                     User Ruser = User.get(reciever);
@@ -188,6 +236,15 @@ public class PlayerEvents implements Listener {
                     event.setCancelled(true);
                 }
             }
+            if(DuelsManager.duel.contains(event.getEntity())) {
+                if(event.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
+                    if(event.getDamager() instanceof Player) {
+                        event.setCancelled(false);
+                    }else {
+                        event.setCancelled(true);
+                    }
+                }
+            }
         }
     }
 
@@ -195,6 +252,8 @@ public class PlayerEvents implements Listener {
     public void onEat(PlayerItemConsumeEvent event) {
         Player player = (Player) event.getPlayer();
         User user = User.get(player);
+
+        ItemStack item = event.getItem();
 
         if(event.getItem().getType() == Material.GOLDEN_CARROT) {
             if(event.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§8> §6§lDaily Crate Key §8<")) {
@@ -206,6 +265,62 @@ public class PlayerEvents implements Listener {
                     player.sendMessage("§cBedoelt om mee te spelen, niet om op te eten! (/crates)");
                 }
             }
+        }
+        if (item.getType() == Material.GOLDEN_APPLE) {
+            if (item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().equals("§6Mini Golden Apple")) {
+                event.setCancelled(true);
+                if(player.getInventory().getItemInMainHand().getAmount() == 1) {
+                    player.getInventory().getItemInMainHand().setType(Material.AIR);
+                }else {
+                    player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount() - 1);
+                }
+                player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 25 * (4), 1));
+            }
+        }
+    }
+
+    @EventHandler
+    public void regenEvent(EntityRegainHealthEvent event) {
+        if(event.getEntity() instanceof Player) {
+            Player player = (Player) event.getEntity();
+            User user = User.get(player);
+            if(DuelsManager.duel.contains(player) && user.getFile().get("duelmode").equals("uhc")) {
+                if(event.getRegainReason() == EntityRegainHealthEvent.RegainReason.EATING || event.getRegainReason() == EntityRegainHealthEvent.RegainReason.SATIATED || event.getRegainReason() == EntityRegainHealthEvent.RegainReason.REGEN) {
+                    event.setCancelled(true);
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onItemDrop(PlayerDropItemEvent event) {
+        Player player = event.getPlayer();
+        User user = User.get(player);
+        if(user.getFile().get("DuelTarget") != null) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onItemDrop(EntityPickupItemEvent event) {
+        if(event.getEntity() instanceof Player) {
+            Player player = (Player) event.getEntity();
+            User user = User.get(player);
+            if(user.getFile().get("DuelTarget") != null) {
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onChestOpen(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        User user = User.get(player);
+        if(event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                if (user.getFile().get("DuelTarget") != null) {
+                    event.setCancelled(true);
+                }
+
         }
     }
 
@@ -259,13 +374,32 @@ public class PlayerEvents implements Listener {
 
         User user = User.get(player);
 
-        if(user.getFile().get("stats.blocksplaced") == null) {
+        if (user.getFile().get("stats.blocksplaced") == null) {
             user.getFile().set("stats.blocksplaced", 0);
             user.saveFile();
         }
 
         user.getFile().set("stats.blocksplaced", user.getFile().getInt("stats.blocksplaced") + 1);
         user.saveFile();
+
+        if (DuelsManager.duel.contains(player)) {
+            if(user.getFile().get("duelmode").equals("uhc")) {
+                if(event.getBlockPlaced().getType() != Material.COBBLESTONE) {
+                    event.setCancelled(true);
+                    return;
+                }
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        if(event.getBlockPlaced().getType() == Material.COBBLESTONE) {
+                            event.getBlockPlaced().setType(Material.AIR);
+                        }
+                    }
+                }, 200);
+                return;
+            }
+            event.setCancelled(true);
+        }
     }
 
     @EventHandler

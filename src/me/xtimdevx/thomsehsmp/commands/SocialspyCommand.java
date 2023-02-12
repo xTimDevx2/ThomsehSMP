@@ -33,28 +33,12 @@ public class SocialspyCommand implements CommandExecutor {
 
             player.sendMessage(MessageUtils.PREFIX + "Je hebt SocialSpy §cuitgeschakelt§f.");
 
-
-            LuckPerms api = LuckPermsProvider.get();
-            net.luckperms.api.model.user.User lpu = api.getPlayerAdapter(Player.class).getUser(player);
-            lpu.data().add(PermissionNode.builder("-griefprevention.eavesdrop").build());
-            lpu.data().add(PermissionNode.builder("-griefprevention.eavesdropsigns").build());
-            api.getUserManager().saveUser(lpu);
-
-
         }else {
             user.getFile().set("socialspy", true);
             user.saveFile();
 
             player.sendMessage(MessageUtils.PREFIX + "Je hebt SocialSpy §aingeschakelt§f.");
 
-            PermsUtils permsUtils = PermsUtils.getInstance();
-
-
-            LuckPerms api = LuckPermsProvider.get();
-            net.luckperms.api.model.user.User lpu = api.getPlayerAdapter(Player.class).getUser(player);
-            lpu.data().remove(PermissionNode.builder("-griefprevention.eavesdrop").build());
-            lpu.data().remove(PermissionNode.builder("-griefprevention.eavesdropsigns").build());
-            api.getUserManager().saveUser(lpu);
 
 
         }

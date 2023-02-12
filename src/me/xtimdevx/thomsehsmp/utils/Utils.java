@@ -60,6 +60,30 @@ public class Utils {
         player.getInventory().setContents(content);
     }
 
+
+    public static void saveBuilderInventory(Player player) {
+        User user = User.get(player);
+
+        user.getFile().set("builderinventory", null);
+        user.saveFile();
+
+        user.getFile().set("builderinventory.armor", player.getInventory().getArmorContents());
+        user.getFile().set("builderinventory.content", player.getInventory().getContents());
+        user.saveFile();
+    }
+
+
+
+
+    public static void restoreBuilderInventory(Player player) {
+        User user = User.get(player);
+
+        ItemStack[] content = ((List<ItemStack>) user.getFile().get("builderinventory.armor")).toArray(new ItemStack[0]);
+        player.getInventory().setArmorContents(content);
+        content = ((List<ItemStack>) user.getFile().get("builderinventory.content")).toArray(new ItemStack[0]);
+        player.getInventory().setContents(content);
+    }
+
     public static boolean invFull(Player p) {
 
         return p.getInventory().firstEmpty() == -1;

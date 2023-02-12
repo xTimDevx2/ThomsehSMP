@@ -2,6 +2,7 @@ package me.xtimdevx.thomsehsmp.commands;
 
 import me.xtimdevx.thomsehsmp.Main;
 import me.xtimdevx.thomsehsmp.User;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -47,8 +48,18 @@ public class ReplyCommand implements CommandExecutor {
         sender.sendMessage("§8> §c§lMSG §fme §8-> §f" + target.getName() + " §8» §f" + msg);
         target.sendMessage("§8> §c§lMSG §f" + sender.getName() + " §8-> §fme §8» §f" + msg);
 
+
         Main.msg.put(target, sender);
         Main.msg.put(sender, target);
+
+        for(Player online : Bukkit.getOnlinePlayers()) {
+            User ouser = User.get(online);
+            if(ouser.getFile().getBoolean("socialspy") == true) {
+                online.sendMessage("§4§lOP §8> §fSocialyspy:");
+                online.sendMessage("§8> §f" + sender.getName() + "§8-> §f" + target.getName() + " §8» §f" + msg);
+                return true;
+            }
+        }
         return true;
     }
 }

@@ -115,3 +115,12 @@ commands:
     usage: /<command>
   arena:
     usage: /<command>
+  gamemode:
+    usage: /<command>
+    aliases: [gm]
+  end:
+    usage: /<command>
+  warn:
+    usage: /<command>
+  warnlist:
+    usage: /<command>

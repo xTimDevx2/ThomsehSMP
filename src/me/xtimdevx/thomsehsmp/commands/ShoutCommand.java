@@ -25,11 +25,12 @@ public class ShoutCommand implements CommandExecutor {
 
         if(args.length == 1) {
             if(args[0].equalsIgnoreCase("live")) {
-                player.sendMessage("§8§m----------------------------------------------------");
-                MessageUtils.sendCenteredMessage(player, "§5§lThomseh is nu live!");
-                MessageUtils.sendCenteredMessage(player, "§5§nTwitch.tv/Thomseh");
-                MessageUtils.sendCenteredMessage(player, "Kom even langs en geef een follow!");
-                player.sendMessage("§8§m----------------------------------------------------");
+                Bukkit.broadcastMessage("§8§m----------------------------------------------------");
+                MessageUtils.broadcastCenteredMessage( "§5§lThomseh is nu live!");
+                MessageUtils.broadcastCenteredMessage( "§5§nTwitch.tv/Thomseh");
+                MessageUtils.broadcastCenteredMessage( "Kom even langs en geef een follow!");
+                Bukkit.broadcastMessage("§8§m----------------------------------------------------");
+
             }
             return true;
         }
@@ -37,12 +38,12 @@ public class ShoutCommand implements CommandExecutor {
         if(args.length == 2) {
             if(args[0].equalsIgnoreCase("live")) {
                 String game = args[1];
-                player.sendMessage("§8§m----------------------------------------------------");
-                MessageUtils.sendCenteredMessage(player, "§5§lThomseh is nu live!");
-                MessageUtils.sendCenteredMessage(player, "§5§nTwitch.tv/Thomseh");
-                MessageUtils.sendCenteredMessage(player, "§fVandaag spelen we §5§n" + game.replace("_", " ") + "§f.");
-                MessageUtils.sendCenteredMessage(player, "Kom even langs en geef een follow!");
-                player.sendMessage("§8§m----------------------------------------------------");
+                Bukkit.broadcastMessage("§8§m----------------------------------------------------");
+                MessageUtils.broadcastCenteredMessage( "§5§lThomseh is nu live!");
+                MessageUtils.broadcastCenteredMessage( "§5§nTwitch.tv/Thomseh");
+                MessageUtils.broadcastCenteredMessage( "§fVandaag spelen we §5§n" + game.replace("_", " ") + "§f.");
+                MessageUtils.broadcastCenteredMessage( "Kom even langs en geef een follow!");
+                Bukkit.broadcastMessage("§8§m----------------------------------------------------");
 
             }
 

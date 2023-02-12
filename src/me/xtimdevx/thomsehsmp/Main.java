@@ -12,7 +12,6 @@ import me.xtimdevx.thomsehsmp.markets.RedstoneMarket;
 import me.xtimdevx.thomsehsmp.markets.ResourceMarket;
 import me.xtimdevx.thomsehsmp.npc.*;
 import me.xtimdevx.thomsehsmp.quests.QuestCommands;
-import me.xtimdevx.thomsehsmp.quests.QuestEvents;
 import me.xtimdevx.thomsehsmp.utils.MovementChecker;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.trait.TraitInfo;
@@ -26,11 +25,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 import java.util.logging.Level;
@@ -59,6 +54,7 @@ public class Main extends JavaPlugin implements Listener {
         this.afkManager = new AFKManager();
 
         this.triviaManager = new TriviaManager();
+        triviaManager.startTrivia();
 
 
         registerCommands();
@@ -190,6 +186,10 @@ public class Main extends JavaPlugin implements Listener {
         getCommand("settings").setExecutor(new SettingsCommand());
         getCommand("socialspy").setExecutor(new SocialspyCommand());
         getCommand("arena").setExecutor(new ArenaCommand());
+        getCommand("gamemode").setExecutor(new GamemodeCommand());
+        getCommand("end").setExecutor(new EndCommand());
+        getCommand("warn").setExecutor(new WarnCommand());
+        getCommand("warnlist").setExecutor(new WarnCommand());
 
 
 
@@ -197,6 +197,7 @@ public class Main extends JavaPlugin implements Listener {
         getCommand("setrank").setTabCompleter(new SetRankCommand());
         getCommand("home").setTabCompleter(new HomeCommand());
         getCommand("maintenance").setTabCompleter(new MaintenanceCommand());
+        getCommand("gamemode").setTabCompleter(new GamemodeCommand());
     }
 
     public void registerListeners() {
@@ -211,7 +212,6 @@ public class Main extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(new BowPackage(), this);
         Bukkit.getPluginManager().registerEvents(new CommandEvents(), this);
         Bukkit.getPluginManager().registerEvents(new NPCManager(), this);
-        Bukkit.getPluginManager().registerEvents(new QuestEvents(), this);
         Bukkit.getPluginManager().registerEvents(new RedstoneMarket(), this);
         Bukkit.getPluginManager().registerEvents(new ResourceMarket(), this);
         Bukkit.getPluginManager().registerEvents(new FishMarket(), this);
