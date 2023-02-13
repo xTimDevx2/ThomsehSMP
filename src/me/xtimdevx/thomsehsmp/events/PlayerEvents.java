@@ -133,6 +133,46 @@ public class PlayerEvents implements Listener {
                         event.setCancelled(true);
                     }
                 }
+                if(event.getCause() == EntityDamageEvent.DamageCause.CONTACT) {
+                    if (((reciever.getHealth() - event.getFinalDamage()) <= 0)) {
+                        event.setCancelled(true);
+                    }
+                }
+                if(event.getCause() == EntityDamageEvent.DamageCause.FALLING_BLOCK) {
+                    if (((reciever.getHealth() - event.getFinalDamage()) <= 0)) {
+                        event.setCancelled(true);
+                    }
+                }
+                if(event.getCause() == EntityDamageEvent.DamageCause.WITHER) {
+                    if (((reciever.getHealth() - event.getFinalDamage()) <= 0)) {
+                        event.setCancelled(true);
+                    }
+                }
+                if(event.getCause() == EntityDamageEvent.DamageCause.THORNS) {
+                    if (((reciever.getHealth() - event.getFinalDamage()) <= 0)) {
+                        event.setCancelled(true);
+                    }
+                }
+                if(event.getCause() == EntityDamageEvent.DamageCause.FLY_INTO_WALL) {
+                    if (((reciever.getHealth() - event.getFinalDamage()) <= 0)) {
+                        event.setCancelled(true);
+                    }
+                }
+                if(event.getCause() == EntityDamageEvent.DamageCause.LAVA) {
+                    if (((reciever.getHealth() - event.getFinalDamage()) <= 0)) {
+                        event.setCancelled(true);
+                    }
+                }
+                if(event.getCause() == EntityDamageEvent.DamageCause.HOT_FLOOR) {
+                    if (((reciever.getHealth() - event.getFinalDamage()) <= 0)) {
+                        event.setCancelled(true);
+                    }
+                }
+                if(event.getCause() == EntityDamageEvent.DamageCause.DRAGON_BREATH) {
+                    if (((reciever.getHealth() - event.getFinalDamage()) <= 0)) {
+                        event.setCancelled(true);
+                    }
+                }
             }
         }
     }
@@ -144,6 +184,9 @@ public class PlayerEvents implements Listener {
             arrow.getShooter();
             if(arrow.getShooter() instanceof Player && event.getEntity() instanceof Player) {
                 if (!DuelsManager.duel.contains(arrow.getShooter())) {
+                    if(!DuelsManager.duel.contains(((Player) event.getEntity()).getPlayer())) {
+                        event.setCancelled(true);
+                    }
                     event.setCancelled(true);
                 }
             }
@@ -188,6 +231,12 @@ public class PlayerEvents implements Listener {
             if(event.getDamager() instanceof Arrow) {
                 Projectile arrow = (Projectile) event.getDamager();
                 Player reciever = (Player) event.getEntity();
+                if(!((arrow.getShooter() instanceof Player))) {
+                    if(DuelsManager.duel.contains(reciever)) {
+                        event.setCancelled(true);
+                    }
+                    return;
+                }
                 Player damager = (Player) arrow.getShooter();
                 if (DuelsManager.duel.contains(damager) && DuelsManager.duel.contains(reciever)) {
                     if(arrow.getShooter() instanceof Player) {

@@ -190,6 +190,8 @@ public class Main extends JavaPlugin implements Listener {
         getCommand("end").setExecutor(new EndCommand());
         getCommand("warn").setExecutor(new WarnCommand());
         getCommand("warnlist").setExecutor(new WarnCommand());
+        getCommand("enderchest").setExecutor(new EnderchestCommand());
+        getCommand("invsee").setExecutor(new InvseeCommand());
 
 
 
