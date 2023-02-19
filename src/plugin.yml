@@ -124,3 +124,7 @@ commands:
     usage: /<command>
   warnlist:
     usage: /<command>
+  invsee:
+    usage: /<command>
+  enderchest:
+    usage: /<command>

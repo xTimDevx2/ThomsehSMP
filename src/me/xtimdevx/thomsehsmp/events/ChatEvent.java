@@ -13,6 +13,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.logging.Level;
 
 public class ChatEvent implements Listener{
 
@@ -60,10 +61,11 @@ public class ChatEvent implements Listener{
 
         if(player.isOp()) {
             Utils.chat(MessageUtils.returnPrefix(oplayer) + player.getName() + " §8> §f" + event.getMessage().replace("&", "§"));
-
         }else {
             Utils.chat(MessageUtils.returnPrefix(oplayer) + player.getName() + " §8> §f" + event.getMessage());
 
         }
+        Bukkit.getLogger().info("Chat > " + player.getName() + ": " + event.getMessage());
+
     }
 }

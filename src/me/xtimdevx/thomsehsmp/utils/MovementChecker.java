@@ -1,6 +1,7 @@
 package me.xtimdevx.thomsehsmp.utils;
 
 import me.xtimdevx.thomsehsmp.managers.AFKManager;
+import org.bukkit.Bukkit;
 
 public class MovementChecker implements Runnable{
 
@@ -12,8 +13,6 @@ public class MovementChecker implements Runnable{
 
     @Override
     public void run() {
-
-        System.out.println("AFK Status for each player is being checked");
 
         afkManager.checkAllPlayersAFKStatus();
 
