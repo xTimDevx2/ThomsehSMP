@@ -190,7 +190,8 @@ public class DuelsManager implements Listener {
                 player.closeInventory();
             }
             if(event.getSlot() == 8) {
-                Player target = Bukkit.getPlayer(user.getFile().getString("duelrequest"));
+                player.sendMessage("§cDeze mode staat uit.");
+               /* Player target = Bukkit.getPlayer(user.getFile().getString("duelrequest"));
                 DuelsManager.duelInvite.add(target);
 
                 User tuser = User.get(target);
@@ -240,6 +241,8 @@ public class DuelsManager implements Listener {
                         }
                     }
                 }, 600);
+
+                */
             }
         }
     }

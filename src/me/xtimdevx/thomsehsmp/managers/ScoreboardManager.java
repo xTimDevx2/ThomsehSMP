@@ -44,7 +44,7 @@ public class ScoreboardManager {
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
         obj.setDisplayName(MessageUtils.format("#01C5CB§lO#00B0B6§lr#009EA3§li#008A8E§lg#00767A§la#006A6D§lm#006366§li §f§lSMP"));
 
-        Score season = obj.getScore("§7§oSeason: 2   Patch: A-1.4");
+        Score season = obj.getScore("§7§oSeason: 3   Patch: B-0.1");
         season.setScore(15);
 
         Score line1 = obj.getScore("§f§8§m-----------------");
@@ -207,7 +207,7 @@ public class ScoreboardManager {
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
         obj.setDisplayName(MessageUtils.format("#01C5CB§lO#00B0B6§lr#009EA3§li#008A8E§lg#00767A§la#006A6D§lm#006366§li §f§lSMP"));
 
-        Score season = obj.getScore("§7§oSeason: 2   Patch: A-1.4");
+        Score season = obj.getScore("§7§oSeason: 3   Patch: B-0.1");
         season.setScore(15);
 
         Score line1 = obj.getScore("§f§8§m-----------------");

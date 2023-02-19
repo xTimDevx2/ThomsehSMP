@@ -28,12 +28,12 @@ public class ServerEvents implements Listener {
     @EventHandler
     public void onServerListPing(ServerListPingEvent event) {
         if(Settings.getInstance().getData().getBoolean("maintenance")) {
-            event.setMotd(MessageUtils.format("                   #01C5CB§lO#00B0B6§lr#009EA3§li#008A8E§lg#00767A§la#006A6D§lm#006366§li §f§lSMP §7§oSeason 2\n" +
+            event.setMotd(MessageUtils.format("#01C5CB§lO#00B0B6§lr#009EA3§li#008A8E§lg#00767A§la#006A6D§lm#006366§li §f§lSMP §7§oSeason 3\n" +
                     "    §fServer maintenance is enabled right now."));
             return;
         }
-        event.setMotd(MessageUtils.format("                   #01C5CB§lO#00B0B6§lr#009EA3§li#008A8E§lg#00767A§la#006A6D§lm#006366§li §f§lSMP §7§oSeason 2\n" +
-                " §fSurvival - Custom - Crates - Thomseh - [§l1.19.2§f]"));
+        event.setMotd(MessageUtils.format("          #01C5CB§lO#00B0B6§lr#009EA3§li#008A8E§lg#00767A§la#006A6D§lm#006366§li §f§lSMP §7§oSeason 3 §8[§3§o1.19.2§8]\n" +
+                " §fSurvival §8- §fCustom §8- §fCrates §8- §fEvents §8- §fMinigames"));
     }
 
     @EventHandler

@@ -39,7 +39,7 @@ public class MaintenanceCommand implements CommandExecutor, TabCompleter {
             Settings.getInstance().saveData();
         }
         if (args[0].equalsIgnoreCase("disable")) {
-            if (Settings.getInstance().getData().getBoolean("maintenance")) {
+            if (!Settings.getInstance().getData().getBoolean("maintenance")) {
                 player.sendMessage("§cMaintenance mode is not enabled right now.");
                 return true;
             }
