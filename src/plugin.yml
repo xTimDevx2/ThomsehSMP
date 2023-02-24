@@ -128,3 +128,6 @@ commands:
     usage: /<command>
   enderchest:
     usage: /<command>
+  pushbattle:
+    usage: /<command>
+    aliases: [pb]

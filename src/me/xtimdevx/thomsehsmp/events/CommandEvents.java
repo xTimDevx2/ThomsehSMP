@@ -1,5 +1,6 @@
 package me.xtimdevx.thomsehsmp.events;
 
+import me.xtimdevx.thomsehsmp.User;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -22,8 +23,16 @@ public class CommandEvents implements Listener{
     public void onCommand(PlayerCommandPreprocessEvent event) {
         String message = event.getMessage();
         Player player = (Player) event.getPlayer();
+        User user = User.get(player);
 
         String command = message.split(" ")[0].substring(1);
+
+        if (user.getFile().get("DuelTarget") != null) {
+            if(command.equalsIgnoreCase("trade")) {
+            }
+            event.setCancelled(true);
+            player.sendMessage("§cERROR: Deze command staat uit tijdens een duel.");
+        }
 
         if (command.equalsIgnoreCase("me") || command.equalsIgnoreCase("minecraft:me") || command.equalsIgnoreCase("kill")) {
             player.sendMessage("§cERROR: You don't have permissions to use this command.");

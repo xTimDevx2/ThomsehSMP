@@ -10,6 +10,7 @@ import me.xtimdevx.thomsehsmp.markets.BlockMarket;
 import me.xtimdevx.thomsehsmp.markets.FishMarket;
 import me.xtimdevx.thomsehsmp.markets.RedstoneMarket;
 import me.xtimdevx.thomsehsmp.markets.ResourceMarket;
+import me.xtimdevx.thomsehsmp.minigames.pushbattle.PushbattleCommands;
 import me.xtimdevx.thomsehsmp.npc.*;
 import me.xtimdevx.thomsehsmp.quests.QuestCommands;
 import me.xtimdevx.thomsehsmp.utils.MovementChecker;
@@ -192,6 +193,7 @@ public class Main extends JavaPlugin implements Listener {
         getCommand("warnlist").setExecutor(new WarnCommand());
         getCommand("enderchest").setExecutor(new EnderchestCommand());
         getCommand("invsee").setExecutor(new InvseeCommand());
+        getCommand("pushbattle").setExecutor(new PushbattleCommands());
 
 
 

@@ -178,6 +178,24 @@ public class PlayerEvents implements Listener {
     }
 
     @EventHandler
+    public void interactEntityEvent(PlayerInteractEntityEvent e) {
+        if(e.getRightClicked()  instanceof ItemFrame) {
+        Player player = (Player) e.getPlayer();
+        User user = User.get(player);
+            if (user.getFile().get("DuelTarget") != null) {
+                e.setCancelled(true);
+            }
+        }
+        if(e.getRightClicked() instanceof Minecart) {
+            Player player = (Player) e.getPlayer();
+            User user = User.get(player);
+            if (user.getFile().get("DuelTarget") != null) {
+                e.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
     public void onDamageByArrow(EntityDamageByEntityEvent event) {
         if(event.getDamager() instanceof Arrow || event.getDamager() instanceof Trident) {
             Projectile arrow = (Projectile) event.getDamager();

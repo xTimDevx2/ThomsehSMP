@@ -25,6 +25,8 @@ public class DuelCommand implements CommandExecutor {
             Player player = (Player) sender;
             User user = User.get(player);
 
+            /*
+
             if (args.length == 0) {
                 player.sendMessage("§c? /duel <player>");
                 return true;
@@ -172,6 +174,8 @@ public class DuelCommand implements CommandExecutor {
 
             manager.proposeKits(player);
             //
+            
+             */
         }
         return true;
     }

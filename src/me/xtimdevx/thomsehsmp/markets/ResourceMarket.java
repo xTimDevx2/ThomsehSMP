@@ -330,15 +330,15 @@ public class ResourceMarket implements Listener {
 
             if(event.getSlot() == 2) {
                 if(event.isShiftClick()) {
-                    marketMethods.buyItem(new ItemStack(Material.BONE), 64, 400, player, MarketMethods.MarketNPC.THEODORUS);
+                        marketMethods.buyItem(new ItemStack(Material.COAL), 64, 400, player, MarketMethods.MarketNPC.THEODORUS);
                     player.closeInventory();
                     return;
                 }
                 if(event.isRightClick()) {
-                    marketMethods.buyItem(new ItemStack(Material.BONE), 1, 8, player, MarketMethods.MarketNPC.THEODORUS);
+                    marketMethods.buyItem(new ItemStack(Material.COAL), 1, 8, player, MarketMethods.MarketNPC.THEODORUS);
                 }
                 if(event.isLeftClick()) {
-                    marketMethods.buyItem(new ItemStack(Material.BONE), 16, 124, player, MarketMethods.MarketNPC.THEODORUS);
+                    marketMethods.buyItem(new ItemStack(Material.COAL), 16, 124, player, MarketMethods.MarketNPC.THEODORUS);
                 }
                 player.closeInventory();
             }

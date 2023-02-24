@@ -1,7 +1,15 @@
 package me.xtimdevx.thomsehsmp.minigames.pushbattle;
 
-import org.bukkit.GameMode;
+import me.xtimdevx.thomsehsmp.utils.Utils;
+import net.citizensnpcs.npc.ai.speech.Chat;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.ScoreboardManager;
+import org.bukkit.scoreboard.Team;
 
 import java.util.ArrayList;
 
@@ -12,6 +20,10 @@ public class PushbattleMain {
     public static ArrayList teamRed = new ArrayList();
     public static ArrayList teamBlue = new ArrayList();
     public static ArrayList inLobby = new ArrayList();
+
+
+    public static Location blueSpawn = new Location(Bukkit.getWorld("SMP"), 108.5, 63, -216.5);
+    public static Location redSpawn = new Location(Bukkit.getWorld("SMP"), 108.5, 63, -221.5);
 
     /*
     Pushbattle:
@@ -32,7 +44,8 @@ public class PushbattleMain {
            important:
            - Disable commands while ingame
            - Make sure inventories work.
-           -
+           - Geen item drops
+           - Geen echte deaths
 
         Game start.
      */
@@ -40,12 +53,77 @@ public class PushbattleMain {
 
     public static void joinLobby(Player player) {
         if(conditionsMet(player)) {
+            inLobby.add(player);
+            decideTeam(player);
+
+
+            String team;
+
+            if(teamBlue.contains(player)) {
+                blueSpawn.setPitch(0);
+                blueSpawn.setYaw(110);
+
+                player.teleport(blueSpawn);
+
+                team = "blue";
+            }else {
+                redSpawn.setPitch(0);
+                redSpawn.setYaw(104);
+
+                player.teleport(redSpawn);
+
+                team = "red";
+            }
+
+
+            Utils.saveInventory(player);
+
+            player.getInventory().clear();
+
+
+            ScoreboardManager scoreboard = Bukkit.getScoreboardManager();
+            Scoreboard board = scoreboard.getNewScoreboard();
+            Team teamRed = board.registerNewTeam("red");
+            Team teamBlue = board.registerNewTeam("blue");
+
+            teamRed.setPrefix(ChatColor.RED + "");
+            teamBlue.setPrefix(ChatColor.BLUE + "");
+
+
+            ItemStack chestplate = new ItemStack(Material.LEATHER_CHESTPLATE);
+            LeatherArmorMeta chestplateMeta = (LeatherArmorMeta) chestplate.getItemMeta();
+            if(team.equals("red")) {
+                chestplateMeta.setColor(Color.RED);
+                chestplate.setItemMeta(chestplateMeta);
+
+                player.getInventory().setHelmet(new ItemStack(Material.RED_CANDLE));
+                player.getInventory().setChestplate(new ItemStack(chestplate));
+
+                teamRed.addEntry(player.getName());
+                player.setPlayerListName(player.getPlayerListName().replace(player.getName(), ChatColor.RED + player.getName()));
+            }else {
+                chestplateMeta.setColor(Color.BLUE);
+                chestplate.setItemMeta(chestplateMeta);
+
+                player.getInventory().setHelmet(new ItemStack(Material.BLUE_CANDLE));
+                player.getInventory().setChestplate(chestplate);
+
+                teamBlue.addEntry(player.getName());
+                player.setPlayerListName(player.getPlayerListName().replace(player.getName(), ChatColor.BLUE + player.getName()));
+            }
 
         }
     }
 
     public static void decideTeam(Player player) {
 
+        String team = sortTeams();
+
+        if(team.equalsIgnoreCase("red")) {
+            teamRed.add(player);
+        }else {
+            teamBlue.add(player);
+        }
     }
 
     public static boolean conditionsMet(Player player) {
@@ -55,7 +133,7 @@ public class PushbattleMain {
         }
 
         if(player.getGameMode() != GameMode.SURVIVAL) {
-            player.sendMessage("§cJe moet gamemode survival hebben om");
+            player.sendMessage("§cJe moet gamemode survival hebben om te kunnen joinen");
             return false;
         }
         if(inLobby.contains(player)) {
@@ -67,12 +145,6 @@ public class PushbattleMain {
             return false;
         }
 
-        inLobby.add(player);
-        if(sortTeams().equalsIgnoreCase("red")) {
-            teamRed.add(player);
-        }else {
-            teamBlue.add(player);
-        }
         return true;
     }
 
