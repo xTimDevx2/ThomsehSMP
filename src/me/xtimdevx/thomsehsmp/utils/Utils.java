@@ -108,10 +108,6 @@ public class Utils {
         }
     }
 
-    public static void winDuel(Player winner, Player loser) {
-
-    }
-
     public static boolean consumeItem(Player player, int count, Material mat) {
         Map<Integer, ? extends ItemStack> ammo = player.getInventory().all(mat);
 

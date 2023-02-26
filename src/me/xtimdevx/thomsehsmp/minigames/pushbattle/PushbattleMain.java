@@ -1,5 +1,9 @@
 package me.xtimdevx.thomsehsmp.minigames.pushbattle;
 
+import com.lkeehl.tagapi.TagBuilder;
+import com.lkeehl.tagapi.api.Tag;
+import me.xtimdevx.thomsehsmp.Main;
+import me.xtimdevx.thomsehsmp.User;
 import me.xtimdevx.thomsehsmp.utils.Utils;
 import net.citizensnpcs.npc.ai.speech.Chat;
 import org.bukkit.*;
@@ -50,14 +54,22 @@ public class PushbattleMain {
         Game start.
      */
 
+    public static void registerPushbattleEvents() {
+        Bukkit.getPluginManager().registerEvents(new PushbattleEvents(), Main.plugin);
+    }
 
     public static void joinLobby(Player player) {
         if(conditionsMet(player)) {
             inLobby.add(player);
             decideTeam(player);
 
+            User user = User.get(player);
 
             String team;
+
+            user.getFile().set("pblocation", player.getLocation());
+            user.saveFile();
+
 
             if(teamBlue.contains(player)) {
                 blueSpawn.setPitch(0);
@@ -80,16 +92,6 @@ public class PushbattleMain {
 
             player.getInventory().clear();
 
-
-            ScoreboardManager scoreboard = Bukkit.getScoreboardManager();
-            Scoreboard board = scoreboard.getNewScoreboard();
-            Team teamRed = board.registerNewTeam("red");
-            Team teamBlue = board.registerNewTeam("blue");
-
-            teamRed.setPrefix(ChatColor.RED + "");
-            teamBlue.setPrefix(ChatColor.BLUE + "");
-
-
             ItemStack chestplate = new ItemStack(Material.LEATHER_CHESTPLATE);
             LeatherArmorMeta chestplateMeta = (LeatherArmorMeta) chestplate.getItemMeta();
             if(team.equals("red")) {
@@ -99,8 +101,12 @@ public class PushbattleMain {
                 player.getInventory().setHelmet(new ItemStack(Material.RED_CANDLE));
                 player.getInventory().setChestplate(new ItemStack(chestplate));
 
-                teamRed.addEntry(player.getName());
                 player.setPlayerListName(player.getPlayerListName().replace(player.getName(), ChatColor.RED + player.getName()));
+
+                com.lkeehl.tagapi.api.Tag tag = Tag.create(player); // Create a new Tag
+                tag.addTagLine(10).setText(pl->"§c" + player.getName());
+                tag.addTagLine(9).setText(pl->"§4§lRed");
+                tag.giveTag();
             }else {
                 chestplateMeta.setColor(Color.BLUE);
                 chestplate.setItemMeta(chestplateMeta);
@@ -108,9 +114,21 @@ public class PushbattleMain {
                 player.getInventory().setHelmet(new ItemStack(Material.BLUE_CANDLE));
                 player.getInventory().setChestplate(chestplate);
 
-                teamBlue.addEntry(player.getName());
                 player.setPlayerListName(player.getPlayerListName().replace(player.getName(), ChatColor.BLUE + player.getName()));
+
+                com.lkeehl.tagapi.api.Tag tag = Tag.create(player); // Create a new Tag
+                tag.addTagLine(10).setText(pl->"§3" + player.getName());
+                tag.addTagLine(9).setText(pl->"§9§lBlue");
+                tag.giveTag();
+
             }
+
+            ItemStack leaveitem = new ItemStack(Material.CYAN_BED);
+            ItemMeta leaveitemMeta = leaveitem.getItemMeta();
+            leaveitemMeta.setDisplayName("§8> §3Klik op mij om uit de lobby te gaan §8<");
+            leaveitem.setItemMeta(leaveitemMeta);
+
+            player.getInventory().setItem(8, leaveitem);
 
         }
     }

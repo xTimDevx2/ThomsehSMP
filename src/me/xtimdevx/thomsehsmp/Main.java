@@ -1,5 +1,6 @@
 package me.xtimdevx.thomsehsmp;
 
+import com.lkeehl.tagapi.TagAPI;
 import me.xtimdevx.thomsehsmp.commands.*;
 import me.xtimdevx.thomsehsmp.crates.CratesCommands;
 import me.xtimdevx.thomsehsmp.crates.CratesEvents;
@@ -11,6 +12,7 @@ import me.xtimdevx.thomsehsmp.markets.FishMarket;
 import me.xtimdevx.thomsehsmp.markets.RedstoneMarket;
 import me.xtimdevx.thomsehsmp.markets.ResourceMarket;
 import me.xtimdevx.thomsehsmp.minigames.pushbattle.PushbattleCommands;
+import me.xtimdevx.thomsehsmp.minigames.pushbattle.PushbattleMain;
 import me.xtimdevx.thomsehsmp.npc.*;
 import me.xtimdevx.thomsehsmp.quests.QuestCommands;
 import me.xtimdevx.thomsehsmp.utils.MovementChecker;
@@ -53,6 +55,8 @@ public class Main extends JavaPlugin implements Listener {
         plugin = this;
         Settings.getInstance().setup();
         this.afkManager = new AFKManager();
+
+        TagAPI.onEnable(this);
 
         this.triviaManager = new TriviaManager();
         triviaManager.startTrivia();
@@ -119,6 +123,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 
         bar.getBar().removeAll();
+        TagAPI.onDisable();
 
 
     }
@@ -227,6 +232,7 @@ public class Main extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(new SettingsCommand(), this);
         Bukkit.getPluginManager().registerEvents(new DuelsManager(), this);
 
+        PushbattleMain.registerPushbattleEvents();
     }
 
     @EventHandler

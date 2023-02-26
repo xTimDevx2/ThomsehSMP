@@ -9,7 +9,7 @@ public class PushbattleCommands implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if(cmd.getName().equalsIgnoreCase("pushbattle")) {
-            if(args[0].equalsIgnoreCase("test")) {
+            if(args[0].equalsIgnoreCase("join")) {
                 Player player = (Player) sender;
                 PushbattleMain.joinLobby(player);
             }

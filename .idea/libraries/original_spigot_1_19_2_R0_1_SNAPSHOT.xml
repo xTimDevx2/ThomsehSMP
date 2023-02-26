@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="original-spigot-1.19.2-R0.1-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../LuckPerms-Bukkit-5.4.30.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Citizens-2.0.30-b2598.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
