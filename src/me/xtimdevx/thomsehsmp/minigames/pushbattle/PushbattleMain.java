@@ -4,15 +4,17 @@ import com.lkeehl.tagapi.TagBuilder;
 import com.lkeehl.tagapi.api.Tag;
 import me.xtimdevx.thomsehsmp.Main;
 import me.xtimdevx.thomsehsmp.User;
+import me.xtimdevx.thomsehsmp.managers.ScoreboardManager;
+import me.xtimdevx.thomsehsmp.utils.MessageUtils;
 import me.xtimdevx.thomsehsmp.utils.Utils;
 import net.citizensnpcs.npc.ai.speech.Chat;
+import net.md_5.bungee.api.chat.*;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.scoreboard.Team;
 
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 public class PushbattleMain {
 
     public static boolean gameRunning;
+    public static boolean starting;
     public static ArrayList inGame = new ArrayList();
     public static ArrayList teamRed = new ArrayList();
     public static ArrayList teamBlue = new ArrayList();
@@ -103,9 +106,9 @@ public class PushbattleMain {
 
                 player.setPlayerListName(player.getPlayerListName().replace(player.getName(), ChatColor.RED + player.getName()));
 
-                com.lkeehl.tagapi.api.Tag tag = Tag.create(player); // Create a new Tag
+                Tag tag = Tag.create(player); // Create a new Tag
                 tag.addTagLine(10).setText(pl->"§c" + player.getName());
-                tag.addTagLine(9).setText(pl->"§4§lRed");
+                tag.addTagLine(9).setText(pl->"§4§lRood");
                 tag.giveTag();
             }else {
                 chestplateMeta.setColor(Color.BLUE);
@@ -118,18 +121,77 @@ public class PushbattleMain {
 
                 com.lkeehl.tagapi.api.Tag tag = Tag.create(player); // Create a new Tag
                 tag.addTagLine(10).setText(pl->"§3" + player.getName());
-                tag.addTagLine(9).setText(pl->"§9§lBlue");
+                tag.addTagLine(9).setText(pl->"§9§lBlauw");
                 tag.giveTag();
 
             }
 
             ItemStack leaveitem = new ItemStack(Material.CYAN_BED);
             ItemMeta leaveitemMeta = leaveitem.getItemMeta();
-            leaveitemMeta.setDisplayName("§8> §3Klik op mij om uit de lobby te gaan §8<");
+            leaveitemMeta.setDisplayName(MessageUtils.format("§8> " + color +"Klik op mij om uit de lobby te gaan §8<"));
             leaveitem.setItemMeta(leaveitemMeta);
 
             player.getInventory().setItem(8, leaveitem);
 
+
+            broadcastPushbattle(color + "§o" + player.getName() + " §fis de lobby gejoined. §7§o(" + inLobby.size() + "/8)", true);
+            if(inLobby.size() == 1) {
+                broadcastPushbattle("§8> §fNog " + color + "1 §fspeler nodig om te game te starten...", false);
+            }
+
+            ScoreboardManager.createPushbattleLobbyBoard(player);
+            for(Player online : Bukkit.getOnlinePlayers()) {
+                if(inLobby.contains(online)) {
+                    ScoreboardManager.updatePBLobbyScoreBoard(online);
+                }
+            }
+
+            if(inLobby.size() == 2) {
+                starting = true;
+
+                ComponentBuilder builder2 = new ComponentBuilder("");
+                builder2.append(MessageUtils.format("§8> §fKlik " + color + " hier §fom de lobby te joinen!"));
+                builder2.event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/pb join"));
+                builder2.event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(MessageUtils.format("§fKlik op mij om te " + color +"joinen§f."))}));
+
+                for(Player online : Bukkit.getOnlinePlayers()) {
+                    if(!inLobby.contains(online)) {
+                        online.sendMessage(MessageUtils.format(prefix + "Een " + color + "Pushbattle §fgame start in " + color + " 30 §fseconden."));
+                        online.spigot().sendMessage(builder2.create());
+                    }
+                }
+
+                broadcastPushbattle("§8> De game start in " + color + " 30 §fseconden.", false);
+            }
+
+        }
+    }
+
+    public static void leaveLobby(Player player){
+        User user = User.get(player);
+        player.teleport(user.getFile().getLocation("pblocation"));
+        player.getInventory().clear();
+
+        Utils.restoreInventory(player);
+        inLobby.remove(player);
+
+        if(teamRed.contains(player)) {
+            teamRed.remove(player);
+        }else {
+            teamBlue.remove(player);
+        }
+
+        broadcastPushbattle(color + "§o" + player.getName() + " §fis de lobby geleaved. §7§o(" + inLobby.size() + "/8)", true);
+        if(inLobby.size() == 1) {
+            broadcastPushbattle("§8> §fStart van de game is afgebroken. Wachten op meer spelers...", false);
+        }
+
+        Bukkit.getScheduler().cancelTask(ScoreboardManager.pusbattleTask);
+        ScoreboardManager.createMainBoard(player);
+        for(Player online : Bukkit.getOnlinePlayers()) {
+            if (inLobby.contains(online)) {
+                ScoreboardManager.updatePBLobbyScoreBoard(online);
+            }
         }
     }
 
@@ -163,9 +225,29 @@ public class PushbattleMain {
             return false;
         }
 
+        if(inLobby.size() == 8) {
+            player.sendMessage("§cDe pushbattle lobby zit vol.");
+        }
+
         return true;
     }
 
+    public static String color = "#825AFE";
+    public static String prefix = "#825AFE§lPushbattle §8> §f";
+
+
+    public static void broadcastPushbattle(String message, boolean prefix) {
+        for(Player inpb : Bukkit.getOnlinePlayers()) {
+            if(inLobby.contains(inpb) || inGame.contains(inpb)) {
+                if(prefix) {
+                    inpb.sendMessage(MessageUtils.format("#825AFE§lPushbattle §8> §f" +  message));
+                }else {
+                    inpb.sendMessage(MessageUtils.format(message));
+
+                }
+            }
+        }
+    }
 
     public static String sortTeams() {
         if(teamRed.size() == 0) {
