@@ -6,6 +6,7 @@ import me.xtimdevx.thomsehsmp.Main;
 import me.xtimdevx.thomsehsmp.User;
 import me.xtimdevx.thomsehsmp.managers.ScoreboardManager;
 import me.xtimdevx.thomsehsmp.utils.MessageUtils;
+import me.xtimdevx.thomsehsmp.utils.NameUtils;
 import me.xtimdevx.thomsehsmp.utils.Utils;
 import net.citizensnpcs.npc.ai.speech.Chat;
 import net.md_5.bungee.api.chat.*;
@@ -14,6 +15,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
@@ -23,6 +26,7 @@ public class PushbattleMain {
 
     public static boolean gameRunning;
     public static boolean starting;
+    public static boolean tutorial;
     public static ArrayList inGame = new ArrayList();
     public static ArrayList teamRed = new ArrayList();
     public static ArrayList teamBlue = new ArrayList();
@@ -59,6 +63,178 @@ public class PushbattleMain {
 
     public static void registerPushbattleEvents() {
         Bukkit.getPluginManager().registerEvents(new PushbattleEvents(), Main.plugin);
+    }
+
+    public static int countdownTask = -1;
+    public static void startCountdown() {
+        broadcastPushbattle("§8> §fDe game start in " + color + "30 §fseconden!", false);
+        starting = true;
+
+        //Set slowness
+        //3sec
+        //Gamemode 3
+
+        for(Player online : Bukkit.getOnlinePlayers()) {
+            if(inLobby.contains(online)) {
+                online.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1726272000, 128));
+                online.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 1726272000, 6));
+                online.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 1726272000, 10));
+                online.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1726272000, 6));
+                online.setInvisible(true);
+                tutorial = true;
+            }
+        }
+        countdownTask = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+            @Override
+            public void run() {
+                for(Player online : Bukkit.getOnlinePlayers()) {
+                    if(inLobby.contains(online)) {
+                        online.setGameMode(GameMode.SPECTATOR);
+                    }
+                }
+            }
+        }, 60);
+        countdownTask = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+            @Override
+            public void run() {
+                for(Player online : Bukkit.getOnlinePlayers()) {
+                    if(inLobby.contains(online)) {
+                        Location loc1 = new Location(Bukkit.getWorld("SMP"), 86.5, 83, -231.5);
+                        loc1.setPitch(90);
+                        loc1.setYaw(-180);
+                        online.teleport(loc1);
+
+                        online.sendTitle(MessageUtils.format(color + "§lPushbattle"), MessageUtils.format("§fDit zijn de regels van " + color + "Pushbattle§f!"));
+                    }
+                }
+            }
+        }, 80);
+
+        countdownTask = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+            @Override
+            public void run() {
+                for(Player online : Bukkit.getOnlinePlayers()) {
+                    if(inLobby.contains(online)) {
+                        Location loc1 = new Location(Bukkit.getWorld("SMP"), 86.5, 68, -247.5);
+                        loc1.setPitch(20);
+                        loc1.setYaw(0);
+                        online.teleport(loc1);
+
+                        online.sendTitle(MessageUtils.format(color + "§lPushbattle"), MessageUtils.format("§fHit spelers van het andere team van de map voor " + color + "punten§f!"));
+                    }
+                }
+            }
+        }, 180);
+
+        countdownTask = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+            @Override
+            public void run() {
+                for(Player online : Bukkit.getOnlinePlayers()) {
+                    if(inLobby.contains(online)) {
+                        Location loc1 = new Location(Bukkit.getWorld("SMP"), 108.5, 66.5, -209.5);
+                        loc1.setPitch(13);
+                        loc1.setYaw(135);
+                        online.teleport(loc1);
+
+                        online.sendTitle(MessageUtils.format(color + "§lPushbattle"), MessageUtils.format("§fVeel succes en veel plezier."));
+                    }
+                }
+                broadcastPushbattle("§8> §fDe game start in " + color + "15 §fseconden!", false);
+            }
+        }, 300);
+
+        countdownTask = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+            @Override
+            public void run() {
+                for(Player online : Bukkit.getOnlinePlayers()) {
+                    if(inLobby.contains(online)) {
+                        online.setGameMode(GameMode.SURVIVAL);
+                        online.setInvisible(false);
+                        online.removePotionEffect(PotionEffectType.SLOW);
+                        online.removePotionEffect(PotionEffectType.JUMP);
+                        online.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
+                        online.removePotionEffect(PotionEffectType.SLOW_DIGGING);
+
+                        online.getInventory().getItem(8).setType(Material.AIR);
+
+                    }
+                    tutorial = false;
+                }
+            }
+        }, 320);
+
+        countdownTask = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+            @Override
+            public void run() {
+                broadcastPushbattle("§8> §fDe game start in " + color + "5 §fseconden!", false);
+            }
+        }, 500);
+        countdownTask = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+            @Override
+            public void run() {
+                broadcastPushbattle("§8> §fDe game start in " + color + "4 §fseconden!", false);
+            }
+        }, 520);
+        countdownTask = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+            @Override
+            public void run() {
+                broadcastPushbattle("§8> §fDe game start in " + color + "3 §fseconden!", false);
+            }
+        }, 540);
+        countdownTask = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+            @Override
+            public void run() {
+                broadcastPushbattle("§8> §fDe game start in " + color + "2 §fseconden!", false);
+            }
+        }, 560);
+        countdownTask = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+            @Override
+            public void run() {
+                broadcastPushbattle("§8> §fDe game start in " + color + "1 §fseconden!", false);
+            }
+        }, 580);
+        countdownTask = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+            @Override
+            public void run() {
+                for(Player online : Bukkit.getOnlinePlayers()) {
+                    if(inLobby.contains(online)) {
+                        inLobby.remove(online);
+                        inGame.add(online);
+
+                    }
+                }
+                startGame();
+            }
+        }, 600);
+
+    }
+
+    public static Location redSpawnMap = new Location(Bukkit.getWorld("SMP"), 86.5, 63, -248.5);
+    public static Location blueSpawnMap = new Location(Bukkit.getWorld("SMP"), 86.5, 63, -214.5);
+    public static void startGame() {
+        for(Player online : Bukkit.getOnlinePlayers()) {
+            if(teamRed.contains(online)) {
+                online.teleport(redSpawnMap);
+            }
+            if(teamBlue.contains(online)) {
+                online.teleport(blueSpawnMap);
+            }
+            if(inGame.contains(online)) {
+                online.getInventory().addItem(new ItemStack(Material.STICK));
+
+                online.sendMessage("§8§m----------------------------------------------------");
+                MessageUtils.sendCenteredMessage(online, color + "§lPushbattle");
+                online.sendMessage(" ");
+                MessageUtils.sendCenteredMessage(online, "§fDeze " + color + "Pushbattle §fgame is begonnen!");
+                MessageUtils.sendCenteredMessage(online, "§fJullie spelen met §c" + teamRed.size() +  " §frode en §9" + teamBlue.size() + " §fblauwe spelers.");
+                online.sendMessage(" ");
+                MessageUtils.sendCenteredMessage(online, color + "Vriendschappelijk vuur §fstaat §cuit§f!");
+                MessageUtils.sendCenteredMessage(online, "§fHit het andere team van de map om punten te scoren.");
+                MessageUtils.sendCenteredMessage(online, color + "§oGLHF");
+                online.sendMessage("§8§m----------------------------------------------------");
+            }
+        }
+
     }
 
     public static void joinLobby(Player player) {
@@ -161,7 +337,7 @@ public class PushbattleMain {
                     }
                 }
 
-                broadcastPushbattle("§8> De game start in " + color + " 30 §fseconden.", false);
+                startCountdown();
             }
 
         }
@@ -193,6 +369,8 @@ public class PushbattleMain {
                 ScoreboardManager.updatePBLobbyScoreBoard(online);
             }
         }
+
+        NameUtils.giveTags(player);
     }
 
     public static void decideTeam(Player player) {

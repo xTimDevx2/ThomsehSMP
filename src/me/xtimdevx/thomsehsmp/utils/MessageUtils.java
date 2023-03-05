@@ -120,7 +120,7 @@ public class MessageUtils {
             sb.append(" ");
             compensated += spaceLength;
         }
-        player.sendMessage(sb.toString() + message);
+        player.sendMessage(format(sb.toString() + message));
     }
 
     public static String returnCenteredMessage(String message){
@@ -195,6 +195,6 @@ public class MessageUtils {
             sb.append(" ");
             compensated += spaceLength;
         }
-        Bukkit.broadcastMessage(sb.toString() + message);
+        Bukkit.broadcastMessage(format(sb.toString() + message));
     }
 }

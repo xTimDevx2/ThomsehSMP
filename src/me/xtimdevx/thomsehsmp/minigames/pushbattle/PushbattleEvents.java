@@ -10,16 +10,19 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryInteractEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.*;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PushbattleEvents implements Listener {
 
+    public ArrayList inlobby = PushbattleMain.inLobby;
 
     @EventHandler
     public void onDamage(EntityDamageEvent event) {
@@ -27,6 +30,29 @@ public class PushbattleEvents implements Listener {
             Player player = (Player) event.getEntity();
 
             if(PushbattleMain.inLobby.contains(player)) {
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
+    public void tpEvent(PlayerTeleportEvent event) {
+        Player player = event.getPlayer();
+        User user = User.get(player);
+
+        if(event.getCause() == PlayerTeleportEvent.TeleportCause.SPECTATE) {
+            if(PushbattleMain.inLobby.contains(player) || PushbattleMain.inGame.contains(player)) {
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onMove(PlayerMoveEvent event) {
+        Player player = (Player) event.getPlayer();
+
+        if(PushbattleMain.inLobby.contains(player) || PushbattleMain.inGame.contains(player)) {
+            if(PushbattleMain.tutorial) {
                 event.setCancelled(true);
             }
         }
@@ -44,10 +70,26 @@ public class PushbattleEvents implements Listener {
     }
 
     @EventHandler
+    public void inventoryManipulateEvent(InventoryInteractEvent event) {
+        Player player = (Player) event.getInventory().getViewers();
+        if(PushbattleMain.inLobby.contains(player)) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onDrop(PlayerDropItemEvent event) {
+        Player player = (Player) event.getPlayer();
+        if(PushbattleMain.inLobby.contains(player)) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
     public void blockPlaceEvent(BlockPlaceEvent event) {
         Player player = event.getPlayer();
 
-        if(PushbattleMain.inLobby.contains(player)) {
+        if(PushbattleMain.inLobby.contains(player) || PushbattleMain.inGame.contains(player)) {
             event.setCancelled(true);
         }
     }
@@ -61,11 +103,28 @@ public class PushbattleEvents implements Listener {
 
         String command = message.split(" ")[0].substring(1);
 
-        if (PushbattleMain.inLobby.contains(player)) {
+        if (PushbattleMain.inLobby.contains(player) || PushbattleMain.inGame.contains(player)) {
             if (!command.equalsIgnoreCase("pushbattle") && !command.equalsIgnoreCase("pb")) {
                 player.sendMessage("§cJe kan enkel pushbattle commands gebruiken wanneer je in het spel zit.");
                 event.setCancelled(true);
             }
+        }
+    }
+
+    @EventHandler
+    public void onLeave(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+
+        if(PushbattleMain.inLobby.contains(player)) {
+            PushbattleMain.leaveLobby(player);
+        }
+    }
+    @EventHandler
+    public void onSaturation(FoodLevelChangeEvent event) {
+        Player player = (Player) event.getEntity();
+
+        if(PushbattleMain.inLobby.contains(player) || PushbattleMain.inGame.contains(player)) {
+            event.setCancelled(true);
         }
     }
 }

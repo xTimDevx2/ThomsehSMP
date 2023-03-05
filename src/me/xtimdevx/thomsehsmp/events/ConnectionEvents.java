@@ -11,10 +11,7 @@ import me.xtimdevx.thomsehsmp.features.Bossbar;
 import me.xtimdevx.thomsehsmp.features.Tutorial;
 import me.xtimdevx.thomsehsmp.managers.DuelsManager;
 import me.xtimdevx.thomsehsmp.managers.ScoreboardManager;
-import me.xtimdevx.thomsehsmp.utils.LocationUtils;
-import me.xtimdevx.thomsehsmp.utils.MessageUtils;
-import me.xtimdevx.thomsehsmp.utils.PermsUtils;
-import me.xtimdevx.thomsehsmp.utils.Utils;
+import me.xtimdevx.thomsehsmp.utils.*;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.node.types.PermissionNode;
@@ -196,6 +193,7 @@ public class ConnectionEvents implements Listener {
             return;
         }
 
+        NameUtils.giveTags(player);
         event.setJoinMessage("§a§l✔ §f" + player.getName() + " joined.");
     }
 

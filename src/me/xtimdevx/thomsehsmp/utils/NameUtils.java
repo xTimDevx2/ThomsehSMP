@@ -1,9 +1,57 @@
 package me.xtimdevx.thomsehsmp.utils;
 
+import com.lkeehl.tagapi.api.Tag;
 import org.bukkit.block.Biome;
+import org.bukkit.entity.Player;
 
 public class NameUtils {
 
+
+    public static void giveTags(Player player) {
+        PermsUtils permsUtils = PermsUtils.getInstance();
+
+        if(permsUtils.isInGroup(player, "Owner")) {
+            com.lkeehl.tagapi.api.Tag tag = Tag.create(player); // Create a new Tag
+            tag.addTagLine(10).setText(pl->"§c" + player.getName());
+            tag.giveTag();
+        }
+
+        if(permsUtils.isInGroup(player, "Developer")) {
+            com.lkeehl.tagapi.api.Tag tag = Tag.create(player); // Create a new Tag
+            tag.addTagLine(10).setText(pl -> "§c" + player.getName());
+            tag.giveTag();
+        }
+
+        if(permsUtils.isInGroup(player, "Mod")) {
+            com.lkeehl.tagapi.api.Tag tag = Tag.create(player); // Create a new Tag
+            tag.addTagLine(10).setText(pl->"§2" + player.getName());
+            tag.giveTag();
+        }
+
+        if(permsUtils.isInGroup(player, "Twitch")) {
+            com.lkeehl.tagapi.api.Tag tag = Tag.create(player); // Create a new Tag
+            tag.addTagLine(10).setText(pl->"§5" + player.getName());
+            tag.giveTag();
+        }
+
+        if(permsUtils.isInGroup(player, "Gold")) {
+            com.lkeehl.tagapi.api.Tag tag = Tag.create(player); // Create a new Tag
+            tag.addTagLine(10).setText(pl->"§6" + player.getName());
+            tag.giveTag();
+        }
+
+        if(permsUtils.isInGroup(player, "Builder")) {
+            com.lkeehl.tagapi.api.Tag tag = Tag.create(player); // Create a new Tag
+            tag.addTagLine(10).setText(pl->"§a" + player.getName());
+            tag.giveTag();
+        }
+        if(permsUtils.isInGroup(player, "Default")) {
+            com.lkeehl.tagapi.api.Tag tag = Tag.create(player); // Create a new Tag
+            tag.addTagLine(10).setText(pl->"§f" + player.getName());
+            tag.giveTag();
+        }
+
+    }
     public static String getBiomeName(Biome biome) {
         switch (biome) {
             case BEACH:
