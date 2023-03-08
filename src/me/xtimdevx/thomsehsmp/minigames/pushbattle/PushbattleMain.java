@@ -209,6 +209,8 @@ public class PushbattleMain {
 
     }
 
+    public static int redkills;
+    public static int bluekills;
     public static Location redSpawnMap = new Location(Bukkit.getWorld("SMP"), 86.5, 63, -248.5);
     public static Location blueSpawnMap = new Location(Bukkit.getWorld("SMP"), 86.5, 63, -214.5);
     public static void startGame() {
@@ -232,6 +234,9 @@ public class PushbattleMain {
                 MessageUtils.sendCenteredMessage(online, "§fHit het andere team van de map om punten te scoren.");
                 MessageUtils.sendCenteredMessage(online, color + "§oGLHF");
                 online.sendMessage("§8§m----------------------------------------------------");
+
+                redkills = 0;
+                bluekills = 0;
             }
         }
 

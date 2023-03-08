@@ -9,6 +9,7 @@ import net.luckperms.api.model.group.Group;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.*;
 
 public class ScoreboardManager {
@@ -470,5 +471,200 @@ public class ScoreboardManager {
             }
         }, 20);
 
+    }
+
+    public static int pusbattleGameTask = -1;
+
+    public static void createPushbattleGameBoard(Player player) {
+        User user = User.get(player);
+
+        Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+        Objective obj = scoreboard.registerNewObjective("pbboardgame", "dummy");
+        obj.setDisplaySlot(DisplaySlot.SIDEBAR);
+        obj.setDisplayName(MessageUtils.format("#825AFE§lPushbattle"));
+
+        Score season = obj.getScore("§7§oIngame");
+        season.setScore(15);
+
+        Score line1 = obj.getScore("§f§8§m-----------------");
+        line1.setScore(14);
+
+        Score questName = obj.getScore(MessageUtils.format("§8> §9§lSpelers"));
+        questName.setScore(13);
+
+        Team questMain = scoreboard.registerNewTeam("players");
+        questMain.addEntry(ChatColor.RED + "" + ChatColor.WHITE + "");
+        questMain.setPrefix("§8> §f" + PushbattleMain.inLobby.size() + "§8/§f8");
+        obj.getScore(ChatColor.RED + "" + ChatColor.WHITE + "").setScore(12);
+
+        Score team = obj.getScore(MessageUtils.format("§8> §9§lTeam"));
+        team.setScore(11);
+
+        if(PushbattleMain.teamBlue.contains(player)) {
+            Score teamnaam = obj.getScore("§8> " + "§9Blauw");
+            teamnaam.setScore(10);
+        }else {
+            Score teamnaam = obj.getScore("§8> " + "§cRood");
+            teamnaam.setScore(10);
+
+        }
+
+        Score MT = obj.getScore(" ");
+        MT.setScore(9);
+
+        Score balanceName = obj.getScore(MessageUtils.format("§8> §9§lSolo Kills"));
+        balanceName.setScore(8);
+
+        Team start = scoreboard.registerNewTeam("solokills");
+        start.addEntry(ChatColor.BLUE + "" + ChatColor.WHITE + "");
+        start.setPrefix("§8> §f" + user.getFile().getInt("pb.solokills"));
+        obj.getScore(ChatColor.BLUE + "" + ChatColor.WHITE + "").setScore(7);
+
+        Score solokills = obj.getScore(MessageUtils.format("§8> §9§lTeam Kills"));
+        solokills.setScore(6);
+
+        Team solokillss = scoreboard.registerNewTeam("teamkills");
+        solokillss.addEntry(ChatColor.BLUE + "" + ChatColor.WHITE + "");
+        if(PushbattleMain.teamBlue.contains(player)) {
+            solokillss.setPrefix("§8> §f" + PushbattleMain.bluekills);
+        }else {
+            solokillss.setPrefix("§8> §f" + PushbattleMain.redkills);
+        }
+        obj.getScore(ChatColor.LIGHT_PURPLE + "" + ChatColor.WHITE + "").setScore(5);
+
+        Score line2 = obj.getScore("§8§m-----------------");
+        line2.setScore(0);
+
+        Team ip = scoreboard.registerNewTeam("ip");
+        ip.addEntry(ChatColor.DARK_RED + "" + ChatColor.WHITE + "");
+        ip.setPrefix("§fThomseh§8.§flive");
+        obj.getScore(ChatColor.DARK_RED + "" + ChatColor.WHITE + "").setScore(-1);
+
+
+
+
+        pusbattleTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.plugin, new Runnable() {
+            @Override
+            public void run() {
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        ip.setPrefix("§f§9§lT§fhomseh§8.§flive");
+                    }
+                }, 10);
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        ip.setPrefix("§fT§9§lh§fomseh§8.§flive");
+                    }
+                }, 20);
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        ip.setPrefix("§fTh§9§lo§fmseh§8.§flive");
+                    }
+                }, 90);
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        ip.setPrefix("§fTho§9§lm§fseh§8.§flive");
+                    }
+                }, 40);
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        ip.setPrefix("§fThom§9§ls§feh§8.§flive");
+                    }
+                }, 50);
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        ip.setPrefix("§fThoms§9§le§fh§8.§flive");
+                    }
+                }, 60);
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        ip.setPrefix("§fThomse§9§lh§8.§flive");
+                    }
+                }, 70);
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        ip.setPrefix("§fThomseh§8.§f§9§ll§five");
+                    }
+                }, 80);
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        ip.setPrefix("§fThomseh§8.§fl§9§li§fve");
+                    }
+                }, 90);
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        ip.setPrefix("§fThomseh§8.§fli§9§lv§fe");
+                    }
+                }, 100);
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        ip.setPrefix("§fThomseh§8.§fliv§9§le");
+                    }
+                }, 110);
+
+            }
+        }, 0,110);
+
+        player.setScoreboard(scoreboard);
+    }
+
+    public static int updatePBGTaskID = -1;
+
+    public static void updatePBGLobbyScoreBoard(Player player) {
+
+        updatePBTaskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+            @Override
+            public void run() {
+                Scoreboard scoreboard = player.getScoreboard();
+                User user = User.get(player);
+
+                scoreboard.getTeam("players").setPrefix("§8> §f" + PushbattleMain.inLobby.size() + "§8/§f8");
+            }
+        }, 20);
+
+    }
+
+    public static int timerTaskID;
+    public static int lobbyTimerTaskID;
+
+    public static int s;
+    public static int m;
+    public static void startTimer(String type) {
+        if(type.equalsIgnoreCase("ingame")) {
+
+            timerTaskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.plugin, new Runnable() {
+                @Override
+                public void run() {
+                    s++;
+                    if(s == 60) {
+                        s = 0;
+                        m++;
+                    }
+                }
+            }, 0, 20);
+
+        }
+
+        if(type.equalsIgnoreCase("lobby")) {
+            s = 30;
+            lobbyTimerTaskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.plugin, new Runnable() {
+                @Override
+                public void run() {
+
+                    s--;
+                }
+            }, 0, 20);
+        }
     }
 }
