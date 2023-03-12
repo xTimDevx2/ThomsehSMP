@@ -5,11 +5,10 @@ import me.xtimdevx.thomsehsmp.User;
 import me.xtimdevx.thomsehsmp.minigames.pushbattle.PushbattleMain;
 import me.xtimdevx.thomsehsmp.utils.MessageUtils;
 import me.xtimdevx.thomsehsmp.utils.PermsUtils;
-import net.luckperms.api.model.group.Group;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.*;
 
 public class ScoreboardManager {
@@ -173,13 +172,11 @@ public class ScoreboardManager {
         player.setScoreboard(scoreboard);
     }
 
-    public static int updateTaskID = -1;
+    public static BukkitTask updateTaskID;
 
     public static void updateScoreBoard(Player player) {
 
-        updateTaskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
-            @Override
-            public void run() {
+        updateTaskID = Bukkit.getScheduler().runTaskLater(Main.plugin, () -> {
                 Scoreboard scoreboard = player.getScoreboard();
                 User user = User.get(player);
 
@@ -192,7 +189,6 @@ public class ScoreboardManager {
                 scoreboard.getTeam("playerRank").setPrefix("  " + rankName(player));
 
                 scoreboard.getTeam("playerBalance").setPrefix("  " + economyManager.getBalance(player) + " ⛀");
-            }
         }, 20);
 
     }
@@ -457,23 +453,43 @@ public class ScoreboardManager {
         player.setScoreboard(scoreboard);
     }
 
-    public static int updatePBTaskID = -1;
+    public static BukkitTask updatePBTaskID;
+    public static BukkitTask repeatingTimerTask;
 
     public static void updatePBLobbyScoreBoard(Player player) {
 
-        updatePBTaskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
-            @Override
-            public void run() {
+        updatePBTaskID = Bukkit.getScheduler().runTaskLater(Main.plugin, () -> {
                 Scoreboard scoreboard = player.getScoreboard();
                 User user = User.get(player);
 
                 scoreboard.getTeam("players").setPrefix("§8> §f" + PushbattleMain.inLobby.size() + "§8/§f8");
-            }
         }, 20);
 
-    }
 
-    public static int pusbattleGameTask = -1;
+        if(PushbattleMain.starting) {
+            repeatingTimerTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Main.plugin, () -> {
+                    Scoreboard scoreboard = player.getScoreboard();
+                    User user = User.get(player);
+
+                    try{
+                        scoreboard.getTeam("start").setPrefix("§8> §f" + s);
+                    }catch (Exception ignored) {
+                    }
+            }, 0, 20);
+
+        }else {
+            repeatingTimerTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Main.plugin, () -> {
+                Scoreboard scoreboard = player.getScoreboard();
+                User user = User.get(player);
+
+                try{
+                    scoreboard.getTeam("start").setPrefix("§8> §fWachten...");
+                }catch (Exception ignored) {
+                }
+            }, 0, 20);
+        }
+
+    }
 
     public static void createPushbattleGameBoard(Player player) {
         User user = User.get(player);
@@ -494,22 +510,10 @@ public class ScoreboardManager {
 
         Team questMain = scoreboard.registerNewTeam("players");
         questMain.addEntry(ChatColor.RED + "" + ChatColor.WHITE + "");
-        questMain.setPrefix("§8> §f" + PushbattleMain.inLobby.size() + "§8/§f8");
+        questMain.setPrefix("§8> §f" + PushbattleMain.inGame.size());
         obj.getScore(ChatColor.RED + "" + ChatColor.WHITE + "").setScore(12);
 
-        Score team = obj.getScore(MessageUtils.format("§8> §9§lTeam"));
-        team.setScore(11);
-
-        if(PushbattleMain.teamBlue.contains(player)) {
-            Score teamnaam = obj.getScore("§8> " + "§9Blauw");
-            teamnaam.setScore(10);
-        }else {
-            Score teamnaam = obj.getScore("§8> " + "§cRood");
-            teamnaam.setScore(10);
-
-        }
-
-        Score MT = obj.getScore(" ");
+        Score MT = obj.getScore("§9 ");
         MT.setScore(9);
 
         Score balanceName = obj.getScore(MessageUtils.format("§8> §9§lSolo Kills"));
@@ -520,25 +524,51 @@ public class ScoreboardManager {
         start.setPrefix("§8> §f" + user.getFile().getInt("pb.solokills"));
         obj.getScore(ChatColor.BLUE + "" + ChatColor.WHITE + "").setScore(7);
 
-        Score solokills = obj.getScore(MessageUtils.format("§8> §9§lTeam Kills"));
-        solokills.setScore(6);
 
-        Team solokillss = scoreboard.registerNewTeam("teamkills");
-        solokillss.addEntry(ChatColor.BLUE + "" + ChatColor.WHITE + "");
+        Score solokills = obj.getScore(MessageUtils.format("§8> §9§lTeam Kills"));
+        solokills.setScore(5);
+
+        Team bluekills = scoreboard.registerNewTeam("bluekills");
+        bluekills.addEntry(ChatColor.DARK_PURPLE + "" + ChatColor.WHITE + "");
         if(PushbattleMain.teamBlue.contains(player)) {
-            solokillss.setPrefix("§8> §f" + PushbattleMain.bluekills);
+            bluekills.setPrefix("§8> §9Blauw: §f" + PushbattleMain.bluekills + " §7§o(Jouw Team)");
         }else {
-            solokillss.setPrefix("§8> §f" + PushbattleMain.redkills);
+            bluekills.setPrefix("§8> §9Blauw §f" + PushbattleMain.bluekills);
         }
-        obj.getScore(ChatColor.LIGHT_PURPLE + "" + ChatColor.WHITE + "").setScore(5);
+        obj.getScore(ChatColor.DARK_PURPLE + "" + ChatColor.WHITE + "").setScore(4);
+
+
+        Team redkills = scoreboard.registerNewTeam("redkills");
+        redkills.addEntry(ChatColor.GRAY + "" + ChatColor.WHITE + "");
+        if(PushbattleMain.teamRed.contains(player)) {
+            redkills.setPrefix("§8> §cRood: §f" + PushbattleMain.redkills + " §7§o(Jouw Team)");
+        }else {
+            redkills.setPrefix("§8> §cRood: §f" + PushbattleMain.redkills);
+        }
+        obj.getScore(ChatColor.GRAY + "" + ChatColor.WHITE + "").setScore(3);
+
+
+        Score MT6 = obj.getScore("§c ");
+        MT6.setScore(2);
+
+        Score timerName = obj.getScore(MessageUtils.format("§8> §9§lTimer"));
+        timerName.setScore(1);
+
+        String timernode = "0" + m + "§8:§f" + ((s < 10) ? "0" + s : s);
+
+        Team timer = scoreboard.registerNewTeam("timer");
+        timer.addEntry(ChatColor.GOLD + "" + ChatColor.WHITE + "");
+        timer.setPrefix("§8> §f" + timernode);
+        obj.getScore(ChatColor.GOLD + "" + ChatColor.WHITE + "").setScore(0);
+
 
         Score line2 = obj.getScore("§8§m-----------------");
-        line2.setScore(0);
+        line2.setScore(-1);
 
         Team ip = scoreboard.registerNewTeam("ip");
         ip.addEntry(ChatColor.DARK_RED + "" + ChatColor.WHITE + "");
         ip.setPrefix("§fThomseh§8.§flive");
-        obj.getScore(ChatColor.DARK_RED + "" + ChatColor.WHITE + "").setScore(-1);
+        obj.getScore(ChatColor.DARK_RED + "" + ChatColor.WHITE + "").setScore(-2);
 
 
 
@@ -619,51 +649,65 @@ public class ScoreboardManager {
         player.setScoreboard(scoreboard);
     }
 
-    public static int updatePBGTaskID = -1;
+    public static BukkitTask updatePBGTaskID;
 
-    public static void updatePBGLobbyScoreBoard(Player player) {
+    public static void updatePBGameScoreBoard(Player player) {
 
-        updatePBTaskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
-            @Override
-            public void run() {
+        updatePBGTaskID = Bukkit.getScheduler().runTaskTimerAsynchronously(Main.plugin, () -> {
                 Scoreboard scoreboard = player.getScoreboard();
                 User user = User.get(player);
 
-                scoreboard.getTeam("players").setPrefix("§8> §f" + PushbattleMain.inLobby.size() + "§8/§f8");
-            }
-        }, 20);
+                String timernode = "0" + m + "§8:§f" + ((s < 10) ? "0" + s : s);
+
+                try {
+                    scoreboard.getTeam("timer").setPrefix("§8> §f" + timernode);
+
+                    scoreboard.getTeam("timer").setPrefix("§8> §f" + timernode);
+
+                    scoreboard.getTeam("solokills").setPrefix("§8> §f" + user.getFile().getInt("pb.solokills"));
+
+                    if(PushbattleMain.teamBlue.contains(player)) {
+                        scoreboard.getTeam("bluekills").setPrefix("§8> §9Blauw: §f" + PushbattleMain.bluekills + " §7§o(Jouw Team)");
+                    }else {
+                        scoreboard.getTeam("bluekills").setPrefix("§8> §9Blauw: §f" + PushbattleMain.bluekills);
+                    }
+                    if(PushbattleMain.teamRed.contains(player)) {
+                        scoreboard.getTeam("redkills").setPrefix("§8> §cRood: §f" + PushbattleMain.redkills + " §7§o(Jouw Team)");
+                    }else {
+                        scoreboard.getTeam("redkills").setPrefix("§8> §cRood: §f" + PushbattleMain.redkills);
+                    }
+                }catch (Exception ignored) {
+
+                }
+        }, 0, 20);
 
     }
 
-    public static int timerTaskID;
-    public static int lobbyTimerTaskID;
+    public static BukkitTask timerTaskID;
+    public static BukkitTask lobbyTimerTaskID;
 
     public static int s;
     public static int m;
     public static void startTimer(String type) {
         if(type.equalsIgnoreCase("ingame")) {
+            s = 0;
+            m = 0;
 
-            timerTaskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.plugin, new Runnable() {
-                @Override
-                public void run() {
+            timerTaskID = Bukkit.getScheduler().runTaskTimerAsynchronously(Main.plugin, () -> {
                     s++;
                     if(s == 60) {
                         s = 0;
                         m++;
                     }
-                }
             }, 0, 20);
 
         }
 
         if(type.equalsIgnoreCase("lobby")) {
-            s = 30;
-            lobbyTimerTaskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.plugin, new Runnable() {
-                @Override
-                public void run() {
+            s = 31;
+            lobbyTimerTaskID= Bukkit.getScheduler().runTaskTimerAsynchronously(Main.plugin, () -> {
 
                     s--;
-                }
             }, 0, 20);
         }
     }

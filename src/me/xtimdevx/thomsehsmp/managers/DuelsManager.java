@@ -354,7 +354,7 @@ public class DuelsManager implements Listener {
                     MessageUtils.sendCenteredMessage(target, "§3§oSurvival Games §7§o(5 minuten)");
                     target.sendMessage("§8§m----------------------------------------------------");
 
-                    Bukkit.getScheduler().cancelTask(ScoreboardManager.updateTaskID);
+                    Bukkit.getScheduler().cancelTask(ScoreboardManager.updateTaskID.getTaskId());
                     ScoreboardManager.createDuelBoard(player, target.getName(), "Survival Games");
                     ScoreboardManager.createDuelBoard(target, player.getName(), "Survival Games");
 
@@ -489,7 +489,7 @@ public class DuelsManager implements Listener {
                     MessageUtils.sendCenteredMessage(target, "§3§oUltra Hardcore §7§o(5 minuten)");
                     target.sendMessage("§8§m----------------------------------------------------");
 
-                    Bukkit.getScheduler().cancelTask(ScoreboardManager.updateTaskID);
+                    Bukkit.getScheduler().cancelTask(ScoreboardManager.updateTaskID.getTaskId());
                     ScoreboardManager.createDuelBoard(player, target.getName(), "Ultra Hardcore");
                     ScoreboardManager.createDuelBoard(target, player.getName(), "Ultra Hardcore");
 
@@ -622,7 +622,7 @@ public class DuelsManager implements Listener {
                     MessageUtils.sendCenteredMessage(target, "§3§oEigen spullen §7§o(10 minuten)");
                     target.sendMessage("§8§m----------------------------------------------------");
 
-                    Bukkit.getScheduler().cancelTask(ScoreboardManager.updateTaskID);
+                    Bukkit.getScheduler().cancelTask(ScoreboardManager.updateTaskID.getTaskId());
                     ScoreboardManager.createDuelBoard(player, target.getName(), "Eigen spullen");
                     ScoreboardManager.createDuelBoard(target, player.getName(), "Eigen spullen");
 
