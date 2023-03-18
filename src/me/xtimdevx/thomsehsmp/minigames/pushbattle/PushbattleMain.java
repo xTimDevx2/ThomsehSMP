@@ -32,6 +32,7 @@ public class PushbattleMain {
     public static boolean gameRunning;
     public static boolean starting;
     public static boolean tutorial;
+    public static boolean cancel;
     public static ArrayList inGame = new ArrayList();
     public static ArrayList teamRed = new ArrayList();
     public static ArrayList teamBlue = new ArrayList();
@@ -40,6 +41,9 @@ public class PushbattleMain {
 
     public static Location blueSpawn = new Location(Bukkit.getWorld("SMP"), 108.5, 63, -216.5);
     public static Location redSpawn = new Location(Bukkit.getWorld("SMP"), 108.5, 63, -221.5);
+    public static BukkitScheduler countdownTask = Bukkit.getScheduler();
+    public static BukkitTask task;
+
 
     /*
     Pushbattle:
@@ -69,9 +73,6 @@ public class PushbattleMain {
     public static void registerPushbattleEvents() {
         Bukkit.getPluginManager().registerEvents(new PushbattleEvents(), Main.plugin);
     }
-
-    public static BukkitScheduler countdownTask = Bukkit.getScheduler();
-    public static BukkitTask task;
 
 
     public static void startCountdown() {
@@ -107,14 +108,25 @@ public class PushbattleMain {
             }
         }
 
-        task = countdownTask.runTaskLater(Main.plugin, () -> {
+        countdownTask.runTaskLater(Main.plugin, task -> {
+    if(inLobby.size() == 1)
+ {
+                task.cancel();
+                return;
+            }
             for(Player online : Bukkit.getOnlinePlayers()) {
                 if(inLobby.contains(online)) {
                     online.setGameMode(GameMode.SPECTATOR);
                 }
             }
         }, 60);
-        task =  countdownTask.runTaskLater(Main.plugin, () -> {
+        countdownTask.runTaskLater(Main.plugin, task -> {
+            if(inLobby.size() == 1)
+
+ {
+                task.cancel();
+                return;
+            }
                 for(Player online : Bukkit.getOnlinePlayers()) {
                     if(inLobby.contains(online)) {
                         Location loc1 = new Location(Bukkit.getWorld("SMP"), 86.5, 83, -231.5);
@@ -127,7 +139,13 @@ public class PushbattleMain {
                 }
         }, 80);
 
-        task = countdownTask.runTaskLater(Main.plugin, () -> {
+        countdownTask.runTaskLater(Main.plugin, task -> {
+            if(inLobby.size() == 1)
+
+ {
+                task.cancel();
+                return;
+            }
                 for(Player online : Bukkit.getOnlinePlayers()) {
                     if(inLobby.contains(online)) {
                         Location loc1 = new Location(Bukkit.getWorld("SMP"), 86.5, 68, -247.5);
@@ -140,7 +158,13 @@ public class PushbattleMain {
             }
         }, 180);
 
-        task = countdownTask.runTaskLater(Main.plugin, () -> {
+        countdownTask.runTaskLater(Main.plugin, task -> {
+            if(inLobby.size() == 1)
+
+ {
+                task.cancel();
+                return;
+            }
                 for(Player online : Bukkit.getOnlinePlayers()) {
                     if(inLobby.contains(online)) {
                         Location loc1 = new Location(Bukkit.getWorld("SMP"), 108.5, 66.5, -209.5);
@@ -154,7 +178,13 @@ public class PushbattleMain {
                 broadcastPushbattle("§8> §fDe game start in " + color + "15 §fseconden!", false);
         }, 300);
 
-        task = countdownTask.runTaskLater(Main.plugin, () -> {
+        countdownTask.runTaskLater(Main.plugin, task -> {
+            if(inLobby.size() == 1)
+
+ {
+                task.cancel();
+                return;
+            }
                 for(Player online : Bukkit.getOnlinePlayers()) {
                     if(inLobby.contains(online)) {
                         online.setGameMode(GameMode.SURVIVAL);
@@ -169,22 +199,58 @@ public class PushbattleMain {
                 }
         }, 320);
 
-        task =  countdownTask.runTaskLater(Main.plugin, () -> {
+        countdownTask.runTaskLater(Main.plugin, task -> {
+            if(inLobby.size() == 1)
+
+ {
+                task.cancel();
+                return;
+            }
                 broadcastPushbattle("§8> §fDe game start in " + color + "5 §fseconden!", false);
         }, 500);
-        task = countdownTask.runTaskLater(Main.plugin, () -> {
+        countdownTask.runTaskLater(Main.plugin, task -> {
+            if(inLobby.size() == 1)
+
+ {
+                task.cancel();
+                return;
+            }
                 broadcastPushbattle("§8> §fDe game start in " + color + "4 §fseconden!", false);
         }, 520);
-        task = countdownTask.runTaskLater(Main.plugin, () -> {
+        countdownTask.runTaskLater(Main.plugin, task -> {
+            if(inLobby.size() == 1)
+
+ {
+                task.cancel();
+                return;
+            }
                 broadcastPushbattle("§8> §fDe game start in " + color + "3 §fseconden!", false);
         }, 540);
-        task = countdownTask.runTaskLater(Main.plugin, () -> {
+        countdownTask.runTaskLater(Main.plugin, task -> {
+            if(inLobby.size() == 1)
+
+ {
+                task.cancel();
+                return;
+            }
                 broadcastPushbattle("§8> §fDe game start in " + color + "2 §fseconden!", false);
         }, 560);
-        task = countdownTask.runTaskLater(Main.plugin, () -> {
+        countdownTask.runTaskLater(Main.plugin, task -> {
+            if(inLobby.size() == 1)
+
+ {
+                task.cancel();
+                return;
+            }
                 broadcastPushbattle("§8> §fDe game start in " + color + "1 §fseconden!", false);
         }, 580);
-        task = countdownTask.runTaskLater(Main.plugin, () -> {
+        countdownTask.runTaskLater(Main.plugin, task -> {
+            if(inLobby.size() == 1)
+
+ {
+                task.cancel();
+                return;
+            }
                 for(Player online : Bukkit.getOnlinePlayers()) {
                     if(inLobby.contains(online)) {
                         inLobby.remove(online);
@@ -577,9 +643,9 @@ public class PushbattleMain {
         }
 
         broadcastPushbattle(color + "§o" + player.getName() + " §fis de lobby geleaved. §7§o(" + inLobby.size() + "/8)", true);
-        if(inLobby.size() == 1) {
+if(inLobby.size() == 1)
+ {
             broadcastPushbattle("§8> §fStart van de game is afgebroken. Wachten op meer spelers...", false);
-            task.cancel();
             Bukkit.getScheduler().cancelTask(ScoreboardManager.lobbyTimerTaskID.getTaskId());
             starting = false;
             tutorial = false;
