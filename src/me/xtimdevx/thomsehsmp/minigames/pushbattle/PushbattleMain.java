@@ -642,11 +642,16 @@ public class PushbattleMain {
             teamBlue.remove(player);
         }
 
+        player.removePotionEffect(PotionEffectType.SLOW);
+        player.removePotionEffect(PotionEffectType.JUMP);
+        player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
+        player.removePotionEffect(PotionEffectType.SLOW_DIGGING);
+        player.setGameMode(GameMode.SURVIVAL);
+
         broadcastPushbattle(color + "§o" + player.getName() + " §fis de lobby geleaved. §7§o(" + inLobby.size() + "/8)", true);
-if(inLobby.size() == 1)
- {
+        if(inLobby.size() == 1) {
             broadcastPushbattle("§8> §fStart van de game is afgebroken. Wachten op meer spelers...", false);
-            Bukkit.getScheduler().cancelTask(ScoreboardManager.lobbyTimerTaskID.getTaskId());
+            ScoreboardManager.lobbyTimerTaskID.cancel();
             starting = false;
             tutorial = false;
             for(Player online : Bukkit.getOnlinePlayers()) {

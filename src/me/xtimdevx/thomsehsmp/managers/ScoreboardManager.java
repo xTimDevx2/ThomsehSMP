@@ -180,15 +180,18 @@ public class ScoreboardManager {
                 Scoreboard scoreboard = player.getScoreboard();
                 User user = User.get(player);
 
-                if(Bukkit.getOnlinePlayers().size() == 0) {
-                    scoreboard.getTeam("onlineCounter").setPrefix(ChatColor.WHITE + "  0§8/§f" + Bukkit.getMaxPlayers());
-                }else {
-                    scoreboard.getTeam("onlineCounter").setPrefix(ChatColor.WHITE + "  " + Bukkit.getOnlinePlayers().size() + "§8/§f" + Bukkit.getMaxPlayers());
+                try {
+                    if(Bukkit.getOnlinePlayers().size() == 0) {
+                        scoreboard.getTeam("onlineCounter").setPrefix(ChatColor.WHITE + "  0§8/§f" + Bukkit.getMaxPlayers());
+                    }else {
+                        scoreboard.getTeam("onlineCounter").setPrefix(ChatColor.WHITE + "  " + Bukkit.getOnlinePlayers().size() + "§8/§f" + Bukkit.getMaxPlayers());
+                    }
+
+                    scoreboard.getTeam("playerRank").setPrefix("  " + rankName(player));
+
+                    scoreboard.getTeam("playerBalance").setPrefix("  " + economyManager.getBalance(player) + " ⛀");
+                }catch (NullPointerException ignored) {
                 }
-
-                scoreboard.getTeam("playerRank").setPrefix("  " + rankName(player));
-
-                scoreboard.getTeam("playerBalance").setPrefix("  " + economyManager.getBalance(player) + " ⛀");
         }, 20);
 
     }
@@ -462,8 +465,13 @@ public class ScoreboardManager {
                 Scoreboard scoreboard = player.getScoreboard();
                 User user = User.get(player);
 
-                scoreboard.getTeam("players").setPrefix("§8> §f" + PushbattleMain.inLobby.size() + "§8/§f8");
-        }, 20);
+                try {
+
+                }catch (NullPointerException ignored) {
+                    scoreboard.getTeam("players").setPrefix("§8> §f" + PushbattleMain.inLobby.size() + "§8/§f8");
+
+                }
+                }, 20);
 
 
         if(PushbattleMain.starting) {
@@ -477,18 +485,7 @@ public class ScoreboardManager {
                     }
             }, 0, 20);
 
-        }else {
-            repeatingTimerTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Main.plugin, () -> {
-                Scoreboard scoreboard = player.getScoreboard();
-                User user = User.get(player);
-
-                try{
-                    scoreboard.getTeam("start").setPrefix("§8> §fWachten...");
-                }catch (Exception ignored) {
-                }
-            }, 0, 20);
         }
-
     }
 
     public static void createPushbattleGameBoard(Player player) {
@@ -692,8 +689,7 @@ public class ScoreboardManager {
         if(type.equalsIgnoreCase("ingame")) {
             s = 0;
             m = 0;
-
-            timerTaskID = Bukkit.getScheduler().runTaskTimerAsynchronously(Main.plugin, () -> {
+            Bukkit.getScheduler().runTaskTimer(Main.plugin, timerTaskID -> {
                     s++;
                     if(s == 60) {
                         s = 0;
@@ -705,7 +701,7 @@ public class ScoreboardManager {
 
         if(type.equalsIgnoreCase("lobby")) {
             s = 31;
-            lobbyTimerTaskID= Bukkit.getScheduler().runTaskTimerAsynchronously(Main.plugin, () -> {
+            Bukkit.getScheduler().runTaskTimer(Main.plugin, lobbyTimerTaskID -> {
 
                     s--;
             }, 0, 20);

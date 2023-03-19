@@ -11,6 +11,7 @@ import me.xtimdevx.thomsehsmp.markets.BlockMarket;
 import me.xtimdevx.thomsehsmp.markets.FishMarket;
 import me.xtimdevx.thomsehsmp.markets.RedstoneMarket;
 import me.xtimdevx.thomsehsmp.markets.ResourceMarket;
+import me.xtimdevx.thomsehsmp.minigames.kotl.KotlMain;
 import me.xtimdevx.thomsehsmp.minigames.pushbattle.PushbattleCommands;
 import me.xtimdevx.thomsehsmp.minigames.pushbattle.PushbattleMain;
 import me.xtimdevx.thomsehsmp.npc.*;
@@ -233,6 +234,7 @@ public class Main extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(new DuelsManager(), this);
 
         PushbattleMain.registerPushbattleEvents();
+        KotlMain.registerKotlEvents();
     }
 
     @EventHandler
