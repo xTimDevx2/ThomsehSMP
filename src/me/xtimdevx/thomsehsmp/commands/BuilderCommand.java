@@ -66,12 +66,12 @@ public class BuilderCommand implements CommandExecutor {
             api.getUserManager().saveUser(lpu);
 
 
-            player.sendMessage(MessageUtils.format("§8> §fJe hebt #00DC99§lB#00D091§lu#00BF85§li#00AE79§ll#019B6C§ld#008A60§le#007F58§lr §fmode §aaangezet§f."));
-            player.sendMessage(MessageUtils.format("§8> §7§oJe kan nu bouwen in spawn en hebt permissions voor /gamemode creative en worldedit."));
+            player.sendMessage(MessageUtils.format("§8> §fYou have enabled #00DC99§lB#00D091§lu#00BF85§li#00AE79§ll#019B6C§ld#008A60§le#007F58§lr §fmode§a."));
+            player.sendMessage(MessageUtils.format("§8> §7§oYou can now build in spawn and have permissions for /gamemode creative and worldedit."));
 
             for(Player online : Bukkit.getOnlinePlayers()) {
                 if(online.hasPermission("smp.staff")) {
-                    online.sendMessage("§4§lOP §8> §c" + player.getName() + " §fheeft builder mode aangezet.");
+                    online.sendMessage("§4§lOP §8> §c" + player.getName() + " §fhas enabled builder mode.");
                 }
             }
             user.getFile().set("builder", true);
@@ -92,17 +92,15 @@ public class BuilderCommand implements CommandExecutor {
             api.getUserManager().saveUser(lpu);
 
 
-            player.sendMessage(MessageUtils.format("§8> §fJe hebt #00DC99§lB#00D091§lu#00BF85§li#00AE79§ll#019B6C§ld#008A60§le#007F58§lr §fmode §cuitgezet§f."));
+            player.sendMessage(MessageUtils.format("§8> §fYou have disabled #00DC99§lB#00D091§lu#00BF85§li#00AE79§ll#019B6C§ld#008A60§le#007F58§lr §fmode§c."));
 
             for(Player online : Bukkit.getOnlinePlayers()) {
                 if(online.hasPermission("smp.staff")) {
-                    online.sendMessage("§4§lOP §8> §c" + player.getName() + " §fheeft builder mode uitgezet.");
+                    online.sendMessage("§4§lOP §8> §c" + player.getName() + " §fhas disabled builder mode.");
                 }
             }
             user.getFile().set("builder", false);
             user.saveFile();
-
-
         }
 
         return true;

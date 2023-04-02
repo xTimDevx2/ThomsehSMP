@@ -62,7 +62,7 @@ public class CheckHomesCommand implements CommandExecutor {
             List<String> strings = tuser.getFile().getStringList("homelist");
 
             if(!strings.contains(homename)) {
-                player.sendMessage("§cError: Deze speler heeft deze home niet.");
+                player.sendMessage("§cError: This player does not have this home.");
                 return true;
             }
 
@@ -84,12 +84,12 @@ public class CheckHomesCommand implements CommandExecutor {
             player.sendMessage("§8§m----------------------------------------------------");
             MessageUtils.sendCenteredMessage(player, "§f§l" + args[0] + "'s home");
             player.sendMessage(" ");
-            player.sendMessage("§8» §fNaam: §o" + homename);
+            player.sendMessage("§8» §fName: §o" + homename);
             player.sendMessage("§8» §fCoords: §ox:" + Math.round(x) + " y:" + Math.round(y) + " z:" + Math.round(z));
             ComponentBuilder builder2 = new ComponentBuilder("");
-            builder2.append("§8» §aKlik hier om te teleporteren in gamemode 3");
-            builder2.event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/gamemode spectator"));
-            builder2.event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/atp " + x + " " + y + " " + z));
+            builder2.append("§8» §aClick here to teleport in gamemode 3")
+                    .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/gamemode spectator"))
+                    .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/atp " + x + " " + y + " " + z));
             player.spigot().sendMessage(builder2.create());
             player.sendMessage("§8§m----------------------------------------------------");
 

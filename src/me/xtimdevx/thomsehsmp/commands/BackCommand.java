@@ -30,12 +30,7 @@ public class BackCommand implements CommandExecutor {
             Location location = player.getLocation();
 
             if(user.getFile().get("back") == null) {
-                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                    player.sendMessage("§c§lERROR: §cNo back location has been found.");
-                }
-                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                    player.sendMessage("§c§lERROR: §cNog geen back locatie gevonden.");
-                }
+                    player.sendMessage("§c§lERROR: §cNo previous location was found.");
                 return true;
             }
 
@@ -54,12 +49,8 @@ public class BackCommand implements CommandExecutor {
             back.setPitch(pitch);
             back.setYaw(yaw);
 
-            if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                player.sendMessage("§8> §fWe will teleport you in §35 §fseconds. Do not move!");
-            }
-            if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                player.sendMessage("§8> §fWe teleporteren je in §35 §fseconden. Niet bewegen!");
-            }
+            player.sendMessage("§8> §fYou will be teleported in §35 §fseconds. Please refrain from moving until then!");
+
             SpawnCommand.moving.add(player);
             taskID2 = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                 @Override
@@ -104,12 +95,7 @@ public class BackCommand implements CommandExecutor {
                 @Override
                 public void run() {
                     player.sendTitle("", "");
-                    if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                        player.sendMessage("§8> §fTeleporting you to your previous location.");
-                    }
-                    if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                        player.sendMessage("§8> §fWe teleporteren je naar je vorige locatie.");
-                    }
+                    player.sendMessage("§8> §fYou are being teleported back to your previous location.");
 
                     Location bloc = player.getLocation();
 

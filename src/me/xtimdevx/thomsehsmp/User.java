@@ -256,4 +256,17 @@ public class User {
         config.set("language", language.toString());
         saveFile();
     }
+
+
+    public String getJob() {
+        return config.getString("job");
+    }
+
+    public enum Jobs {
+        MINER
+    }
+    public void setJob(Jobs job) {
+        config.set("job", job.toString());
+        saveFile();
+    }
 }

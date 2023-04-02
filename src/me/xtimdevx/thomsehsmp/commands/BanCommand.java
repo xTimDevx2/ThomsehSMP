@@ -46,12 +46,7 @@ public class BanCommand implements CommandExecutor {
             final String msg = reason.toString().trim();
 
             if (target == null) {
-                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                    Utils.broadcastLanguage(MessageUtils.GARY + "§c" + args[0] + " §fhas been from the server for §c" + msg + "§f!", User.Languages.ENGLISH);
-                }
-                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                    Utils.broadcastLanguage(MessageUtils.GARY + "§c" + args[0] + " §fis verbannen van de server voor §c" + msg + "§f!", User.Languages.DUTCH);
-                }
+                Bukkit.broadcastMessage(MessageUtils.GARY + "§c" + args[0] + " §fhas been banned from the server for §c" + msg + "§f!");
                 list.addBan(args[0], msg, null, sender.getName());
                 user.getFile().set("bans", user.getFile().getInt("bans") + 1);
                 user.saveFile();
@@ -69,12 +64,11 @@ public class BanCommand implements CommandExecutor {
             target.setWhitelisted(false);
 
             target.kickPlayer("§8§m----------------------------------------------" +
-                    "\n     §c§lJE BENT VERBANNEN" +
-                    "\n§fReden§8: §f" + ban.getReason() +
-                    "\n§fVerbannen door§8: §f" + ban.getSource() +
+                    "\n     §c§lYOU HAVE BEEN BANNED" +
+                    "\n§fReason§8: §f" + ban.getReason() +
+                    "\n§fBanned by§8: §f" + ban.getSource() +
                     "\n§8§m----------------------------------------------"
             );
-
 
         }
         return true;

@@ -28,9 +28,6 @@ public class CratesCommand implements CommandExecutor {
         if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
             player.sendMessage("§8> §fWe will teleport you in §35 §fseconds. Do not move!");
         }
-        if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-            player.sendMessage("§8> §fWe teleporteren je in §35 §fseconden. Niet bewegen!");
-        }
         SpawnCommand.moving.add(player);
 
         taskID2 = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
@@ -75,12 +72,7 @@ public class CratesCommand implements CommandExecutor {
         taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
             @Override
             public void run() {
-                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                    player.sendMessage("§8> §fWe are teleporting you to §3Crates§f.");
-                }
-                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                    player.sendMessage("§8> §fWe teleporteren je naar §3Crates§f.");
-                }
+                player.sendMessage("§8> §fWe are teleporting you to §3Crates§f.");
                 player.sendTitle("", "");
 
                 Location location = player.getLocation();

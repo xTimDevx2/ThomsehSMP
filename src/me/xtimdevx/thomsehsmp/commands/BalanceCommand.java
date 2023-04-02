@@ -20,12 +20,7 @@ public class BalanceCommand implements CommandExecutor {
 
 
         if(args.length == 0) {
-            if (puser.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                player.sendMessage("§8> §fYour Balance: §3" + economyManager.getBalance(player) + " §f⛀");
-            }
-            if (puser.getLanguage().equalsIgnoreCase("DUTCH")) {
-                player.sendMessage("§8> §fJouw Balance: §3" + economyManager.getBalance(player) + " §f⛀");
-            }
+            player.sendMessage("§8> §fYour Balance: §3" + economyManager.getBalance(player) + " §f⛀");
             return true;
         }
 
@@ -35,12 +30,7 @@ public class BalanceCommand implements CommandExecutor {
             User user = User.get(target);
 
             if(user == null) {
-                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                    player.sendMessage("§cThis player is not known to us yet.");
-                }
-                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                    player.sendMessage("§cDeze speler is ons niet bekend.");
-                }
+                player.sendMessage("§cThis player is not known to us yet.");
                 return true;
             }
 

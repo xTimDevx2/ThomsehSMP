@@ -30,7 +30,7 @@ public class AdminTeleportCommand implements CommandExecutor {
                 Player target = Bukkit.getPlayer(args[0]);
 
                 if(target == null) {
-                    player.sendMessage("§cError: Deze speler is niet online.");
+                    player.sendMessage("§cError: This player is not online.");
                     return true;
                 }
 
@@ -40,7 +40,7 @@ public class AdminTeleportCommand implements CommandExecutor {
                     @Override
                     public void run() {
                         player.teleport(target.getLocation());
-                        player.sendMessage("§4§lADMIN! §fAdmin teleport naar §c§o" + target.getName() + " §7§o(Spectator mode)");
+                        player.sendMessage("§4§lADMIN! §fAdmin teleport to §c§o" + target.getName() + " §7§o(Spectator mode)");
                     }
                 }, 40L);
                 return true;
@@ -56,7 +56,7 @@ public class AdminTeleportCommand implements CommandExecutor {
                 @Override
                 public void run() {
                     player.teleport(new Location(Bukkit.getWorld(player.getWorld().getName()), x, y, z));
-                    player.sendMessage("§4§lADMIN! §fAdmin teleport naar §c§ox:" + Math.round(x) + " y:" + Math.round(y) + " z:" + Math.round(z) + " §7§o(Spectator mode)");
+                    player.sendMessage("§4§lADMIN! §fAdmin teleport to §c§ox:" + Math.round(x) + " y:" + Math.round(y) + " z:" + Math.round(z) + " §7§o(Spectator mode)");
                 }
             }, 40L);
 
