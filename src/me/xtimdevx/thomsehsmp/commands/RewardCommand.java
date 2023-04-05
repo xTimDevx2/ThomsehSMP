@@ -60,105 +60,18 @@ public class RewardCommand implements CommandExecutor {
                 long secondsleft = ((cooldownsdaily.get(player.getUniqueId().toString()) / 1000) + DAILYCOOLDOWN) - (System.currentTimeMillis() / 1000);
 
                 if (secondsleft > 0) {
-                    if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                        player.sendMessage("§8> §fYou have to wait §3§o" + convert(secondsleft) + " §fbefore claiming your daily key(s).");
-                    }
-                    if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                        player.sendMessage("§8> §fJe moet nog §3§o" + convert(secondsleft) + " §fwachten voor je je dagelijkse key(s) kan claimen.");
-                    }
+                    player.sendMessage("§8> §fYou still have to wait §3§o" + convert(secondsleft) + " §fbefore you can claim your daily key(s).");
 
                 } else {
-                    if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                        cooldownsdaily.put(player.getUniqueId().toString(), System.currentTimeMillis());
-                        player.sendMessage("§8> §fYou recieved your free daily key!");
-                        ItemStack questkey = new ItemStack(Material.GOLDEN_CARROT);
-                        ItemMeta questkeyMeta = questkey.getItemMeta();
-                        questkeyMeta.setDisplayName("§8> §6§lDaily Crate Key §8<");
-                        ArrayList<String> lore = new ArrayList<String>();
-                        lore.add("§8§m-------------------------");
-                        lore.add("§fUse right click on the §3Daily Crate");
-                        lore.add("§fto recieve your rewards.");
-                        lore.add("§3§o/crates §fto teleport.");
-                        lore.add("§8§m-------------------------");
-
-                        questkeyMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, true);
-
-                        questkeyMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                        questkeyMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-
-                        questkeyMeta.setLore(lore);
-                        questkey.setItemMeta(questkeyMeta);
-                        if (utils.invFull(player)) {
-                            if(player.hasPermission("rank.gold")) {
-                                questkey.setAmount(2);
-                                Bukkit.getWorld(player.getLocation().getWorld().getName()).dropItem(player.getLocation(), questkey);
-                                return true;
-                            }
-                            questkey.setAmount(1);
-                            Bukkit.getWorld(player.getLocation().getWorld().getName()).dropItem(player.getLocation(), questkey);
-                        }else {
-                            if(player.hasPermission("rank.gold")) {
-                                questkey.setAmount(2);
-                                player.getInventory().addItem(questkey);
-                                return true;
-                            }
-                            questkey.setAmount(1);
-                            player.getInventory().addItem(questkey);
-                        }
-                        lore.clear();
-                    }
-                    if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                        cooldownsdaily.put(player.getUniqueId().toString(), System.currentTimeMillis());
-                        player.sendMessage("§8> §fJe hebt je gratis dagelijkse key ontvangen!");
-                        ItemStack questkey = new ItemStack(Material.GOLDEN_CARROT);
-                        ItemMeta questkeyMeta = questkey.getItemMeta();
-                        questkeyMeta.setDisplayName("§8> §6§lDaily Crate Key §8<");
-                        ArrayList<String> lore = new ArrayList<String>();
-                        lore.add("§8§m-------------------------");
-                        lore.add("§fGebruik rechtermuisknop op §3Daily Crate");
-                        lore.add("§fOm je rewards te krijgen.");
-                        lore.add("§3§o/crates §fom te teleporteren.");
-                        lore.add("§8§m-------------------------");
-
-                        questkeyMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, true);
-
-                        questkeyMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                        questkeyMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-
-                        questkeyMeta.setLore(lore);
-                        questkey.setItemMeta(questkeyMeta);
-                        if (utils.invFull(player)) {
-                            if(player.hasPermission("rank.gold")) {
-                                questkey.setAmount(2);
-                                Bukkit.getWorld(player.getLocation().getWorld().getName()).dropItem(player.getLocation(), questkey);
-                                return true;
-                            }
-                            questkey.setAmount(1);
-                            Bukkit.getWorld(player.getLocation().getWorld().getName()).dropItem(player.getLocation(), questkey);
-                        }else {
-                            if(player.hasPermission("rank.gold")) {
-                                questkey.setAmount(2);
-                                player.getInventory().addItem(questkey);
-                                return true;
-                            }
-                            questkey.setAmount(1);
-                            player.getInventory().addItem(questkey);
-                        }
-                        lore.clear();
-                    }
-                }
-
-            } else {
-                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
                     cooldownsdaily.put(player.getUniqueId().toString(), System.currentTimeMillis());
-                    player.sendMessage("§8> §fYou recieved your free daily key!");
+                    player.sendMessage("§8> §fYou have received your free daily key!");
                     ItemStack questkey = new ItemStack(Material.GOLDEN_CARROT);
                     ItemMeta questkeyMeta = questkey.getItemMeta();
                     questkeyMeta.setDisplayName("§8> §6§lDaily Crate Key §8<");
                     ArrayList<String> lore = new ArrayList<String>();
                     lore.add("§8§m-------------------------");
-                    lore.add("§fUse right click on the §3Daily Crate");
-                    lore.add("§fto recieve your rewards.");
+                    lore.add("§fUse right-click on §3Daily Crate");
+                    lore.add("§fTo claim your rewards.");
                     lore.add("§3§o/crates §fto teleport.");
                     lore.add("§8§m-------------------------");
 
@@ -169,6 +82,7 @@ public class RewardCommand implements CommandExecutor {
 
                     questkeyMeta.setLore(lore);
                     questkey.setItemMeta(questkeyMeta);
+
                     if (utils.invFull(player)) {
                         if(player.hasPermission("rank.gold")) {
                             questkey.setAmount(2);
@@ -177,7 +91,7 @@ public class RewardCommand implements CommandExecutor {
                         }
                         questkey.setAmount(1);
                         Bukkit.getWorld(player.getLocation().getWorld().getName()).dropItem(player.getLocation(), questkey);
-                    }else {
+                    } else {
                         if(player.hasPermission("rank.gold")) {
                             questkey.setAmount(2);
                             player.getInventory().addItem(questkey);
@@ -186,47 +100,50 @@ public class RewardCommand implements CommandExecutor {
                         questkey.setAmount(1);
                         player.getInventory().addItem(questkey);
                     }
+
                     lore.clear();
+
                 }
-                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                    cooldownsdaily.put(player.getUniqueId().toString(), System.currentTimeMillis());
-                    player.sendMessage("§8> §fJe hebt je gratis dagelijkse key ontvangen!");
-                    ItemStack questkey = new ItemStack(Material.GOLDEN_CARROT);
-                    ItemMeta questkeyMeta = questkey.getItemMeta();
-                    questkeyMeta.setDisplayName("§8> §6§lDaily Crate Key §8<");
-                    ArrayList<String> lore = new ArrayList<String>();
-                    lore.add("§8§m-------------------------");
-                    lore.add("§fGebruik rechtermuisknop op §3Daily Crate");
-                    lore.add("§fOm je rewards te krijgen.");
-                    lore.add("§3§o/crates §fom te teleporteren.");
-                    lore.add("§8§m-------------------------");
 
-                    questkeyMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, true);
+            } else {
+                cooldownsdaily.put(player.getUniqueId().toString(), System.currentTimeMillis());
+                player.sendMessage("§8> §fYou have received your free daily key!");
+                ItemStack questkey = new ItemStack(Material.GOLDEN_CARROT);
+                ItemMeta questkeyMeta = questkey.getItemMeta();
+                questkeyMeta.setDisplayName("§8> §6§lDaily Crate Key §8<");
+                ArrayList<String> lore = new ArrayList<String>();
+                lore.add("§8§m-------------------------");
+                lore.add("§fRight-click on §3Daily Crate");
+                lore.add("§fTo claim your rewards.");
+                lore.add("§3§o/crates §fto teleport.");
+                lore.add("§8§m-------------------------");
 
-                    questkeyMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                    questkeyMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                questkeyMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, true);
 
-                    questkeyMeta.setLore(lore);
-                    questkey.setItemMeta(questkeyMeta);
-                    if (utils.invFull(player)) {
-                        if(player.hasPermission("rank.gold")) {
-                            questkey.setAmount(2);
-                            Bukkit.getWorld(player.getLocation().getWorld().getName()).dropItem(player.getLocation(), questkey);
-                            return true;
-                        }
-                        questkey.setAmount(1);
+                questkeyMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                questkeyMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
+                questkeyMeta.setLore(lore);
+                questkey.setItemMeta(questkeyMeta);
+                if (utils.invFull(player)) {
+                    if(player.hasPermission("rank.gold")) {
+                        questkey.setAmount(2);
                         Bukkit.getWorld(player.getLocation().getWorld().getName()).dropItem(player.getLocation(), questkey);
-                    }else {
-                        if(player.hasPermission("rank.gold")) {
-                            questkey.setAmount(2);
-                            player.getInventory().addItem(questkey);
-                            return true;
-                        }
-                        questkey.setAmount(1);
-                        player.getInventory().addItem(questkey);
+                        return true;
                     }
-                    lore.clear();
+                    questkey.setAmount(1);
+                    Bukkit.getWorld(player.getLocation().getWorld().getName()).dropItem(player.getLocation(), questkey);
+                }else {
+                    if(player.hasPermission("rank.gold")) {
+                        questkey.setAmount(2);
+                        player.getInventory().addItem(questkey);
+                        return true;
+                    }
+                    questkey.setAmount(1);
+                    player.getInventory().addItem(questkey);
                 }
+                lore.clear();
+
             }
         }
         return true;

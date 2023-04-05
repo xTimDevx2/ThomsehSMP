@@ -28,12 +28,13 @@ public class EnderchestCommand implements CommandExecutor {
             Player target = Bukkit.getPlayer(args[0]);
 
             if(target == null) {
-                player.sendMessage("§cError: Deze speler is niet online.");
+                player.sendMessage("§cError: This player is not online.");
                 return true;
             }
 
             player.openInventory(target.getEnderChest());
-            player.sendMessage(MessageUtils.GARY + "Ik open §c" + target.getName() + "'s §fenderchest voor je.");
+            player.sendMessage(MessageUtils.GARY + "I am opening §c" + target.getName() + "'s §fenderchest for you.");
+
         }
         return true;
     }

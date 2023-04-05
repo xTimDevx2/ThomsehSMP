@@ -19,7 +19,7 @@ public class EndCommand implements CommandExecutor {
             return true;
         }
 
-        if(args.length ==0) {
+        if(args.length == 0) {
             player.sendMessage("§cUsage: /end <close/open>");
             return true;
         }
@@ -27,10 +27,10 @@ public class EndCommand implements CommandExecutor {
         FileConfiguration settings = Settings.getInstance().getData();
         if(args[0].equalsIgnoreCase("close")) {
             if(!settings.getBoolean("end")) {
-                player.sendMessage( "§cDe end staat al uit!");
+                player.sendMessage("§cThe End is already closed!");
                 return true;
             }
-            Bukkit.broadcastMessage(MessageUtils.PREFIX + "De §3End §fstaat nu uit!");
+            Bukkit.broadcastMessage(MessageUtils.PREFIX + "The §3End §fhas been closed!");
 
             settings.set("end", false);
             Settings.getInstance().saveData();
@@ -38,21 +38,20 @@ public class EndCommand implements CommandExecutor {
 
         if(args[0].equalsIgnoreCase("open")) {
             if(settings.getBoolean("end")) {
-                player.sendMessage( "§cDe end staat al aan!");
+                player.sendMessage("§cThe End is already open!");
                 return true;
             }
 
             player.sendMessage("§8§m----------------------------------------------------");
             MessageUtils.sendCenteredMessage(player, "§3§lEnd");
-            MessageUtils.sendCenteredMessage(player, "§fDe end is nu §a§lGeopend§f!");
-            MessageUtils.sendCenteredMessage(player, "§fVecht jij mee de draak? §3§o/tpa §fdan naar §lThomseh§f!");
+            MessageUtils.sendCenteredMessage(player, "§fThe End is now §a§lopen§f!");
+            MessageUtils.sendCenteredMessage(player, "§fDo you want to fight the dragon? §3§o/tpa §fto §lThomseh§f!");
             player.sendMessage("§8§m----------------------------------------------------");
 
             settings.set("end", true);
             Settings.getInstance().saveData();
-
-
         }
         return true;
     }
+
 }

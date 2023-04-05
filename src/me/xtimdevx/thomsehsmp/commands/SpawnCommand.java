@@ -29,12 +29,7 @@ public class SpawnCommand implements CommandExecutor {
         Player player = (Player) sender;
         User user = User.get(player);
 
-        if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-            player.sendMessage("§8> §fWe will teleport you in §35 §fseconds. Do not move!");
-        }
-        if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-            player.sendMessage("§8> §fWe teleporteren je in §35 §fseconden. Niet bewegen!");
-        }
+            player.sendMessage("§8> §fWe will teleport you in §35 §fseconds. Don't move!");
         moving.add(player);
         taskID6 = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
             @Override
@@ -78,12 +73,7 @@ public class SpawnCommand implements CommandExecutor {
         taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
             @Override
             public void run() {
-                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
                     player.sendMessage("§8> §fWe are teleporting you to §3Spawn§f.");
-                }
-                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                    player.sendMessage("§8> §fWe teleporteren je naar §3Spawn§f.");
-                }
                 player.sendTitle("", "");
 
                 Location location = player.getLocation();

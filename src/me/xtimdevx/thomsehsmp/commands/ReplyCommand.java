@@ -25,12 +25,8 @@ public class ReplyCommand implements CommandExecutor {
             Player player = (Player) sender;
             User user = User.get(player);
 
-            if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                sender.sendMessage(ChatColor.RED + "You have no one to reply to.");
-            }
-            if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                sender.sendMessage(ChatColor.RED + "Je hebt niemand om op te antwoorden.");
-            }
+            sender.sendMessage(ChatColor.RED + "You have no one to reply to.");
+
 
             return true;
         }

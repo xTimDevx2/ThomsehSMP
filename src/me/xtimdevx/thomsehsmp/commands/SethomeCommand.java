@@ -33,48 +33,30 @@ public class SethomeCommand implements CommandExecutor {
             user.saveFile();
 
             if (user.getFile().getStringList("homelist").stream().anyMatch("home"::equalsIgnoreCase)) {
-                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                    player.sendMessage("§8> §fThe location of your home has been altered. §7§o(Naam: home)");
-                }
-                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                    player.sendMessage("§8> §fDe locatie van je home is aangepast. §7§o(Naam: home)");
-                }
+                player.sendMessage("§8> §fThe location of your home has been updated. §7§o(Name: home)");
             } else {
                 Main.home.clear();
                 Main.home.addAll(user.getFile().getStringList("homelist"));
 
-                if(player.hasPermission("smp.homes.gold")) {
-                    if(Main.home.size() == 5) {
-                        if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                            player.sendMessage("§cError: You cannot set more then 5 homes.");
-                        }
-                        if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                            player.sendMessage("§cError: Je kan niet meer als 5 homes zetten.");
-                        }
+                if (player.hasPermission("smp.homes.gold")) {
+                    if (Main.home.size() == 5) {
+                        player.sendMessage("§cError: You can't set more than 5 homes.");
                         return true;
                     }
-                }else {
-                    if(Main.home.size() == 3) {
-                        if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                            player.sendMessage("§cError: You cannot set more then 3 homes.");
-                        }
-                        if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                            player.sendMessage("§cError: Je kan niet meer als 3 homes zetten.");
-                        }
+                } else {
+                    if (Main.home.size() == 3) {
+                        player.sendMessage("§cError: You can't set more than 3 homes.");
                         return true;
                     }
                 }
-                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                    player.sendMessage("§8> §fYou placed your home here. §7§o(Name: home)");
-                }
-                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                    player.sendMessage("§8> §fJe hebt je home hier geplaatst. §7§o(Naam: home)");
-                }
+
+                player.sendMessage("§8> §fYou have set your home here. §7§o(Name: home)");
 
                 Main.home.add("Home");
                 user.getFile().set("homelist", Main.home);
                 user.saveFile();
             }
+
             return true;
         }
 
@@ -90,46 +72,28 @@ public class SethomeCommand implements CommandExecutor {
             user.saveFile();
 
             if (user.getFile().getStringList("homelist").stream().anyMatch(name::equalsIgnoreCase)) {
-                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                    player.sendMessage("§8> §fThe location of your home has been altered. §7§o(Name: " + name + ")");
-                }
-                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                    player.sendMessage("§8> §fDe locatie van je home is aangepast. §7§o(Naam: " + name + ")");
-                }
+                player.sendMessage("§8> §fThe location of your home has been updated. §7§o(Name: " + name + ")");
             } else {
                 Main.home.clear();
                 Main.home.addAll(user.getFile().getStringList("homelist"));
 
-                if(player.hasPermission("smp.homes.gold")) {
-                    if(Main.home.size() == 5) {
-                        if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                            player.sendMessage("§cError: You cannot set more then 5 homes.");
-                        }
-                        if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                            player.sendMessage("§cError: Je kan niet meer als 5 homes zetten.");
-                        }                            return true;
+                if (player.hasPermission("smp.homes.gold")) {
+                    if (Main.home.size() == 5) {
+                        player.sendMessage("§cError: You can't set more than 5 homes.");
+                        return true;
                     }
-                }else {
-                    if(Main.home.size() == 3) {
-                        if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                            player.sendMessage("§cError: You cannot set more then 3 homes.");
-                        }
-                        if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                            player.sendMessage("§cError: Je kan niet meer als 3 homes zetten.");
-                        }
+                } else {
+                    if (Main.home.size() == 3) {
+                        player.sendMessage("§cError: You can't set more than 3 homes.");
                         return true;
                     }
                 }
                 Main.home.add(name);
                 user.getFile().set("homelist", Main.home);
                 user.saveFile();
-                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                    player.sendMessage("§8> §fYou placed your home here. §7§o(Name: home)");
-                }
-                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                    player.sendMessage("§8> §fJe hebt je home hier geplaatst. §7§o(Naam: home)");
-                }
+                player.sendMessage("§8> §fYou have set your home here. §7§o(Name: " + name + ")");
             }
+
 
         }
         return true;

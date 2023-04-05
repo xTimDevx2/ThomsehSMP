@@ -14,36 +14,19 @@ public class RulesCommand implements CommandExecutor {
         Player player = (Player) sender;
         User user = User.get(player);
 
-        if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-            player.sendMessage("§8§m----------------------------------------------------");
-            MessageUtils.sendCenteredMessage(player, "§3§lServer Rules!");
-            MessageUtils.sendCenteredMessage(player, "§fGriefing is §cnot §fallowed.");
-            MessageUtils.sendCenteredMessage(player, "§fPvP is §cdisabled§f!");
-            MessageUtils.sendCenteredMessage(player, "§fUsing fire, lava, gravel damage is §cnot §fallowed.");
-            MessageUtils.sendCenteredMessage(player, "§fThe moderators are §aalways §fright.");
-            MessageUtils.sendCenteredMessage(player, "§fBe respectfull to other players.");
-            MessageUtils.sendCenteredMessage(player, "§fExcessive swearing is §cnot §fallowed.");
-            MessageUtils.sendCenteredMessage(player, "§fSexism is §cnot§f allowed.");
-            MessageUtils.sendCenteredMessage(player, "§fRacism is §cnot§f allowed.");
-            MessageUtils.sendCenteredMessage(player, "§fScamming other players is §cnot§f allowed.");
-            MessageUtils.sendCenteredMessage(player, "§fDon't advertise for your own server.");
-            player.sendMessage("§8§m----------------------------------------------------");
-        }
-        if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-            player.sendMessage("§8§m----------------------------------------------------");
-            MessageUtils.sendCenteredMessage(player, "§3§lServer Regels!");
-            MessageUtils.sendCenteredMessage(player, "§fGriefen is §cniet §ftoegestaan.");
-            MessageUtils.sendCenteredMessage(player, "§fPvP staat §cuit§f!");
-            MessageUtils.sendCenteredMessage(player, "§fHet gebruiken van vuur, lava, gravel damage is §cniet §ftoegestaan.");
-            MessageUtils.sendCenteredMessage(player, "§fDe moderators hebben §aaltijd §fgelijk.");
-            MessageUtils.sendCenteredMessage(player, "§fWees respectvol tegen andere spelers.");
-            MessageUtils.sendCenteredMessage(player, "§fExcessief schelden is §cniet §ftoegestaan.");
-            MessageUtils.sendCenteredMessage(player, "§fSexism is §cniet§f toegestaan.");
-            MessageUtils.sendCenteredMessage(player, "§fRacisme is §cniet§f toegestaan.");
-            MessageUtils.sendCenteredMessage(player, "§fScammen bij andere spelers is §cniet§f toegestaan.");
-            MessageUtils.sendCenteredMessage(player, "§fGeen reclame maken van eigen servers of sociale media.");
-            player.sendMessage("§8§m----------------------------------------------------");
-        }
+        player.sendMessage("§8§m----------------------------------------------------");
+        MessageUtils.sendCenteredMessage(player, "§3§lServer Rules!");
+        MessageUtils.sendCenteredMessage(player, "§fGriefing is §cnot§f allowed.");
+        MessageUtils.sendCenteredMessage(player, "§fPvP is §cdisabled§f!");
+        MessageUtils.sendCenteredMessage(player, "§fUsing fire, lava, gravel damage is §cnot§f allowed.");
+        MessageUtils.sendCenteredMessage(player, "§fThe moderators are §always§f right.");
+        MessageUtils.sendCenteredMessage(player, "§fBe respectful to other players.");
+        MessageUtils.sendCenteredMessage(player, "§fExcessive cursing is §cnot§f allowed.");
+        MessageUtils.sendCenteredMessage(player, "§fSexism is §cnot§f allowed.");
+        MessageUtils.sendCenteredMessage(player, "§fRacism is §cnot§f allowed.");
+        MessageUtils.sendCenteredMessage(player, "§fScamming other players is §cnot§f allowed.");
+        MessageUtils.sendCenteredMessage(player, "§fNo advertising of own servers or social media.");
+        player.sendMessage("§8§m----------------------------------------------------");
         return true;
     }
 }

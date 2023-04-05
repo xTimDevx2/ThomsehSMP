@@ -31,10 +31,8 @@ public class SettingsCommand implements CommandExecutor, Listener {
     }
 
     public Inventory openSettingmenu(Player player) {
-        Inventory inv = Bukkit.createInventory(player, 9, "§3§nPersoonlijke Settings:");
+        Inventory inv = Bukkit.createInventory(player, 9, "§3§nPersonal Settings:");
         ArrayList<String> lore = new ArrayList<String>();
-
-
 
         User user = User.get(player);
 
@@ -42,14 +40,16 @@ public class SettingsCommand implements CommandExecutor, Listener {
             user.getFile().set("settings.deathcounter", true);
             user.saveFile();
         }
+
         ItemStack deathcount = new ItemStack(Material.PAPER);
         ItemMeta deathcountMeta = deathcount.getItemMeta();
-        deathcountMeta.setDisplayName("§8> §3§oDeath aantal in de death message §8<");
+        deathcountMeta.setDisplayName("§8> §3§oDeath count in death message §8<");
         lore.add(" ");
-        lore.add("§8> §f§lZet het tonen van je deathcounter in de deathmessages aan of uit.");
+        lore.add("§8> §f§lTurn on or off showing your death counter in death messages.");
         lore.add(" ");
-        lore.add("§8> §fStatus: " + (user.getFile().getBoolean("deathcounter") ? "§aIngeschakelt" : "§cUitgeschakelt"));
+        lore.add("§8> §fStatus: " + (user.getFile().getBoolean("deathcounter") ? "§aEnabled" : "§cDisabled"));
         lore.add(" ");
+
         deathcountMeta.setLore(lore);
         deathcount.setItemMeta(deathcountMeta);
         inv.setItem(4, deathcount);
@@ -64,26 +64,25 @@ public class SettingsCommand implements CommandExecutor, Listener {
         Player player = (Player) event.getWhoClicked();
         User user = User.get(player);
 
-        if(player.getOpenInventory().getTitle().equalsIgnoreCase("§3§nPersoonlijke Settings:")) {
+        if (player.getOpenInventory().getTitle().equalsIgnoreCase("§3§nPersonal Settings:")) {
             event.setCancelled(true);
 
-            if(event.getSlot() == 4) {
-                if(user.getFile().getBoolean("settings.deathcounter")) {
+            if (event.getSlot() == 4) {
+                if (user.getFile().getBoolean("settings.deathcounter")) {
                     user.getFile().set("settings.deathcounter", false);
                     user.saveFile();
 
                     player.closeInventory();
 
-                    player.sendMessage(MessageUtils.PREFIX + "Je hebt deathcounter §cuitgeschakelt§f!");
-                }else {
+                    player.sendMessage(MessageUtils.PREFIX + "You have disabled the death counter!");
+                } else {
                     user.getFile().set("settings.deathcounter", true);
                     user.saveFile();
 
                     player.closeInventory();
 
-                    player.sendMessage(MessageUtils.PREFIX + "Je hebt deathcounter §aingeschakelt§f!");
+                    player.sendMessage(MessageUtils.PREFIX + "You have enabled the death counter!");
                 }
-
             }
         }
     }

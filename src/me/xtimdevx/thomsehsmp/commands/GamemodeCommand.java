@@ -36,42 +36,41 @@ public class GamemodeCommand implements CommandExecutor, TabCompleter {
             }
 
             if(args[0].equalsIgnoreCase("creative") || args[0].equalsIgnoreCase("1")) {
-                if(args.length == 1) {
-                    if(player.getGameMode() != GameMode.CREATIVE) {
-                        if(player.getGameMode() == GameMode.SURVIVAL) {
+                if (args.length == 1) {
+                    if (player.getGameMode() != GameMode.CREATIVE) {
+                        if (player.getGameMode() == GameMode.SURVIVAL) {
                             Utils.saveInventory(player);
                         }
-                        if(user.getFile().get("builderinventory") != null) {
+                        if (user.getFile().get("builderinventory") != null) {
                             Utils.restoreBuilderInventory(player);
-                        }else {
+                        } else {
                             player.getInventory().clear();
                             player.getInventory().setArmorContents(null);
                         }
                         player.setGameMode(GameMode.CREATIVE);
-                        player.sendMessage("§8> §fGamemode verandert naar §3§oCreative§f!");
+                        player.sendMessage("§8> §fGamemode changed to §3§oCreative§f!");
                     }
                     return true;
                 }
                 Player target = Bukkit.getPlayer(args[1]);
-                if(target == null) {
-                    player.sendMessage("§cError: Deze speler is niet online.");
+                if (target == null) {
+                    player.sendMessage("§cError: This player is not online.");
                 }
                 User tuser = User.get(target);
-                if(player.getGameMode() != GameMode.CREATIVE) {
+                if (player.getGameMode() != GameMode.CREATIVE) {
                     Utils.saveInventory(target);
-                    if(tuser.getFile().get("builderinventory") != null) {
+                    if (tuser.getFile().get("builderinventory") != null) {
                         Utils.restoreBuilderInventory(target);
-                    }else {
+                    } else {
                         target.getInventory().clear();
                         target.getInventory().setArmorContents(null);
                     }
                     target.setGameMode(GameMode.CREATIVE);
-                    target.sendMessage("§8> §fGamemode verandert naar §3§oCreative§f!");
-                    player.sendMessage("§8> §fGamemode van §3§o" + target.getName() + " §fverandert naar §3§oCreative§f!");
-                }else {
-                    player.sendMessage("§cError: Deze speler zit al in creative mode.");
+                    target.sendMessage("§8> §fGamemode changed to §3§oCreative§f!");
+                    player.sendMessage("§8> §fGamemode of §3§o" + target.getName() + " §fchanged to §3§oCreative§f!");
+                } else {
+                    player.sendMessage("§cError: This player is already in creative mode.");
                 }
-
             }
 
             if(args[0].equalsIgnoreCase("survival") || args[0].equalsIgnoreCase("0")) {
@@ -82,13 +81,13 @@ public class GamemodeCommand implements CommandExecutor, TabCompleter {
                         }
                         Utils.restoreInventory(player);
                         player.setGameMode(GameMode.SURVIVAL);
-                        player.sendMessage("§8> §fGamemode verandert naar §3§oSurvival§f!");
+                        player.sendMessage("§8> §fGamemode changed to §3§oSurvival§f!");
                     }
                     return true;
                 }
                 Player target = Bukkit.getPlayer(args[1]);
-                if(target == null) {
-                    player.sendMessage("§cError: Deze speler is niet online.");
+                if (target == null) {
+                    player.sendMessage("§cError: This player is not online.");
                 }
                 User tuser = User.get(target);
                 if(target.getGameMode() != GameMode.SURVIVAL) {
@@ -97,10 +96,10 @@ public class GamemodeCommand implements CommandExecutor, TabCompleter {
                     }
                     Utils.restoreInventory(target);
                     target.setGameMode(GameMode.SURVIVAL);
-                    target.sendMessage("§8> §fGamemode verandert naar §3§oSurvival§f!");
-                    player.sendMessage("§8> §fGamemode van §3§o" + target.getName() + " §fverandert naar §3§oSurvival§f!");
-                }else {
-                    player.sendMessage("§cError: Deze speler zit al in survival mode.");
+                    target.sendMessage("§8> §fGamemode changed to §3§oSurvival§f!");
+                    player.sendMessage("§8> §fGamemode of §3§o" + target.getName() + " §fchanged to §3§oSurvival§f!");
+                } else {
+                    player.sendMessage("§cError: This player is already in survival mode.");
                 }
 
             }
@@ -109,48 +108,46 @@ public class GamemodeCommand implements CommandExecutor, TabCompleter {
                 if(args.length == 1) {
                     if(player.getGameMode() != GameMode.SPECTATOR) {
                         player.setGameMode(GameMode.SPECTATOR);
-                        player.sendMessage("§8> §fGamemode verandert naar §3§oSpectator§f!");
+                        player.sendMessage("§8> §fGamemode changed to §3§oSpectator§f!");
                     }
                     return true;
                 }
                 Player target = Bukkit.getPlayer(args[1]);
                 if(target == null) {
-                    player.sendMessage("§cError: Deze speler is niet online.");
+                    player.sendMessage("§cError: This player is not online.");
                 }
                 User tuser = User.get(target);
                 if(target.getGameMode() != GameMode.SPECTATOR) {
-
                     target.setGameMode(GameMode.SPECTATOR);
-                    target.sendMessage("§8> §fGamemode verandert naar §3§oSpectator§f!");
-                    player.sendMessage("§8> §fGamemode van §3§o" + target.getName() + " §fverandert naar §3§oSpectator§f!");
-                }else {
-                    player.sendMessage("§cError: Deze speler zit al in spectator mode.");
+                    target.sendMessage("§8> §fGamemode changed to §3§oSpectator§f!");
+                    player.sendMessage("§8> §fGamemode of §3§o" + target.getName() + " §fchanged to §3§oSpectator§f!");
+                } else {
+                    player.sendMessage("§cError: This player is already in spectator mode.");
                 }
-
             }
+
             if(args[0].equalsIgnoreCase("adventure") || args[0].equalsIgnoreCase("2")) {
                 if(args.length == 1) {
                     if(player.getGameMode() != GameMode.ADVENTURE) {
                         player.setGameMode(GameMode.ADVENTURE);
-                        player.sendMessage("§8> §fGamemode verandert naar §3§oAdventure§f!");
+                        player.sendMessage("§8> §fGamemode changed to §3§oAdventure§f!");
                     }
                     return true;
                 }
                 Player target = Bukkit.getPlayer(args[1]);
                 if(target == null) {
-                    player.sendMessage("§cError: Deze speler is niet online.");
+                    player.sendMessage("§cError: This player is not online.");
                 }
                 User tuser = User.get(target);
                 if(target.getGameMode() != GameMode.ADVENTURE) {
-
                     target.setGameMode(GameMode.ADVENTURE);
-                    target.sendMessage("§8> §fGamemode verandert naar §3§oAdventure§f!");
-                    player.sendMessage("§8> §fGamemode van §3§o" + target.getName() + " §fverandert naar §3§oAdventure§f!");
-                }else {
-                    player.sendMessage("§cError: Deze speler zit al in adventure mode.");
+                    target.sendMessage("§8> §fGamemode changed to §3§oAdventure§f!");
+                    player.sendMessage("§8> §fGamemode of §3§o" + target.getName() + " §fchanged to §3§oAdventure§f!");
+                } else {
+                    player.sendMessage("§cError: This player is already in adventure mode.");
                 }
-
             }
+
         }
         return true;
     }

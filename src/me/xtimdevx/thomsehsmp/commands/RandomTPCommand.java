@@ -50,23 +50,13 @@ public class RandomTPCommand implements CommandExecutor {
                 user.getFile().set("back.world", bWorld);
                 user.saveFile();
 
+                player.sendMessage("§8§m----------------------------------------------------");
+                MessageUtils.sendCenteredMessage(player, "§2§lOverworld"); // "Overworld" stays the same in English
+                MessageUtils.sendCenteredMessage(player, "§3§lWe will send you to a random location...");
+                MessageUtils.sendCenteredMessage(player, "§fX: " + rtp.getBlockX() + " Y: " + rtp.getBlockY() + " Z: " + rtp.getBlockZ());
+                MessageUtils.sendCenteredMessage(player, "§fBiome: §3§o" + NameUtils.getBiomeName(player.getWorld().getBiome(rtp)));
+                player.sendMessage("§8§m----------------------------------------------------");
 
-                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                    player.sendMessage("§8§m----------------------------------------------------");
-                    MessageUtils.sendCenteredMessage(player, "§2§lOverworld");
-                    MessageUtils.sendCenteredMessage(player, "§3§lWe are sending you to a random location....");
-                    MessageUtils.sendCenteredMessage(player, "§fX: " + rtp.getBlockX() + " Y: " + rtp.getBlockY() + " Z: " + rtp.getBlockZ());
-                    MessageUtils.sendCenteredMessage(player, "§fBiome: §3§o" + NameUtils.getBiomeName(player.getWorld().getBiome(rtp)));
-                    player.sendMessage("§8§m----------------------------------------------------");
-                }
-                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                    player.sendMessage("§8§m----------------------------------------------------");
-                    MessageUtils.sendCenteredMessage(player, "§2§lOverworld");
-                    MessageUtils.sendCenteredMessage(player, "§3§lWe sturen je naar een willekeurige locatie....");
-                    MessageUtils.sendCenteredMessage(player, "§fX: " + rtp.getBlockX() + " Y: " + rtp.getBlockY() + " Z: " + rtp.getBlockZ());
-                    MessageUtils.sendCenteredMessage(player, "§fBiome: §3§o" + NameUtils.getBiomeName(player.getWorld().getBiome(rtp)));
-                    player.sendMessage("§8§m----------------------------------------------------");
-                }
 
                 player.teleport(rtp);
 
@@ -105,22 +95,13 @@ public class RandomTPCommand implements CommandExecutor {
                 user.saveFile();
 
 
-                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                    player.sendMessage("§8§m----------------------------------------------------");
-                    MessageUtils.sendCenteredMessage(player, "§c§lNether");
-                    MessageUtils.sendCenteredMessage(player, "§3§lWe are sending you to a random location....");
-                    MessageUtils.sendCenteredMessage(player, "§fX: " + rtp.getBlockX() + " Y: " + rtp.getBlockY() + " Z: " + rtp.getBlockZ());
-                    MessageUtils.sendCenteredMessage(player, "§fBiome: §3§o" + NameUtils.getBiomeName(player.getWorld().getBiome(rtp)));
-                    player.sendMessage("§8§m----------------------------------------------------");
-                }
-                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                    player.sendMessage("§8§m----------------------------------------------------");
-                    MessageUtils.sendCenteredMessage(player, "§c§lNether");
-                    MessageUtils.sendCenteredMessage(player, "§3§lWe sturen je naar een willekeurige locatie....");
-                    MessageUtils.sendCenteredMessage(player, "§fX: " + rtp.getBlockX() + " Y: " + rtp.getBlockY() + " Z: " + rtp.getBlockZ());
-                    MessageUtils.sendCenteredMessage(player, "§fBiome: §3§o" + NameUtils.getBiomeName(player.getWorld().getBiome(rtp)));
-                    player.sendMessage("§8§m----------------------------------------------------");
-                }
+                player.sendMessage("§8§m----------------------------------------------------");
+                MessageUtils.sendCenteredMessage(player, "§c§lNether");
+                MessageUtils.sendCenteredMessage(player, "§3§lWe will send you to a random location...");
+                MessageUtils.sendCenteredMessage(player, "§fX: " + rtp.getBlockX() + " Y: " + rtp.getBlockY() + " Z: " + rtp.getBlockZ());
+                MessageUtils.sendCenteredMessage(player, "§fBiome: §3§o" + NameUtils.getBiomeName(player.getWorld().getBiome(rtp)));
+                player.sendMessage("§8§m----------------------------------------------------");
+
 
                 player.teleport(rtp);
 
@@ -138,12 +119,7 @@ public class RandomTPCommand implements CommandExecutor {
             }
         }else{
             //Hasn't expired yet, shows how many seconds left until it does
-            if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                player.sendMessage("§8> §fWait §3"+  timeLeft + " §fseconds before using random teleport again.");
-            }
-            if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                player.sendMessage("§8> §fWacht nog §3"+  timeLeft + " §fseconden voor je opnieuw random teleport kan gebruiken.");
-            }
+            player.sendMessage("§8> §fPlease wait another §3" + timeLeft + " §fseconds before using rtp again.");
         }
 
         return true;

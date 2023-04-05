@@ -35,29 +35,15 @@ public class DonateAnnounceCommand implements CommandExecutor {
                     for(Player online : Bukkit.getOnlinePlayers()) {
                         online.playSound(player.getLocation(), Sound.ITEM_TRIDENT_THUNDER, 20, 1);
                     }
-                    if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
                         Bukkit.broadcastMessage("§8§m----------------------------------------------------");
                         MessageUtils.broadcastCenteredMessage("§3§lDonation!");
                         Bukkit.broadcastMessage(" ");
-                        MessageUtils.broadcastCenteredMessage("§3§o" + player.getName() + " §fhas donated on the server!");
+                        MessageUtils.broadcastCenteredMessage("§3§o" + player.getName() + " §fhas donated to the server!");
                         MessageUtils.broadcastCenteredMessage(MessageUtils.format("§fThey bought the #FFD786§lG#FFCB62§lo#FCBB39§ll#FFAC06§ld §frank!"));
                         Bukkit.broadcastMessage(" ");
                         MessageUtils.broadcastCenteredMessage(MessageUtils.format("§3§nstore.thomseh.live"));
                         MessageUtils.broadcastCenteredMessage(MessageUtils.format("§d§l<3"));
                         Bukkit.broadcastMessage("§8§m----------------------------------------------------");
-                    }
-                    if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                        Bukkit.broadcastMessage("§8§m----------------------------------------------------");
-                        MessageUtils.broadcastCenteredMessage("§3§lDonatie!");
-                        Bukkit.broadcastMessage(" ");
-                        MessageUtils.broadcastCenteredMessage("§3§o" + player.getName() + " §fheeft op de server gedoneerd!");
-                        MessageUtils.broadcastCenteredMessage(MessageUtils.format("§fDie kocht de #FFD786§lG#FFCB62§lo#FCBB39§ll#FFAC06§ld §frank!"));
-                        MessageUtils.broadcastCenteredMessage(MessageUtils.format("§fGeef hun een welverdiende §3§LGG §fin de chat!"));
-                        Bukkit.broadcastMessage(" ");
-                        MessageUtils.broadcastCenteredMessage(MessageUtils.format("§3§nstore.thomseh.live"));
-                        MessageUtils.broadcastCenteredMessage(MessageUtils.format("§d§l<3"));
-                        Bukkit.broadcastMessage("§8§m----------------------------------------------------");
-                    }
 
                     Bukkit.dispatchCommand(console, "setrank " + player.getName() + " Gold -s");
 
@@ -80,18 +66,10 @@ public class DonateAnnounceCommand implements CommandExecutor {
                     taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                         @Override
                         public void run() {
-                            if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
                                 player.sendMessage("§6§lThank you for donating!");
                                 player.sendMessage(" ");
-                                player.sendMessage("§fThank you §6§o" + player.getName() + " §ffor your donation!");
-                                player.sendMessage(MessageUtils.format("§fYou bought the #FFD786§lG#FFCB62§lo#FCBB39§ll#FFAC06§ld §frank."));
-                            }
-                            if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                                player.sendMessage("§6§lBedankt voor het donaten!");
-                                player.sendMessage(" ");
-                                player.sendMessage("§fBedankt §6§o" + player.getName() + " §fvoor je donatie!");
-                                player.sendMessage(MessageUtils.format("§fJe hebt de rank #FFD786§lG#FFCB62§lo#FCBB39§ll#FFAC06§ld §fgekocht."));
-                            }
+                                player.sendMessage("§fThank you, §6§o" + player.getName() + "§f, for your donation!");
+                                player.sendMessage(MessageUtils.format("§fYou have bought the #FFD786§lG#FFCB62§lo#FCBB39§ll#FFAC06§ld §frank."));
                         }
                     },40L);
 
@@ -99,30 +77,18 @@ public class DonateAnnounceCommand implements CommandExecutor {
                         @Override
                         public void run() {
 
-                            if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                                player.sendMessage(" ");
-                                player.sendMessage("§fBecause of donations like these we can keep excisting as a server!");
-                                player.sendMessage("§fAnd we are  §6§lExtremely §fgratefull for that.");
-                            }
-                            if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                                player.sendMessage(" ");
-                                player.sendMessage("§fDankzij donaties zoals deze kunnen wij blijven bestaan als server!");
-                                player.sendMessage("§fEn daar zijn we je §6§lEnorm §fdankbaar voor.");
-                            }
+                            player.sendMessage(" ");
+                            player.sendMessage("Thank you for your donation! It's because of donations like yours that we can continue to exist as a server.");
+                            player.sendMessage("We are truly grateful, and want to emphasize just how much we appreciate your support. Your contribution helps us to provide a better experience for all of our players. Thank you again for your generosity!");
+
                         }
                     },100L);
 
                     taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                         @Override
                         public void run() {
-                            if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
                                 player.sendMessage(" ");
-                                player.sendMessage("§fThese are the features that you have unlocked by being a badass:");
-                            }
-                            if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                                player.sendMessage(" ");
-                                player.sendMessage("§fVerder zijn dit de dingen die jij hebt vrijgespeeld:");
-                            }
+                            player.sendMessage("Congratulations on being a badass! Here are the features that you have unlocked:");
                         }
                     },160L);
 
@@ -147,14 +113,8 @@ public class DonateAnnounceCommand implements CommandExecutor {
                     taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                         @Override
                         public void run() {
-                            if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                                player.sendMessage("§fFrom now on you are allowed to build in the §adonor zone §faround spawn.");
+                            player.sendMessage("Great news! As a donor, you are now allowed to build in the donor zone around spawn.");
 
-                            }
-                            if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                                player.sendMessage("§fVanaf nu kan jij bouwen in de §adonor zone §frond spawn.");
-
-                            }
                             player.playSound(player.getLocation(), Sound.ITEM_TRIDENT_RIPTIDE_1, 1, 1);
                         }
                     },280L);
@@ -162,12 +122,7 @@ public class DonateAnnounceCommand implements CommandExecutor {
                     taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                         @Override
                         public void run() {
-                            if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                                player.sendMessage("§fYou get §6§l1 §fextra crate key a day.");
-                            }
-                            if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                                player.sendMessage("§fJe krijgt §6§l1 §fextra crate key per dag.");
-                            }
+                            player.sendMessage("As a donor, you now receive 1 extra crate key per day!");
                             player.playSound(player.getLocation(), Sound.ITEM_TRIDENT_RIPTIDE_1, 1, 1);
                         }
                     },320L);
@@ -175,12 +130,7 @@ public class DonateAnnounceCommand implements CommandExecutor {
                     taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                         @Override
                         public void run() {
-                            if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                                player.sendMessage("§fYou get §6§oEarly Access §fon season releases.");
-                            }
-                            if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                                player.sendMessage("§fJe krijgt een §6§oEarly Access §fbij nieuwe updates.");
-                            }
+                            player.sendMessage("As a donor, you will get early access to season releases!");
                             player.playSound(player.getLocation(), Sound.ITEM_TRIDENT_RIPTIDE_1, 1, 1);
                         }
                     },360L);
@@ -188,12 +138,7 @@ public class DonateAnnounceCommand implements CommandExecutor {
                     taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                         @Override
                         public void run() {
-                            if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                                player.sendMessage("§fYou are able to §6§lheal §fyourself. §7§o(Every 60 minutes)");
-                            }
-                            if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                                player.sendMessage("§fJe kan jezelf §6§lhealen. §7§o(Elke 60 minuten)");
-                            }
+                            player.sendMessage("As a donor, you have the ability to heal yourself once every 60 minutes!");
                             player.sendMessage("§7§oTip: /heal");
                             player.playSound(player.getLocation(), Sound.ITEM_TRIDENT_RIPTIDE_1, 1, 1);
                         }
@@ -202,12 +147,7 @@ public class DonateAnnounceCommand implements CommandExecutor {
                     taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                         @Override
                         public void run() {
-                            if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                                player.sendMessage("§fYou are able to open a virtual crafting table. §7§o(Every 2 minutes)");
-                            }
-                            if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                                player.sendMessage("§fJe kan een virtuele crafting table openen. §7§o(Elke 2 minuten)");
-                            }
+                            player.sendMessage("As a donor, you can now access a virtual crafting table once every 2 minutes!");
                             player.sendMessage("§7§oTip: /craft");
                             player.playSound(player.getLocation(), Sound.ITEM_TRIDENT_RIPTIDE_1, 1, 1);
                         }
@@ -216,12 +156,7 @@ public class DonateAnnounceCommand implements CommandExecutor {
                     taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                         @Override
                         public void run() {
-                            if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                                player.sendMessage("§fThe most important! §d§lYou are supporting the server!");
-                            }
-                            if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                                player.sendMessage("§fHet belangrijkste! §d§lJe support de server!");
-                            }
+                            player.sendMessage("Most importantly, by donating, you are supporting our server! We couldn't do it without you, and we appreciate your contribution.");
                             player.playSound(player.getLocation(), Sound.ITEM_TRIDENT_RIPTIDE_1, 1, 1);
                         }
                     },480L);
@@ -229,14 +164,7 @@ public class DonateAnnounceCommand implements CommandExecutor {
                     taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                         @Override
                         public void run() {
-                            if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                                player.sendMessage("§fThat was it §lfor now§f, we will let you continue on.");
-                                player.sendMessage("§fOne last huge thank you from the entire §3§lOrigami §fteam!");
-                            }
-                            if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                                player.sendMessage("§fDit was het dan §lvoorlopig§f, we gaan je laten verder spelen.");
-                                player.sendMessage("§fEnorm bedankt namens het hele §3§lOrigami §fteam!");
-                            }
+                            player.sendMessage("That's all for now. We'll let you get back to playing. Once again, a huge thank you from the entire Origami team!");
 
                             player.playSound(player.getLocation(), Sound.ITEM_TRIDENT_RIPTIDE_1, 1, 1);
                         }

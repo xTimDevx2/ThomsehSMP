@@ -31,14 +31,12 @@ public class SocialspyCommand implements CommandExecutor {
             user.getFile().set("socialspy", false);
             user.saveFile();
 
-            player.sendMessage(MessageUtils.PREFIX + "Je hebt SocialSpy §cuitgeschakelt§f.");
-
+            player.sendMessage(MessageUtils.PREFIX + "You have turned off SocialSpy.");
         }else {
             user.getFile().set("socialspy", true);
             user.saveFile();
 
-            player.sendMessage(MessageUtils.PREFIX + "Je hebt SocialSpy §aingeschakelt§f.");
-
+            player.sendMessage(MessageUtils.PREFIX + "You have turned on SocialSpy.");
 
 
         }

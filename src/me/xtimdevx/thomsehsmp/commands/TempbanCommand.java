@@ -49,14 +49,14 @@ public class TempbanCommand implements CommandExecutor {
             final String msg = reason.toString().trim();
 
             if (target == null) {
-                p.getServer().broadcastMessage(MessageUtils.GARY + "§c" + args[0] + " §fis §cgetemp-banned §fvoor §c" + msg + "§f!");
+                p.getServer().broadcastMessage(MessageUtils.GARY + "§c" + args[0] + " §fhas been §ctemporarily banned§f for §c" + msg + "§f!");
                 list.addBan(args[0], msg, date, sender.getName());
                 user.getFile().set("bans", user.getFile().getInt("bans") + 1);
                 user.saveFile();
                 return true;
             }
 
-            p.getServer().broadcastMessage(MessageUtils.GARY + "§c" + args[0] + " §fis §cgetemp-banned §fvoor §c" + msg + "§f!");
+            p.getServer().broadcastMessage(MessageUtils.GARY + "§c" + args[0] + " §fhas been §ctemporarily banned§f for §c" + msg + "§f!");
             user.getFile().set("bans", user.getFile().getInt("bans") + 1);
             user.saveFile();
             for (Player online : Bukkit.getOnlinePlayers()) {
@@ -71,12 +71,13 @@ public class TempbanCommand implements CommandExecutor {
             Bukkit.getServer().getPluginManager().callEvent(event);
 
             target.kickPlayer("§8§m----------------------------------------------" +
-                    "\n     §c§lJE BENT VERBANNEN" +
-                    "\n§fReden§8: §f" + ban.getReason() +
-                    "\n§fVerbannen door§8: §f" + ban.getSource() +
-                    "\n§fLengte§8: §f" + DateUtils.formatDateDiff(time) +
+                    "\n     §c§lYOU ARE BANNED" +
+                    "\n§fReason§8: §f" + ban.getReason() +
+                    "\n§fBanned by§8: §f" + ban.getSource() +
+                    "\n§fDuration§8: §f" + DateUtils.formatDateDiff(time) +
                     "\n§8§m----------------------------------------------"
             );
+
         }
         return true;
     }

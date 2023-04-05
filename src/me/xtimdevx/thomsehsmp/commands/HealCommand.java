@@ -20,63 +20,47 @@ public class HealCommand implements CommandExecutor {
         Player player = (Player) sender;
         User user = User.get(player);
 
-        if(args.length == 0) {
-            if(!player.hasPermission("smp.command.heal.self")) {
+        if (args.length == 0) {
+            if (!player.hasPermission("smp.command.heal.self")) {
                 player.sendMessage(MessageUtils.NOPERM);
                 return true;
             }
 
-            if(player.hasPermission("rank.gold")) {
+            if (player.hasPermission("rank.gold")) {
                 if (cooldownshealgold.containsKey(player.getUniqueId().toString())) {
                     long secondsleft = ((cooldownshealgold.get(player.getUniqueId().toString()) / 1000) + HEALCOOLDOWNGOLD) - (System.currentTimeMillis() / 1000);
 
                     if (secondsleft > 0) {
-                        if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                            player.sendMessage("§8> §fYou have to wait §3§o" + RewardCommand.convert(secondsleft) + " §fmore seconds before healing again.");
-                        }
-                        if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                            player.sendMessage("§8> §fJe moet nog §3§o" + RewardCommand.convert(secondsleft) + " §fwachten tot je opnieuw mag healen.");
-                        }
-
+                        player.sendMessage("§8> §fYou have to wait §3§o" + RewardCommand.convert(secondsleft) + " §fmore seconds before healing again.");
                     } else {
                         cooldownshealgold.put(player.getUniqueId().toString(), System.currentTimeMillis());
                         player.setHealth(20);
                         player.setSaturation(20);
                         player.setFireTicks(0);
 
-                        if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                            player.sendMessage("§8> §fYou just §3§ohealed§f yourself!");
-                        }
-                        if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                            player.sendMessage("§8> §fJe hebt jezelf §3§ogehealed§f!");
-                        }
+                        player.sendMessage("§8> §fYou just §3§ohealed§f yourself!");
                     }
-                }else {
+                } else {
                     cooldownshealgold.put(player.getUniqueId().toString(), System.currentTimeMillis());
                     player.setHealth(20);
                     player.setSaturation(20);
                     player.setFireTicks(0);
 
-                    if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                        player.sendMessage("§8> §fYou just §3§ohealed§f yourself!");
-                    }
-                    if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                        player.sendMessage("§8> §fJe hebt jezelf §3§ogehealed§f!");
-                    }                }
+                    player.sendMessage("§8> §fYou just §3§ohealed§f yourself!");
+                }
             }
             return true;
         }
 
-        if(!player.hasPermission("smp.command.heal.other")) {
-            if(!player.hasPermission("smp.command.heal.self")) {
+        if (!player.hasPermission("smp.command.heal.other")) {
+            if (!player.hasPermission("smp.command.heal.self")) {
                 player.sendMessage(MessageUtils.NOPERM);
-            }else {
+            } else {
                 player.sendMessage("§c§lError: §cJe kan alleen jezelf healen.");
             }
             return true;
         }
         player.sendMessage("§cDit is nog geen functie #blametim");
-
 
 
         return true;

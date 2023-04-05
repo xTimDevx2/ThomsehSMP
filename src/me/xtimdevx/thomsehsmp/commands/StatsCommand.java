@@ -65,7 +65,6 @@ public class StatsCommand implements CommandExecutor {
             User tuser = User.get(target);
             
             if(tuser.isNew()) {
-                player.sendMessage("§cNieuwe speler gedetecteerd. We maken een nieuwe file aan.");
                 return true;
             }
 

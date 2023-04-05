@@ -11,7 +11,7 @@ public class DelhomeCommand implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if(cmd.getName().equalsIgnoreCase("delhome")) {
-            if(args.length == 0) {
+            if (args.length == 0) {
                 sender.sendMessage("§cUsage: /delhome <home>");
                 return true;
             }
@@ -21,12 +21,7 @@ public class DelhomeCommand implements CommandExecutor {
             User user = User.get(player);
 
             if (user.getFile().getStringList("homelist").stream().noneMatch(name::equalsIgnoreCase)) {
-                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                    player.sendMessage("§cError: This home does not excist.");
-                }
-                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                    player.sendMessage("§cError: Deze home bestaat niet.");
-                }
+                player.sendMessage("§cError: This home does not excist.");
                 return true;
             }
 
@@ -39,12 +34,7 @@ public class DelhomeCommand implements CommandExecutor {
             user.getFile().set("homelist", Main.home);
             user.saveFile();
 
-            if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                player.sendMessage("§8> §fYou deleted your home. §7§o(Naam: " + name + ")");
-            }
-            if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                player.sendMessage("§8> §fJe hebt je home verwijdert. §7§o(Naam: " + name + ")");
-            }
+            player.sendMessage("§8> §fYou have deleted your home. §7§o(Name: " + name + ")");
         }
         return true;
     }

@@ -50,20 +50,11 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
 
             String home = args[0];
             if (user.getFile().getStringList("homelist").stream().noneMatch(home::equalsIgnoreCase)) {
-                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                    player.sendMessage("§cERROR: This home does not exist.");
-                }
-                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                    player.sendMessage("§cERROR: Deze home bestaat niet.");
-                }
+                player.sendMessage("§cERROR: This home does not exist.");
                 return true;
             }
-            if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                player.sendMessage("§8> §fWe will teleport you in §35 §fseconds. Do not move!");
-            }
-            if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                player.sendMessage("§8> §fWe teleporteren je in §35 §fseconden. Niet bewegen!");
-            }
+            player.sendMessage("§8> §fWe will teleport you in §35 §fseconds. Do not move!");
+
             SpawnCommand.moving.add(player);
             taskID2 = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                 @Override
@@ -142,12 +133,7 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
 
                     player.teleport(homeloc);
 
-                    if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                        player.sendMessage("§8> §fWe are teleporting you to your home. §7§o(" + home + ")");
-                    }
-                    if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                        player.sendMessage("§8> §fWe teleporteren je naar je home. §7§o(" + home + ")");
-                    }
+                    player.sendMessage("§8> §fWe will teleport you to your home. §7§o(" + home + ")");
                     SpawnCommand.moving.remove(player);
                 }
             }, 100L);
