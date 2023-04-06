@@ -340,34 +340,23 @@ public class CratesManager {
         User user = User.get(player);
         if(type == CrateType.QUEST) {
             utils.giveItem(player, randomReward(CrateType.QUEST));
-            if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                player.sendMessage("§8§m----------------------------------------------------");
-                MessageUtils.sendCenteredMessage(player, "§6§lYou opened a crate!");
-                player.sendMessage(" ");
-                player.sendMessage("§fType: §6§oDaily");
-                player.sendMessage(" ");
-                player.sendMessage("§fReward: ");
-                player.sendMessage("§6§o" + lastreward);
-                player.sendMessage("§8§m----------------------------------------------------");
-            }
-            if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                player.sendMessage("§8§m----------------------------------------------------");
-                MessageUtils.sendCenteredMessage(player, "§6§lJe hebt een crate geopend!");
-                player.sendMessage(" ");
-                player.sendMessage("§fType: §6§oDaily");
-                player.sendMessage(" ");
-                player.sendMessage("§fReward: ");
-                player.sendMessage("§6§o" + lastreward);
-                player.sendMessage("§8§m----------------------------------------------------");
-            }
+            player.sendMessage("§8§m----------------------------------------------------");
+            MessageUtils.sendCenteredMessage(player, "§6§lYou have opened a crate!");
+            player.sendMessage(" ");
+            player.sendMessage("§fType: §6§oDaily");
+            player.sendMessage(" ");
+            player.sendMessage("§fReward: ");
+            player.sendMessage("§6§o" + lastreward);
+            player.sendMessage("§8§m----------------------------------------------------");
             if(lastreward.equalsIgnoreCase("Elytra (Legendary Reward)")) {
-                Bukkit.broadcastMessage("§3§lCrates §8> §3" + player.getName() + " §fheeft een §6§lLEGENDARY §freward gekregen van zijn daily key. §7§o(Elytra)");
+                Bukkit.broadcastMessage("§3§lCrates §8> §3" + player.getName() + " §fhas received a §6§lLEGENDARY §freward from their daily key. §7§o(Elytra)");
                 Bukkit.broadcastMessage("§8> §fUse §3/reward §fto claim your free daily key.");
             }
             if(lastreward.equalsIgnoreCase("Trident (Legendary Reward)")) {
-                Bukkit.broadcastMessage("§3§lCrates §8> §3" + player.getName() + " §fheeft een §6§lLEGENDARY §freward gekregen van zijn daily key  §7§o(Trident)");
+                Bukkit.broadcastMessage("§3§lCrates §8> §3" + player.getName() + " §fhas received a §6§lLEGENDARY §freward from their daily key  §7§o(Trident)");
                 Bukkit.broadcastMessage("§8> §fUse §3/reward §fto claim your free daily key.");
             }
+
         }
         if(type == CrateType.LEVEL) {
 

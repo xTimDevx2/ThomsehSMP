@@ -43,12 +43,7 @@ public class  BowPackage implements Listener {
                     cheque.setAmount(cheque.getAmount() - 1);
                 }
                 giveBowPackage(player);
-                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
                     player.sendMessage("§8> §fYou recieved the §2Bow §fpackage!");
-                }
-                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                    player.sendMessage("§8> §fJe hebt de §2Bow §fpackage gekregen!");
-                }
 
 
                 return;

@@ -33,12 +33,7 @@ public class MoneyCheques implements Listener {
                 }
                 economyManager.addBalance(player, amount);
 
-                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
                     player.sendMessage("§8> §fYou added §3" + amount + "§f⛀ to your account balance with a cheque.");
-                }
-                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                    player.sendMessage("§8> §fJe hebt §3" + amount + "§f⛀ aan je balance toegevoegd met een cheque.");
-                }
 
                 return;
             }

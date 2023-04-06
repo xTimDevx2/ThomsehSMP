@@ -45,17 +45,17 @@ public class WarnCommand implements CommandExecutor {
 
             String msg = message.toString().trim();
 
-            player.sendMessage(MessageUtils.GARY + "Je hebt §c§o" + target.getName() + " §fgewarned voor §c" + msg + "§f.");
-            player.sendMessage(MessageUtils.GARY + "Warning opgeslagen in database.");
+            player.sendMessage(MessageUtils.GARY + "You have warned §c§o" + target.getName() + "§r§f for §c" + msg + "§r§f.");
+            player.sendMessage(MessageUtils.GARY + "The warning has been saved in the database.");
 
 
             User user = User.get(target);
 
             target.sendMessage("§8§m----------------------------------------------------");
             MessageUtils.sendCenteredMessage(target, "§4§lWarning!");
-            MessageUtils.sendCenteredMessage(target, "§fJe hebt een warning gekregen!");
+            MessageUtils.sendCenteredMessage(target, "§fYou have received a warning!");
             MessageUtils.sendCenteredMessage(target, "§c" + msg);
-            MessageUtils.sendCenteredMessage(target, "§7§o(Staff zal deze warning reviewen.)");
+            MessageUtils.sendCenteredMessage(target, "§7§o(Staff will review this warning.)");
             target.sendMessage("§8§m----------------------------------------------------");
 
 
@@ -79,26 +79,27 @@ public class WarnCommand implements CommandExecutor {
 
             OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
 
-            if(!target.hasPlayedBefore()) {
-                player.sendMessage("§cError: Deze speler heeft is nog niet gejoined.");
+            if (!target.hasPlayedBefore()) {
+                player.sendMessage("§cError: This player has not joined the server yet.");
                 return true;
             }
 
             User user = User.get(target);
 
-            if(user.getFile().getStringList("warns").isEmpty()) {
-                player.sendMessage(MessageUtils.GARY + "Deze speler heeft geen warnings.");
+            if (user.getFile().getStringList("warns").isEmpty()) {
+                player.sendMessage(MessageUtils.GARY + "This player has no warnings.");
                 return true;
             }
 
-            List<String> strings = user.getFile().getStringList("warns");
+            List<String> warningList = user.getFile().getStringList("warns");
 
             player.sendMessage("§8§m----------------------------------------------------");
-            MessageUtils.sendCenteredMessage(player, "§c§l" + args[0] + "'s Warnings");
-            for(String entry : strings) {
-                player.sendMessage("§8- §f" + entry);
+            MessageUtils.sendCenteredMessage(player, "§c§l" + target.getName() + "'s Warnings");
+            for (String warning : warningList) {
+                player.sendMessage("§8- §f" + warning);
             }
             player.sendMessage("§8§m----------------------------------------------------");
+
 
         }
         return true;

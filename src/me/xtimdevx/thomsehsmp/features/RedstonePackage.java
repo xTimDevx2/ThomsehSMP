@@ -41,12 +41,7 @@ public class RedstonePackage implements Listener {
                     cheque.setAmount(cheque.getAmount() - 1);
                 }
                 giveRedstonePackage(player);
-                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
                     player.sendMessage("§8> §fYou recieved the §cRedstone §fpackage!");
-                }
-                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                    player.sendMessage("§8> §fJe hebt de §cRedstone §fpackage gekregen!");
-                }
 
 
                 return;

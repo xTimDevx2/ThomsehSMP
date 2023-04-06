@@ -27,13 +27,6 @@ public class CommandEvents implements Listener{
 
         String command = message.split(" ")[0].substring(1);
 
-        if (user.getFile().get("DuelTarget") != null) {
-            if(command.equalsIgnoreCase("trade")) {
-            }
-            event.setCancelled(true);
-            player.sendMessage("§cERROR: Deze command staat uit tijdens een duel.");
-        }
-
         if (command.equalsIgnoreCase("me") || command.equalsIgnoreCase("minecraft:me") || command.equalsIgnoreCase("kill")) {
             player.sendMessage("§cERROR: You don't have permissions to use this command.");
             event.setCancelled(true);
@@ -62,14 +55,14 @@ public class CommandEvents implements Listener{
                 return;
             }
             event.setCancelled(true);
-            Bukkit.broadcastMessage("§c§lWARNING: We are forcing a server reload. If something is not working please contact Tim.");
+            Bukkit.broadcastMessage("§c§lWARNING: We are forcing a server reload. If something is not working please contact our head of development.");
             Bukkit.reload();
             Bukkit.broadcastMessage("§aFinished reloading the server.");
         }
 
         if (command.equalsIgnoreCase("pl") || command.equalsIgnoreCase("plugins") || command.equalsIgnoreCase("?") || command.equalsIgnoreCase("ver") || command.equalsIgnoreCase("version") || command.equalsIgnoreCase("about")) {
             event.setCancelled(true);
-            player.sendMessage("§cDe meeste plugins zijn gecode door §b§lTeam Scyle§f.");
+            player.sendMessage("§cMost of our plugins are created by our development team. Contact xTimDevx for more info");
         }
         if(command.equalsIgnoreCase("/calc")||command.equalsIgnoreCase("/calculate")||command.equalsIgnoreCase("/solve")||command.equalsIgnoreCase("/eval")||command.equalsIgnoreCase("/evaluate")) {
             event.setCancelled(true);

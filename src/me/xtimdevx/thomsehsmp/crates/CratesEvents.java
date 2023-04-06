@@ -56,24 +56,15 @@ public class CratesEvents implements Listener {
 
             if(block.getLocation().getBlockX() == questcrate.getBlockX() && block.getLocation().getBlockZ() == questcrate.getBlockZ() && block.getLocation().getBlockY() == questcrate.getBlockY()) {
                 event.setCancelled(true);
-                if(openingDaily) {
-                    if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                        player.sendMessage("§cSomeone is already using this crate, wait until they are done.");
-                    }
-                    if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                        player.sendMessage("§cIemand is deze crate al aan het gebruiken, wacht even tot ze klaar zijn.");
-                    }
+                if (openingDaily) {
+                    player.sendMessage("§cSomeone is already using this crate, please wait until they finish.");
                     return;
                 }
-                if(player.getItemInHand().getType().equals(Material.AIR)) {
-                    if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                        player.sendMessage("§3§lCrates §8> §fYou need to use a §3§lDaily §fcrate key to open this crate.");
-                    }
-                    if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                        player.sendMessage("§3§lCrates §8> §fJe moet een §3Daily §fcrate key gebruiken om dit te openen.");
-                    }
+                if (player.getItemInHand().getType().equals(Material.AIR)) {
+                    player.sendMessage("§3§lCrates §8> §fYou need to use a §3Daily §fcrate key to open this.");
                     return;
                 }
+
                 if(player.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase("§8> §6§lDaily Crate Key §8<")){
                     player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
                     openingDaily = true;
@@ -173,12 +164,7 @@ public class CratesEvents implements Listener {
 
                 }else {
 
-                    if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                        player.sendMessage("§3§lCrates §8> §fYou need to use a §3§lDaily §fcrate key to open this crate.");
-                    }
-                    if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                        player.sendMessage("§3§lCrates §8> §fJe moet een §3Daily §fcrate key gebruiken om dit te openen.");
-                    }
+                        player.sendMessage("§3§lCrates §8> §fYou need to use a §3Daily§f crate key to open this.");
                 }
                 return;
             }

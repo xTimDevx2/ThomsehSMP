@@ -325,12 +325,7 @@ public class PlayerEvents implements Listener {
         if(event.getItem().getType() == Material.GOLDEN_CARROT) {
             if(event.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§8> §6§lDaily Crate Key §8<")) {
                 event.setCancelled(true);
-                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
                     player.sendMessage("§cMeant for playing, not for eating! (/crates)");
-                }
-                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                    player.sendMessage("§cBedoelt om mee te spelen, niet om op te eten! (/crates)");
-                }
             }
         }
         if (item.getType() == Material.GOLDEN_APPLE) {
@@ -356,38 +351,6 @@ public class PlayerEvents implements Listener {
                     event.setCancelled(true);
                 }
             }
-        }
-    }
-
-    @EventHandler
-    public void onItemDrop(PlayerDropItemEvent event) {
-        Player player = event.getPlayer();
-        User user = User.get(player);
-        if(user.getFile().get("DuelTarget") != null) {
-            event.setCancelled(true);
-        }
-    }
-
-    @EventHandler
-    public void onItemDrop(EntityPickupItemEvent event) {
-        if(event.getEntity() instanceof Player) {
-            Player player = (Player) event.getEntity();
-            User user = User.get(player);
-            if(user.getFile().get("DuelTarget") != null) {
-                event.setCancelled(true);
-            }
-        }
-    }
-
-    @EventHandler
-    public void onChestOpen(PlayerInteractEvent event) {
-        Player player = event.getPlayer();
-        User user = User.get(player);
-        if(event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                if (user.getFile().get("DuelTarget") != null) {
-                    event.setCancelled(true);
-                }
-
         }
     }
 

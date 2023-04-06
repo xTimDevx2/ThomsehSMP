@@ -21,21 +21,22 @@ public class DonatorWand implements Listener, CommandExecutor {
             amuletMeta.setDisplayName(MessageUtils.format("§8§k:#D46CFE§lDreambender§8§k:"));
             amulet.setItemMeta(amuletMeta);
             Player player = (Player) sender;
-            if(!player.hasPermission("smp.feature.amulet")) {
-                player.sendMessage(MessageUtils.PREFIX + "Alleen §6§lGold §fkan deze feature gebruiken.");
-                player.sendMessage("§8> §3§nstore.thomseh.live §fof §3§o/buy");
+            if (!player.hasPermission("smp.feature.amulet")) {
+                player.sendMessage(MessageUtils.PREFIX + "Only §6§lGold §fcan use this feature.");
+                player.sendMessage("§8> §3§nstore.thomseh.live §for §3§o/buy");
                 return true;
             }
 
-            if(player.getInventory().contains(amulet)) {
-                player.sendMessage("§cError: Je hebt al een amulet in je inventory.");
+            if (player.getInventory().contains(amulet)) {
+                player.sendMessage("§cError: You already have an amulet in your inventory.");
                 return true;
             }
 
-            if(!player.getInventory().getItem(8).equals(Material.AIR)) {
-                player.sendMessage("§cError: Je laatste slot van je hotbar moet vrij zijn om je amulet te ontvangen.");
+            if (!player.getInventory().getItem(8).equals(Material.AIR)) {
+                player.sendMessage("§cError: Your last slot in your hotbar must be empty to receive your amulet.");
                 return true;
             }
+
 
             player.getInventory().setItem(8, amulet);
         }

@@ -56,7 +56,7 @@ public class ServerEvents implements Listener {
         }
         if(world.getName().contains("_end")) {
             player.teleport(LocationUtils.spawn);
-            player.sendMessage("§8> §fEnd released dinsdag §3§o7/02§f, volg het live op §5§ntwitch.tv/thomseh§f!");
+            player.sendMessage("§8> §fThe End is currently closed and will be opened during an upcoming event.");
         }
 
     }

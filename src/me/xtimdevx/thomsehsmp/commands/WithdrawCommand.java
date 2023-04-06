@@ -26,55 +26,43 @@ public class WithdrawCommand implements CommandExecutor {
             }
 
             int num;
-
             try {
                 num = Integer.parseInt(args[0]);
             } catch (NumberFormatException ex){
-                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                    player.sendMessage("§cYou need to type a number for this to work.");
-                }
-                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                    player.sendMessage("§cJe moet een nummer ingeven om geld af te halen.");
-                }
+                player.sendMessage("§cYou need to enter a number for this to work.");
                 return true;
             }
 
             EconomyManager manager = new EconomyManager();
 
-            if(!manager.hasEnoughBalance(player, num)) {
-                if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                    player.sendMessage("§cThere is not enough money on your account.");
-                }
-                if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                    player.sendMessage("§cEr staat niet genoeg geld op je rekening om dit af te halen.");
-                }
+            if (!manager.hasEnoughBalance(player, num)) {
+                player.sendMessage("§cThere is not enough money in your account.");
                 return true;
             }
 
-            ArrayList<String> lore = new ArrayList<String>();
-            ItemStack money500 = new ItemStack(Material.PAPER);
-            ItemMeta money500meta = money500.getItemMeta();
-            money500meta.setDisplayName("§8> §3§l" + num + " ⛀ Cheque §8< §7§o(Right click)");
+            ArrayList<String> lore = new ArrayList<>();
+            ItemStack moneyCheque = new ItemStack(Material.PAPER);
+            ItemMeta moneyChequeMeta = moneyCheque.getItemMeta();
+            moneyChequeMeta.setDisplayName("§8> §3§l" + num + " ⛀ Cheque §8< §7§o(Right-click to claim)");
             lore.add("§8§m-------------------------");
             lore.add("§3§lMoney Cheque");
             lore.add("§f" + num + " ⛀");
-            lore.add("§7§oRight click to claim.");
+            lore.add("§7§oRight-click to claim.");
             lore.add("§8§m-------------------------");
 
-            money500meta.setLore(lore);
+            moneyChequeMeta.setLore(lore);
 
-            money500.setItemMeta(money500meta);
+            moneyCheque.setItemMeta(moneyChequeMeta);
 
             lore.clear();
 
-            if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
-                player.sendMessage("§8> §fYou withdrew §3§o" + num + " §f⛀ from your account.");
-            }
-            if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                player.sendMessage("§8> §fJe hebt §3§o" + num + " §f⛀ afgehaald.");
-            }
+            player.sendMessage("§8> §fYou withdrew §3§o" + num + " §f⛀ from your account.");
 
-            Utils.giveItem(player, money500);
+
+
+
+
+            Utils.giveItem(player, moneyCheque);
 
             manager.removeBalance(player, num);
 

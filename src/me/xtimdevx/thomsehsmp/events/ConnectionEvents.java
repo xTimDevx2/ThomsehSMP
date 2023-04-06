@@ -63,13 +63,13 @@ public class ConnectionEvents implements Listener {
 
             player.setGameMode(GameMode.SURVIVAL);
             player.teleport(LocationUtils.spawn);
-            player.sendMessage("§c§lJe logde uit tijdens de tutorial, we teleporteren je naar spawn.");
+            player.sendMessage("§c§lYou logged out during the tutorial, we will teleport you to spawn.");
 
             Utils.inServerMessage.remove(player.getName());
         }
 
-        player.setPlayerListHeader(MessageUtils.format("#01C5CB§lO#00B0B6§lr#009EA3§li#008A8E§lg#00767A§la#006A6D§lm#006366§li §f§lSMP") + "\n§7§oSeason: 2");
-        player.setPlayerListFooter("§8> §f§oTwitch.tv/thomseh §8< \n§7§oOnline: " + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers());
+        player.setPlayerListHeader(MessageUtils.format("#01C5CB§lO#00B0B6§lr#009EA3§li#008A8E§lg#00767A§la#006A6D§lm#006366§li §f§lSMP") + "\n§7§oSeason: 3");
+        player.setPlayerListFooter("§8> §7§oCreated by Team Scyle §8< \n§7§oOnline: " + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers());
         player.setPlayerListName(MessageUtils.returnTabPrefix(player) + player.getName());
 
         Bukkit.getScheduler().runTaskLater(Main.plugin, new Runnable() {
@@ -81,7 +81,7 @@ public class ConnectionEvents implements Listener {
                     if(!DuelsManager.duel.contains(online)) {
                         ScoreboardManager.updateScoreBoard(online);
                     }
-                    online.setPlayerListFooter("§8> §f§oTwitch.tv/thomseh §8< \n§7§oOnline: " + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers());
+                    online.setPlayerListFooter("§8> §7§oCreated by Team Scyle §8<\n§7§oOnline: " + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers());
                 }
             }
         }, 20);
@@ -114,12 +114,7 @@ public class ConnectionEvents implements Listener {
             taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                 @Override
                 public void run() {
-                    if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
                         player.sendMessage("§3§lWelcome to Origami SMP!");
-                    }
-                    if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                        player.sendMessage("§3§lWelkom bij Origami SMP!");
-                    }
                     player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 1726272000, 128));
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1726272000, 128));
                 }
@@ -127,18 +122,9 @@ public class ConnectionEvents implements Listener {
             taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                 @Override
                 public void run() {
-                    if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
                         player.sendMessage(" ");
                         player.sendMessage("§fThis is a §3§oSurvival Multiplayer Server");
-                        player.sendMessage("§fOwned by twitch streamer §3Thomseh");
-                        player.sendMessage("§fManaged en developed by §3Team Scyle§f.");
-                    }
-                    if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                        player.sendMessage(" ");
-                        player.sendMessage("§fDit is een §3§oSurvival Multiplayer Server");
-                        player.sendMessage("§fGe-Owned door twitch streamer §3Thomseh");
-                        player.sendMessage("§fGemanaged en geprogrameerd door §3Team Scyle§f.");
-                    }
+                        player.sendMessage("§fOwned, managed and developed by §3Team Scyle");
                 }
             },100L);
             taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
@@ -147,14 +133,8 @@ public class ConnectionEvents implements Listener {
                     if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
                         player.sendMessage(" ");
                         player.sendMessage("§fUse §3§o/help §ffor our custom guide.");
-                        player.sendMessage("§fEveryone gets 3 home to start off.");
-                        player.sendMessage("§fUse §3§o/rtp §fto go to a random location.");
-                    }
-                    if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                        player.sendMessage(" ");
-                        player.sendMessage("§fGebruik §3§o/help §fvoor onze custom guide.");
-                        player.sendMessage("§fIedereen krijgt 3 homes om te beginnen");
-                        player.sendMessage("§fJe kan §3§o/rtp §fgebruiken om op een random locatie te komen.");
+                        player.sendMessage("§fEach player starts with three home locations.");
+                        player.sendMessage("§fUse §3§o/rtp §fto teleport to a random location.");
                     }
                 }
             },160L);
@@ -164,14 +144,8 @@ public class ConnectionEvents implements Listener {
                     if (user.getLanguage().equalsIgnoreCase("ENGLISH")) {
                         player.sendMessage(" ");
                         player.sendMessage("§fDon't forget to use §3§o/reward §fto recieve your daily free crate.");
-                        player.sendMessage("§fAlso don't forget to also look at §3§o/rules §fbefore you start playing.");
+                        player.sendMessage("§fAdditionally, remember to review our §3§o/rules §fbefore you start playing.");
                         player.sendMessage("§fGood luck and have fun!");
-                    }
-                    if (user.getLanguage().equalsIgnoreCase("DUTCH")) {
-                        player.sendMessage(" ");
-                        player.sendMessage("§fDoe ook zeker elke dag §3§o/reward §fvoor je gratis crate.");
-                        player.sendMessage("§fKijk ook zeker in de §3§o/rules §fvoor je begint met spelen.");
-                        player.sendMessage("§fVeel plezier en success!");
                     }
                 }
             },220L);
@@ -206,11 +180,6 @@ public class ConnectionEvents implements Listener {
             Bukkit.getScheduler().cancelTask(Tutorial.taskID);
         }
 
-        if(DuelsManager.duel.contains(player)) {
-            DuelsManager manager = new DuelsManager();
-            Player winner = Bukkit.getPlayer(user.getFile().getString("DuelTarget"));
-            manager.endDuel(winner, player, user.getFile().getString("duelmode"), true, false);
-        }
 
         Bukkit.getScheduler().runTaskLater(Main.plugin, new Runnable() {
             @Override
@@ -219,7 +188,7 @@ public class ConnectionEvents implements Listener {
                     if(!DuelsManager.duel.contains(online)) {
                         ScoreboardManager.updateScoreBoard(online);
                     }
-                    online.setPlayerListFooter("§8> §f§oTwitch.tv/thomseh §8< \n§7§oOnline: " + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers());
+                    online.setPlayerListFooter("§8> §7§oCreated by Team Scyle §8< \n§7§oOnline: " + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers());
                 }
             }
         }, 20);
@@ -238,11 +207,11 @@ public class ConnectionEvents implements Listener {
             api.getUserManager().saveUser(lpu);
 
 
-            player.sendMessage(MessageUtils.format("§8> §fJe hebt #00DC99§lB#00D091§lu#00BF85§li#00AE79§ll#019B6C§ld#008A60§le#007F58§lr §fmode §cuitgezet§f."));
+            player.sendMessage(MessageUtils.format("§8> §fYou have disabled the #00DC99§lB#00D091§lu#00BF85§li#00AE79§ll#019B6C§ld#008A60§le#007F58§lr §fmode §csuccessfully§f."));
 
             for(Player online : Bukkit.getOnlinePlayers()) {
                 if(online.hasPermission("smp.staff")) {
-                    online.sendMessage("§4§lOP §8> §c" + player.getName() + " §flogde uit zijn builder mode is uitgezet.");
+                    online.sendMessage("§4§lOP §8> §c" + player.getName() + " §flogged out and turned off his builder mode.");
                 }
             }
 
@@ -257,15 +226,15 @@ public class ConnectionEvents implements Listener {
     @EventHandler
     public void onLogin(PlayerLoginEvent event) {
         Player player = (Player) event.getPlayer();
-        if(Settings.getInstance().getData().getBoolean("maintenance")) {
-            if(player.isOp()) {
+        if (Settings.getInstance().getData().getBoolean("maintenance")) {
+            if (player.isOp()) {
                 event.allow();
                 return;
             }
             event.disallow(PlayerLoginEvent.Result.KICK_OTHER, "§8§m----------------------------- \n" +
                     "§c§lServer Maintenance! \n" +
                     "§fOur server is currently undergoing maintenance.\n" +
-                    "§fFor more updates follow Thomseh on twitch.\n" +
+                    "§fFor more updates, follow Thomseh on Twitch at \n" +
                     "§7§otwitch.tv/thomseh\n" +
                     "§8§m-----------------------------");
             return;
@@ -279,11 +248,11 @@ public class ConnectionEvents implements Listener {
             event.setKickMessage("§8§m----------------------------- \n" +
                     "§c§lYou are not whitelisted! \n" +
                     "§fThis server has not been released yet.\n" +
-                    "§fFor more updates follow Thomseh on twitch.\n" +
+                    "§fFor more updates, follow Thomseh on Twitch at \n" +
                     "§7§otwitch.tv/thomseh\n" +
                     "§8§m-----------------------------");
-
             return;
         }
+
     }
 }
